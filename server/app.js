@@ -1,0 +1,25 @@
+require("dotenv").config();
+const express = require("express");
+const app = express();
+const port = process.env.PORT || 3000;
+const cors = require("cors");
+const errHandler = require("./middlewares/errHandler");
+const userRouter = require("./routes/userRouter");
+const productRouter = require("./routes/productRouter");
+
+// Body Parser
+app.use(express.json());
+app.use(express.urlencoded({ extended: false }));
+
+app.use(cors());
+
+// User Routes
+app.use(userRouter);
+
+// Product Routes
+app.use("/products", productRouter);
+
+// Error Handler
+app.use(errHandler);
+
+module.exports = app;
