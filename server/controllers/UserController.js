@@ -1,5 +1,6 @@
 const {User} = require ("../models")
 
+
 class UserController {
     static register (req, res) {
         let params = {

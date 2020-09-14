@@ -1,5 +1,18 @@
 const request = require ("supertest")
 const app = require ("../app.js")
+const {sequelize} = require ("../models/index.js")
+const {queryInterface} = sequelize
+
+afterAll ((done) => {
+    queryInterface.bulkDelete ("Users")
+
+    .then (() => done ())
+
+    .catch (err => {
+        done ()
+    })
+    
+})
 
 describe ("POST/register", () => {
     test ("responds with json", (done) => {
