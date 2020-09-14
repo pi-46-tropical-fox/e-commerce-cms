@@ -50,7 +50,7 @@ export default {
             this.page = 'Login'
         }
     }
-}   
+}       
 </script>
 
 <style lang="stylus">
