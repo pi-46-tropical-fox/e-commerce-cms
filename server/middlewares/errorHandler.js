@@ -20,7 +20,7 @@ const errorHandler = (err, req, res, next) => {
 			});
 			break;
 		case 'notAuthorizedUser':
-			statusCode = 401;
+			statusCode = 403;
 			errors.push({
 				name: err.name,
 				message: 'User not authorized perform this action',
@@ -31,6 +31,13 @@ const errorHandler = (err, req, res, next) => {
 			errors.push({
 				name: err.name,
 				message: 'User not authenticated',
+			});
+			break;
+		case 'notFoundProduct':
+			statusCode = 404;
+			errors.push({
+				name: 'notFoundProduct',
+				message: 'Error product not found',
 			});
 			break;
 

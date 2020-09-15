@@ -1,7 +1,9 @@
 const jwt = require('jsonwebtoken');
 const secret = process.env.SECRET;
 
-const generateToken = userData => jwt.sign(userData, secret);
+const generateToken = userData => {
+	return jwt.sign(userData, secret);
+};
 
 const verifyToken = access_token => {
 	try {

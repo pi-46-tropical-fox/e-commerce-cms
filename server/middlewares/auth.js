@@ -18,4 +18,14 @@ const authentication = async (req, res, next) => {
 	}
 };
 
-module.exports = authentication;
+const authorizationByRoleAdmin = async (req, res, next) => {
+	const { role } = req.userData;
+
+	if (role === 'admin') {
+		next();
+	} else {
+		next({ name: 'notAuthorizedUser' });
+	}
+};
+
+module.exports = { authentication, authorizationByRoleAdmin };

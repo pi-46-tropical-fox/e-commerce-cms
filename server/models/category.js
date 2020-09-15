@@ -1,5 +1,6 @@
 'use strict';
 const { Model } = require('sequelize');
+const { toSlug } = require('../helpers/slugify');
 module.exports = (sequelize, DataTypes) => {
 	class Category extends Model {
 		/**
@@ -15,11 +16,15 @@ module.exports = (sequelize, DataTypes) => {
 	Category.init(
 		{
 			name: DataTypes.STRING,
+			slug: DataTypes.STRING,
 		},
 		{
 			sequelize,
 			modelName: 'Category',
 		}
 	);
+	Category.beforeCreate((category, options) => {
+		category.slug = toSlug(category.name);
+	});
 	return Category;
 };

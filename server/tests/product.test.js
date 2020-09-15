@@ -1,3 +1,4 @@
+require('dotenv').config();
 const request = require('supertest');
 const app = require('../app');
 const { generateToken } = require('../helpers/jwt');
@@ -9,37 +10,139 @@ let access_token_admin;
 let access_token_customer;
 
 let category;
+let product;
+let productEmpty;
+let productNull;
+let productPriceNegative;
+let productStockNegative;
+let productPriceString;
+let productStockString;
 let createdProduct;
 let updatedProduct;
 
-beforeAll(async done => {
-	try {
-		// Create & Update User as admin
-		const userAdmin = await User.create({
-			email: 'admin@mail.com',
-			password: '1234',
-		});
-		const userAdminUpdated = await User.update({ role: 'admin' }, { where: { id: userAdmin.id }, returning: true });
-		// Create User as customer (default)
-		const userCustomer = await User.create({
-			email: 'customer@mail.com',
-			password: '1234',
-		});
+// beforeAll(async done => {
+// 	try {
+// 		// Create & Update User as admin
+// 		const userAdmin = await User.create({
+// 			email: 'admin@mail.com',
+// 			password: '1234',
+// 		});
+// 		const userAdminUpdated = await User.update({ role: 'admin' }, { where: { id: userAdmin.id }, returning: true });
+// 		// Create User as customer (default)
+// 		const userCustomer = await User.create({
+// 			email: 'customer@mail.com',
+// 			password: '1234',
+// 		});
 
-		// Generate JWT access_token
-		access_token_admin = generateToken(userAdminUpdated);
-		access_token_customer = generateToken(userCustomer);
+// 		// Generate JWT access_token
+// 		access_token_admin = generateToken(JSON.stringify(userAdminUpdated));
+// 		access_token_customer = generateToken(JSON.stringify(userCustomer));
 
-		// Create Category
-		category = await Category.create({
-			name: 'Basic',
-			slug: 'basic',
+// 		// Create Category
+// 		category = await Category.create({
+// 			name: 'Basic',
+// 			slug: 'basic',
+// 		});
+
+// 		done();
+// 	} catch (error) {
+// 		done(error);
+// 	}
+// });
+
+beforeAll(done => {
+	User.create({
+		email: 'admin@mail.com',
+		password: '1234',
+	})
+		.then(user => {
+			return User.update({ role: 'admin' }, { where: { id: user.id }, returning: true });
+		})
+		.then(userAdmin => {
+			access_token_admin = generateToken({
+				id: userAdmin[1][0].id,
+				email: userAdmin[1][0].email,
+				role: userAdmin[1][0].role,
+			});
+
+			return User.create({
+				email: 'customer@mail.com',
+				password: '1234',
+			});
+		})
+		.then(userCustomer => {
+			access_token_customer = generateToken({
+				id: userCustomer.id,
+				email: userCustomer.email,
+				role: userCustomer.role,
+			});
+			return Category.create({
+				name: 'Basic',
+				slug: 'basic',
+			});
+		})
+		.then(categoryBasic => {
+			category = categoryBasic;
+			product = {
+				name: 'Basic T-Shirt',
+				image_url: 'https://imgur.com/a/W0gzfu9',
+				price: 45000,
+				stock: 5,
+				slug: 'basic-t-shirt',
+				CategoryId: category.id,
+			};
+
+			productEmpty = {
+				name: '',
+				image_url: '',
+				price: '',
+				stock: '',
+				slug: '',
+				CategoryId: '',
+			};
+
+			productNull = {};
+
+			productPriceNegative = {
+				name: 'Basic T-Shirt',
+				image_url: 'https://imgur.com/a/W0gzfu9',
+				price: -1,
+				stock: 5,
+				slug: 'basic-t-shirt',
+				CategoryId: category.id,
+			};
+
+			productStockNegative = {
+				name: 'Basic T-Shirt',
+				image_url: 'https://imgur.com/a/W0gzfu9',
+				price: 45000,
+				stock: -1,
+				slug: 'basic-t-shirt',
+				CategoryId: product.CategoryId,
+			};
+
+			productStockString = {
+				name: 'Basic T-Shirt',
+				image_url: 'https://imgur.com/a/W0gzfu9',
+				price: 45000,
+				stock: 'string',
+				slug: 'basic-t-shirt',
+				CategoryId: category.id,
+			};
+
+			productPriceString = {
+				name: 'Basic T-Shirt',
+				image_url: 'https://imgur.com/a/W0gzfu9',
+				price: 'string',
+				stock: 5,
+				slug: 'basic-t-shirt',
+				CategoryId: category.id,
+			};
+			done();
+		})
+		.catch(err => {
+			done(err);
 		});
-
-		done();
-	} catch (error) {
-		done(error);
-	}
 });
 
 afterAll(async done => {
@@ -54,15 +157,6 @@ afterAll(async done => {
 });
 
 describe('POST /products', function () {
-	const product = {
-		name: 'Basic T-Shirt',
-		image_url: 'https://imgur.com/a/W0gzfu9',
-		price: 45000,
-		stock: 5,
-		slug: 'basic-t-shirt',
-		CategoryId: category.id,
-	};
-
 	test(`201: Success create product, return json with product's data`, function (done) {
 		request(app)
 			.post('/products')
@@ -70,7 +164,6 @@ describe('POST /products', function () {
 			.set('access_token', access_token_admin)
 			.then(response => {
 				const { statusCode, body } = response;
-
 				createdProduct = { ...body };
 
 				expect(statusCode).toBe(201);
@@ -88,15 +181,6 @@ describe('POST /products', function () {
 			});
 	});
 
-	const productEmpty = {
-		name: '',
-		image_url: '',
-		price: '',
-		stock: '',
-		slug: '',
-		CategoryId: '',
-	};
-
 	test('400: Error validation: required field cannot empty', function (done) {
 		const expectedErrors = [
 			{
@@ -106,10 +190,6 @@ describe('POST /products', function () {
 			{
 				name: 'notEmpty',
 				message: 'Image url cannot empty',
-			},
-			{
-				name: 'notEmpty',
-				message: 'Slug cannot empty',
 			},
 			{
 				name: 'notEmpty',
@@ -141,8 +221,6 @@ describe('POST /products', function () {
 			});
 	});
 
-	const productNull = {};
-
 	test('400: Error validation: required field cannot null', function (done) {
 		const expectedErrors = [
 			{
@@ -152,10 +230,6 @@ describe('POST /products', function () {
 			{
 				name: 'is_null',
 				message: 'Image url cannot null',
-			},
-			{
-				name: 'is_null',
-				message: 'Slug cannot null',
 			},
 			{
 				name: 'is_null',
@@ -187,19 +261,10 @@ describe('POST /products', function () {
 			});
 	});
 
-	const productStockNegative = {
-		name: 'Basic T-Shirt',
-		image_url: 'https://imgur.com/a/W0gzfu9',
-		price: 45000,
-		stock: -1,
-		slug: 'basic-t-shirt',
-		CategoryId: category.id,
-	};
-
 	test('400: Error validation: stock negative values', function (done) {
 		const expectedErrors = [
 			{
-				name: 'isInt',
+				name: 'isInteger',
 				message: 'Stock must be positive numbers with no leading zeroes',
 			},
 		];
@@ -220,19 +285,10 @@ describe('POST /products', function () {
 			});
 	});
 
-	const productPriceNegative = {
-		name: 'Basic T-Shirt',
-		image_url: 'https://imgur.com/a/W0gzfu9',
-		price: -1,
-		stock: 5,
-		slug: 'basic-t-shirt',
-		CategoryId: category.id,
-	};
-
-	test('400: Error validation: stock negative values', function (done) {
+	test('400: Error validation: price negative values', function (done) {
 		const expectedErrors = [
 			{
-				name: 'isInt',
+				name: 'isInteger',
 				message: 'Price must be positive numbers with no leading zeroes',
 			},
 		];
@@ -253,19 +309,10 @@ describe('POST /products', function () {
 			});
 	});
 
-	const productStockString = {
-		name: 'Basic T-Shirt',
-		image_url: 'https://imgur.com/a/W0gzfu9',
-		price: 45000,
-		stock: 'string',
-		slug: 'basic-t-shirt',
-		CategoryId: category.id,
-	};
-
-	test('400: Error validation: stock negative values', function (done) {
+	test('400: Error validation: stock contain string', function (done) {
 		const expectedErrors = [
 			{
-				name: 'isInt',
+				name: 'isInteger',
 				message: 'Stock must be positive numbers with no leading zeroes',
 			},
 		];
@@ -286,19 +333,10 @@ describe('POST /products', function () {
 			});
 	});
 
-	const productPriceString = {
-		name: 'Basic T-Shirt',
-		image_url: 'https://imgur.com/a/W0gzfu9',
-		price: 'string',
-		stock: 5,
-		slug: 'basic-t-shirt',
-		CategoryId: category.id,
-	};
-
-	test('400: Error validation: stock negative values', function (done) {
+	test('400: Error validation: price contain string', function (done) {
 		const expectedErrors = [
 			{
-				name: 'isInt',
+				name: 'isInteger',
 				message: 'Price must be positive numbers with no leading zeroes',
 			},
 		];
@@ -368,9 +406,19 @@ describe('POST /products', function () {
 });
 
 describe('GET /products', function () {
-	const products = [{ ...createdProduct }];
-
 	test(`200: Success get all products, return json with product's data`, function (done) {
+		const products = [
+			{
+				...createdProduct,
+				Category: {
+					id: category.id,
+					name: category.name,
+					slug: category.slug,
+					createdAt: new Date(category.createdAt).toISOString(),
+					updatedAt: new Date(category.updatedAt).toISOString(),
+				},
+			},
+		];
 		request(app)
 			.get('/products')
 			.set('access_token', access_token_admin)
@@ -436,6 +484,7 @@ describe('GET /products/:id', function () {
 
 		request(app)
 			.get(`/products/1234`)
+			.set('access_token', access_token_admin)
 			.then(response => {
 				const { statusCode, body } = response;
 
@@ -472,10 +521,9 @@ describe('GET /products/:id', function () {
 });
 
 describe('PUT /products/:id', function () {
-	const productToUpdate = { ...createdProduct };
-	productToUpdate.name = 'updated name';
-
 	test(`200: Success update product, return json with updated product's data`, function (done) {
+		const productToUpdate = { ...createdProduct };
+		productToUpdate.name = 'updated name';
 		request(app)
 			.put(`/products/${productToUpdate.id}`)
 			.send(productToUpdate)
@@ -501,6 +549,9 @@ describe('PUT /products/:id', function () {
 	});
 
 	test('404: Error product not found, return json with error', function (done) {
+		const productToUpdate = { ...createdProduct };
+		productToUpdate.name = 'updated name';
+
 		const expectedErrors = [
 			{
 				name: 'notFoundProduct',
@@ -525,6 +576,9 @@ describe('PUT /products/:id', function () {
 	});
 
 	test('401: Unauthenticated because no access_token, return json with error', function (done) {
+		const productToUpdate = { ...createdProduct };
+		productToUpdate.name = 'updated name';
+
 		const expectedErrors = [
 			{
 				name: 'notAuthenticated',
@@ -548,6 +602,9 @@ describe('PUT /products/:id', function () {
 	});
 
 	test('403: Role is not admin, return json with error', function (done) {
+		const productToUpdate = { ...createdProduct };
+		productToUpdate.name = 'updated name';
+
 		const expectedErrors = [
 			{
 				name: 'notAuthorizedUser',
