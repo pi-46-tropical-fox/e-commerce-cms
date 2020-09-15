@@ -3,7 +3,7 @@ const { comparePass } = require("../helpers/bcrypt");
 const { generateToken } = require("../helpers/jwt");
 
 class UserController {
-  static login(req, res) {
+  static login(req, res, next) {
     let options = {
       where: {
         email: req.body.email,
@@ -17,16 +17,14 @@ class UserController {
             const access_token = generateToken(data);
             return res.status(200).json({ access_token, email: data.email });
           } else {
-            return res
-              .status(400)
-              .json({ message: "Invalid email or password" });
+            throw { message: "Invalid email or password", statusCode: 400 };
           }
         } else {
-          return res.status(400).json({ message: "Invalid email or password" });
+          throw { message: "Invalid email or password", statusCode: 400 };
         }
       })
       .catch((err) => {
-        return res.status(500).json({ message: "Internal Error Server" });
+        return next(err);
       });
   }
 }

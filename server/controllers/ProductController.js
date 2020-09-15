@@ -1,41 +1,40 @@
 const { Product } = require("../models");
 
 class ProductController {
-  static show(req, res) {
+  static show(req, res, next) {
     Product.findAll()
       .then((data) => {
         return res.status(200).json(data);
       })
       .catch((err) => {
-        return res.status(400).json(err);
+        return next(err)
       });
   }
-  static add(req, res) {
+  static add(req, res, next) {
     let params = {
       name: req.body.name,
       image_url: req.body.image_url,
       price: req.body.price,
       stock: req.body.stock,
-      // UserId: req.userData.id,
     };
     Product.create(params)
       .then((data) => {
         return res.status(201).json(data);
       })
       .catch((err) => {
-        return res.status(400).json(err);
+        return next(err)
       });
   }
-  static find(req, res) {
+  static find(req, res, next) {
     Product.findByPk(req.params.id)
       .then((data) => {
         return res.status(200).json(data);
       })
       .catch((err) => {
-        return res.status(400).json(err);
+        return next(err)
       });
   }
-  static edit(req, res) {
+  static edit(req, res, next) {
     let params = {
       name: req.body.name,
       image_url: req.body.image_url,
@@ -47,10 +46,10 @@ class ProductController {
         return res.status(200).json(data);
       })
       .catch((err) => {
-        return res.status(400).json(err);
+        return next(err)
       });
   }
-  static delete(req, res) {
+  static delete(req, res, next) {
     let options = {
       where: {
         id: req.params.id,
@@ -62,7 +61,7 @@ class ProductController {
         return res.status(200).json(data);
       })
       .catch((err) => {
-        return res.status(400).json(err);
+        return next(err)
       });
   }
 }

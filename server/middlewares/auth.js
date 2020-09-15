@@ -1,5 +1,5 @@
 const { verifyToken } = require("../helpers/jwt");
-const { User, Product } = require("../models");
+const { User } = require("../models");
 
 const authentication = async (req, res, next) => {
   const { access_token } = req.headers;
@@ -14,25 +14,25 @@ const authentication = async (req, res, next) => {
       req.userData = userData;
       next();
     } else {
-      return res.status(401).json({ message: `Doesnt recognize user..` });
+      throw { message: "Doesnt recognize user..", statusCode: 401 };
     }
   } catch (error) {
-    return res.status(401).json({ message: `Doesnt recognize user..` });
+    return next(error);
   }
 };
 
 const authorization = (req, res, next) => {
   User.findByPk(req.userData.id)
-  .then(user => {
-    if (user.role === 'Admin') {
-      next()
-    } else {
-      return res.status(403).json({message: `You are not an admin!`})
-    }
-  })
-  .catch(err => {
-    return res.status(500).json({message: `Internal Server Error`})
-  })
+    .then((user) => {
+      if (user.role === "Admin") {
+        next();
+      } else {
+        throw { message: "You are not an admin!", statusCode: 403 };
+      }
+    })
+    .catch((err) => {
+      return next(err);
+    });
 };
 
 module.exports = { authentication, authorization };
