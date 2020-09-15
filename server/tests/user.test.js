@@ -3,16 +3,16 @@ const app = require ("../app.js")
 const {sequelize} = require ("../models/index.js")
 const {queryInterface} = sequelize
 
-// afterAll ((done) => {
-//     queryInterface.bulkDelete ("Users")
+afterAll ((done) => {
+    queryInterface.bulkDelete ("Users")
 
-//     .then (() => done ())
+    .then (() => done ())
 
-//     .catch (err => {
-//         done ()
-//     })
+    .catch (err => {
+        done ()
+    })
     
-// })
+})
 
 describe ("POST/register", () => {
     test ("success register responds with json", (done) => {

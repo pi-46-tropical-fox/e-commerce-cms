@@ -1,4 +1,3 @@
-const bcrypt = require ("bcryptjs")
 const {User} = require ("../models")
 
 const {generateToken} = require ("../helpers/jwt.js")
@@ -6,7 +5,7 @@ const {valid} = require ("../helpers/bcrypt.js")
 
 
 class UserController {
-    static register (req, res) {
+    static registerUsers (req, res) {
         let params = {
             email: req.body.email,
             password: req.body.password
@@ -20,12 +19,11 @@ class UserController {
 
         .catch (err => {
             console.log (err)
-            return res.status (500).json ({message : "Internal Server Error"})
-
+            // return res.status (400).json (err)
         })
     }
 
-    static login (req, res) {
+    static loginUsers (req, res) {
         let params = {
             email: req.body.email,
             password: req.body.password
@@ -52,12 +50,14 @@ class UserController {
                 return res.status (200).json ({access_token})
 
             } else {
+                console.log (data)
                 return res.status (400).json ({message: "Invalid Email or Password"})
             }
         })
 
         .catch (err => {
             console.log (err)
+            // return res.status (400).json (err)
             // return res.status (500).json ({message : "Internal Server Error"})
         })
     }

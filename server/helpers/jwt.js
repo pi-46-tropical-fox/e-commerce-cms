@@ -5,7 +5,6 @@ const generateToken = (data) => {
     let access_token = jwt.sign ({
         id: data.id,
         email: data.email,
-        role: data.role
     }, secret)
 
     return access_token

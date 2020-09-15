@@ -13,12 +13,38 @@ module.exports = {
      *   isBetaMember: false
      * }], {});
     */
-   const dataAdmin = JSON.parse (fs.readFileSync ("./seeders/data.json", "utf-8"))
-   dataAdmin.forEach (el => {
-     el.createdAt = new Date (),
-     el.updatedAt = new Date ()
-   })
-   return queryInterface.bulkInsert ("Users", dataAdmin)
+  //  const dataAdmin = JSON.parse (fs.readFileSync ("./seeders/data.json", "utf-8"))
+  //  dataAdmin.forEach (el => {
+  //    el.createdAt = new Date (),
+  //    el.updatedAt = new Date ()
+  //  })
+  //  return queryInterface.bulkInsert ("Users", dataAdmin)
+
+  return queryInterface.bulkInsert ("Users", [
+    {
+      email: "admin1@email.com",
+      password: "admin1",
+      role: "admin",
+      createdAt: new Date (),
+      updatedAt: new Date ()
+    },
+
+    {
+      email: "admin2@email.com",
+      password: "admin2",
+      role: "admin",
+      createdAt: new Date (),
+      updatedAt: new Date ()
+    },
+
+    {
+      email: "admin3@email.com",
+      password: "admin3",
+      role: "admin",
+      createdAt: new Date (),
+      updatedAt: new Date ()
+    }
+  ], {})
   },
 
   down: (queryInterface, Sequelize) => {
