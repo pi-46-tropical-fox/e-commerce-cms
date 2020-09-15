@@ -128,7 +128,7 @@ describe("test failed crud products", function () {
       .then((response) => {
         const { body, status } = response;
         expect(status).toBe(401);
-        expect(body).toHaveProperty("message", "Doesnt recognize user..");
+        expect(body).toHaveProperty(Object.keys(response.body));
         done();
       });
   });
@@ -146,10 +146,7 @@ describe("test failed crud products", function () {
       .then((response) => {
         const { body, status } = response;
         expect(status).toBe(400);
-        expect(body.errors[0]).toHaveProperty(
-          "message",
-          "Please fill the field!"
-        );
+        expect(body).toHaveProperty(Object.keys(response.body));
         done();
       });
   });
@@ -167,10 +164,7 @@ describe("test failed crud products", function () {
       .then((response) => {
         const { body, status } = response;
         expect(status).toBe(400);
-        expect(body.errors[0]).toHaveProperty(
-          "message",
-          "Do not input value under 1!"
-        );
+        expect(body).toHaveProperty(Object.keys(response.body));
         done();
       });
   });
@@ -188,10 +182,7 @@ describe("test failed crud products", function () {
       .then((response) => {
         const { body, status } = response;
         expect(status).toBe(400);
-        expect(body.errors[0]).toHaveProperty(
-          "message",
-          "Do not input value under 1!"
-        );
+        expect(body).toHaveProperty(Object.keys(response.body));
         done();
       });
   });
@@ -209,10 +200,7 @@ describe("test failed crud products", function () {
       .then((response) => {
         const { body, status } = response;
         expect(status).toBe(400);
-        expect(body.errors[0]).toHaveProperty(
-          "message",
-          "Validation isNumeric on stock failed"
-        );
+        expect(body).toHaveProperty(Object.keys(response.body));
         done();
       });
   });
@@ -230,7 +218,7 @@ describe("test failed crud products", function () {
       .then((response) => {
         const { body, status } = response;
         expect(status).toBe(403);
-        expect(body).toHaveProperty("message", "You are not an admin!");
+        expect(body).toHaveProperty(Object.keys(response.body));
         done();
       });
   });
@@ -252,7 +240,7 @@ describe("test failed crud products", function () {
       .then((response) => {
         const { body, status } = response;
         expect(status).toBe(401);
-        expect(body).toHaveProperty("message", "Doesnt recognize user..");
+        expect(body).toHaveProperty(Object.keys(response.body));
         done();
       });
   });
@@ -270,7 +258,7 @@ describe("test failed crud products", function () {
       .then((response) => {
         const { body, status } = response;
         expect(status).toBe(403);
-        expect(body).toHaveProperty("message", "You are not an admin!");
+        expect(body).toHaveProperty(Object.keys(response.body));
         done();
       });
   });
@@ -288,10 +276,7 @@ describe("test failed crud products", function () {
       .then((response) => {
         const { body, status } = response;
         expect(status).toBe(400);
-        expect(body.errors[0]).toHaveProperty(
-          "message",
-          "Do not input value under 1!"
-        );
+        expect(body).toHaveProperty(Object.keys(response.body));
         done();
       });
   });
@@ -309,10 +294,7 @@ describe("test failed crud products", function () {
       .then((response) => {
         const { body, status } = response;
         expect(status).toBe(400);
-        expect(body.errors[0]).toHaveProperty(
-          "message",
-          "Do not input value under 1!"
-        );
+        expect(body).toHaveProperty(Object.keys(response.body));
         done();
       });
   });
@@ -330,10 +312,7 @@ describe("test failed crud products", function () {
       .then((response) => {
         const { body, status } = response;
         expect(status).toBe(400);
-        expect(body.errors[0]).toHaveProperty(
-          "message",
-          "Validation isNumeric on stock failed"
-        );
+        expect(body).toHaveProperty(Object.keys(response.body));
         done();
       });
   });
@@ -354,7 +333,7 @@ describe("test failed crud products", function () {
       .then((response) => {
         const { body, status } = response;
         expect(status).toBe(401);
-        expect(body).toHaveProperty("message", "Doesnt recognize user..");
+        expect(body).toHaveProperty(Object.keys(response.body));
         done();
       });
   });
@@ -372,7 +351,7 @@ describe("test failed crud products", function () {
       .then((response) => {
         const { body, status } = response;
         expect(status).toBe(403);
-        expect(body).toHaveProperty("message", "You are not an admin!");
+        expect(body).toHaveProperty(Object.keys(response.body));
         done();
       });
   });

@@ -14,8 +14,8 @@ app.use(router);
 
 app.use(errHandler);
 
-app.listen(port, () => {
-  console.log(`E-COMMERCE APP LISTENIN ON PORT ${port}`);
-});
+// app.listen(port, () => {
+//   console.log(`E-COMMERCE APP LISTENIN ON PORT ${port}`);
+// });
 
 module.exports = app;
