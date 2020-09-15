@@ -1,10 +1,10 @@
 const route = require('express').Router()
 const ProductController = require('../controllers/productController')
-const { authentication } = require('../middlewares/auth')
+const { authentication, authorization } = require('../middlewares/auth')
 
 route.get('/', authentication, ProductController.productList)
-route.post('/', ProductController.addProduct)
-route.put('/:itemId', ProductController.updateProduct)
-route.delete('/:itemId', ProductController.deleteProduct)
+route.post('/', authentication, authorization, ProductController.addProduct)
+route.put('/:productId', authentication, authorization, ProductController.updateProduct)
+route.delete('/:productId', authentication, authorization, ProductController.deleteProduct)
 
 module.exports = route

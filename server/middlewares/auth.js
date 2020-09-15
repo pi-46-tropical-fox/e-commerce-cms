@@ -24,20 +24,19 @@ const authentication = async (req, res, next) => {
 }
 
 const authorization = async (req, res, next) => {
-    const { idTodo } = req.params
-    console.log(idTodo, '<<<di authorization')
+    const { access_token } = req.headers
     try {
-        const todo = await Todo.findByPk(idTodo)
-        console.log(req.userData.id, '<<<ini req.userData di authorization')
-        console.log(todo.UserId, '<<<ini todo.UserId')
-        if (todo && todo.UserId === req.userData.id) {
+        const userData = verifyToken(access_token)
+        let user = await User.findOne({ where: { email: userData.email } })
+        if (user.role == 'admin') {
+            req.userData = userData
             next()
         } else {
-            return res.status(403).json({ message: 'Forbidden access' })
+            throw { message: `you don't have access for this feature`, statusCode: 401 }
         }
     }
-    catch {
-        return res.status(403).json({ message: 'Forbidden access' })
+    catch (err) {
+        next(err)
     }
 }
 

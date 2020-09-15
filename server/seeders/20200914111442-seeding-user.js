@@ -11,9 +11,9 @@ module.exports = {
       updatedAt: new Date()
     },
     {
-      email: 'admin2@gmail.com',
+      email: 'user1@gmail.com',
       password: bcryptjs('123456'),
-      role: 'admin',
+      role: 'user',
       createdAt: new Date(),
       updatedAt: new Date()
     }
