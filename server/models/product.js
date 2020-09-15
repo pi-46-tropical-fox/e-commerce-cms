@@ -39,6 +39,10 @@ module.exports = (sequelize, DataTypes) => {
           args: true,
           msg: `Image Url is required!`,
         },
+        min: {
+          args: [0],
+          msg: 'price cant set less than 0'
+        }
       },
     },
     stock: {
@@ -48,6 +52,10 @@ module.exports = (sequelize, DataTypes) => {
           args: true,
           msg: `Image Url is required!`,
         },
+        min: {
+          args: [0],
+          msg: 'stock cant set less than 0'
+        }
       },
     },
   }, {

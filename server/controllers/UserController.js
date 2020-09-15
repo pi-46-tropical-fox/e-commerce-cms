@@ -29,7 +29,7 @@ class UserController {
             const user =  await User.findOne({where: {email}})
 
             if(!user) {
-                throw {statusCode: 400, msg: "invalid username or password"}
+                throw {statusCode: 400, msg: "Register first!"}
             }
 
             const isValid = await compareBcrypt(password, user.password)
@@ -39,7 +39,7 @@ class UserController {
                 
                 return res.status(200).json({id:user.id, email:user.email,role:user.role, access_token})
             } else {
-                throw {statusCode: 400, msg: "invalid username or password"}
+                throw {statusCode: 400, msg: "Invalid username or password!"}
             }
             
         } catch(err) {

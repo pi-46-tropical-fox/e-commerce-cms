@@ -6,6 +6,7 @@ const authentication = async (req, res, next) => {
     const {access_token} = req.headers
     
     try {
+        
         const userData = verifyToken(access_token)
         
         let user = await User.findOne({
@@ -13,7 +14,7 @@ const authentication = async (req, res, next) => {
                 email: userData.email
             }
         })
-        
+
         if (user && user.role == 'Admin') {
             req.userData = userData
             req.userData.role = user.role

@@ -19,6 +19,7 @@ class ProductController {
         
         Product.create({name,image_url,price,stock})
             .then(product => {
+                // console.log('berhasil post product');
                 res.status(201).json(product)
             })
             .catch(err => {
