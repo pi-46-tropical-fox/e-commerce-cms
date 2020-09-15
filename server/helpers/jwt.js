@@ -6,8 +6,12 @@ const generateToken = (payload) => {
     return access_token
 }
 
-
+const verifyToken = (token) => {
+    return jwt.verify(token, secret)
+    
+}
 
 module.exports = {
-    generateToken
+    generateToken,
+    verifyToken
 }

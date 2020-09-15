@@ -3,7 +3,6 @@ const {
   Model
 } = require('sequelize');
 const { hashing } = require('../helpers/bcrpyt');
-const role = require('./role');
 module.exports = (sequelize, DataTypes) => {
   class User extends Model {
     /**
@@ -22,7 +21,7 @@ module.exports = (sequelize, DataTypes) => {
       validate: {
         isEmail: {
           args: true,
-          msg: 'Invalid Email'
+          msg: 'Invalid email'
         },
         notEmpty: {
           args: true,
@@ -34,8 +33,8 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.STRING,
       validate: {
         len: {
-          args: [5, 12],
-          msg: 'Password length must be 5-12 characters'
+          args: [4, 12],
+          msg: 'Password length must be 4-12 characters'
         },
         notEmpty: {
           args: true,
