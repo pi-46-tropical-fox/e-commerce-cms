@@ -82,6 +82,21 @@ describe('test get all product GET /products', () => {
     })
   })
 })
+describe('test get product by id GET /products/:id', () => {
+  it('Test success get product by id responds with json', (done) => {
+    request(app)
+      .get(`/products/${productId}`)
+      .set('access_token', access_token)
+      .set('Accept', 'application/json')
+      .expect('Content-Type', /json/)
+      .then(response => {
+        const {body, status} = response
+        expect(status).toBe(200)
+        expect(response).toHaveProperty("body", expect.any(Object))
+        done()
+    })
+  })
+})
 describe('test update a product PUT /products/:id', () => {
   it('Test success update a product responds with json', (done) => {
     request(app)
@@ -252,6 +267,7 @@ describe('test failed update product PUT /products', () => {
       .then(response => {
         const {body, status} = response
         expect(status).toBe(400)
+        expect(body).toHaveProperty('message', 'user not authenticated')
         done()
     })
   })
@@ -352,6 +368,7 @@ describe('test delete a product DELETE /products/:id', () => {
       .then(response => {
         const {body, status} = response
         expect(status).toBe(400)
+        expect(body).toHaveProperty('message', 'user not authenticated')
         done()
     })
   })
@@ -372,6 +389,7 @@ describe('test delete a product DELETE /products/:id', () => {
       .then(response => {
         const {body, status} = response
         expect(status).toBe(403)
+        expect(body).toHaveProperty('message', 'forbidden access')
         done()
     })
   })
@@ -384,6 +402,7 @@ describe('test delete a product DELETE /products/:id', () => {
       .then(response => {
         const {body, status} = response
         expect(status).toBe(200)
+        expect(body).toHaveProperty('message', 'successfully delete')
         done()
     })
   })
