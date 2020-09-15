@@ -6,6 +6,7 @@ const cors = require("cors");
 const errHandler = require("./middlewares/errHandler");
 const userRouter = require("./routes/userRouter");
 const productRouter = require("./routes/productRouter");
+const bannerRouter = require("./routes/bannerRouter");
 
 // Body Parser
 app.use(express.json());
@@ -18,6 +19,9 @@ app.use(userRouter);
 
 // Product Routes
 app.use("/products", productRouter);
+
+// Banner Routes
+app.use("/banners", bannerRouter);
 
 // Error Handler
 app.use(errHandler);

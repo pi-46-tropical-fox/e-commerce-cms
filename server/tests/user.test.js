@@ -79,7 +79,7 @@ describe("User Endpoints Tests", () => {
       });
     });
 
-    test("400: Empty field, return json with error messages", (done) => {
+    test("400:Empty field, return json with error messages", (done) => {
       request(app)
       .post("/register")
       .send(emptyUserRegister)
@@ -175,22 +175,22 @@ describe("User Endpoints Tests", () => {
         done(err);
       });
     });
-  });
 
-  test("400:Empty email and password, return json with error messages", (done) => {
-    request(app)
-    .post("/login")
-    .send(emptyUserLogin)
-    .set("Accept", "application/json")
-    .expect("Content-Type", /json/)
-    .then((response) => {
-      const { body, status } = response;
-      expect(status).toBe(400);
-      expect(body).toHaveProperty("errors", invalidPasswordEmailMsg);
-      done();
-    })
-    .catch((err) => {
-      done(err);
+    test("400:Empty email and password, return json with error messages", (done) => {
+      request(app)
+      .post("/login")
+      .send(emptyUserLogin)
+      .set("Accept", "application/json")
+      .expect("Content-Type", /json/)
+      .then((response) => {
+        const { body, status } = response;
+        expect(status).toBe(400);
+        expect(body).toHaveProperty("errors", invalidPasswordEmailMsg);
+        done();
+      })
+      .catch((err) => {
+        done(err);
+      });
     });
   });
 });

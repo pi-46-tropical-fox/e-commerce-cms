@@ -287,7 +287,7 @@ describe("Product Endpoints Tests", () => {
       price: 30000000,
       stock: 20,
       category: "Electronics"
-    }
+    };
 
     test("200:OK, return json with product's data", (done) => {
       request(app)

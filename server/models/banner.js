@@ -14,12 +14,50 @@ module.exports = (sequelize, DataTypes) => {
     }
   };
   Banner.init({
-    title: DataTypes.STRING,
-    status: DataTypes.BOOLEAN,
-    image_url: DataTypes.STRING
+    title: {
+      type: DataTypes.STRING,
+      validate: {
+        notEmpty: {
+          args: true,
+          msg: "Title cannot be left blank!"
+        }
+      }
+    },
+    status: {
+      type: DataTypes.BOOLEAN,
+      validate: {
+        notEmpty: {
+          args: true,
+          msg: "Status cannot be left blank!"
+        },
+        isBoolean(value) {
+          if (typeof value !== "boolean") {
+            throw new Error("Status must be boolean!");
+          }
+        }
+      }
+    },
+    image_url: {
+      type: DataTypes.STRING,
+      validate: {
+        notEmpty: {
+          args: true,
+          msg: "Title cannot be left blank!"
+        },
+        isUrl: {
+          args: true,
+          msg: "Please insert a valid url!"
+        }
+      }
+    }
   }, {
     sequelize,
     modelName: 'Banner',
+  });
+  Banner.beforeCreate((banner, options) => {
+    if (!banner.status) {
+      banner.status = false;
+    }
   });
   return Banner;
 };

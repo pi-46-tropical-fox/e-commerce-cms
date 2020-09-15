@@ -1,2 +1,2 @@
 # e-commerce-cms
-Membuat Content Management System untuk e-commerce
+Make a Content Management System for e-commerce
