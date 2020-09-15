@@ -1,6 +1,5 @@
 const { verifyToken } = require('../helpers/jwt');
 const { User } = require('../models');
-
 const authentication = async (req, res, next) => {
   const { access_token } = req.headers
   try {
@@ -27,7 +26,6 @@ const authentication = async (req, res, next) => {
     return res.status(statusCode).json({err, message})
   }
 }
-
 const authorization = async (req, res, next) => {
   try {
     const user = await User.findByPk(req.userData.id)
@@ -40,5 +38,4 @@ const authorization = async (req, res, next) => {
     return res.status(403).send(err)
   }
 }
-
 module.exports = { authentication, authorization }

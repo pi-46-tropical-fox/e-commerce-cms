@@ -1,6 +1,5 @@
 const request = require('supertest')
 const app = require('../app')
-
 describe('test User login POST /login', () => {
   it('Test success login responds with json', (done) => {
     request(app)
@@ -16,7 +15,6 @@ describe('test User login POST /login', () => {
     })
   })
 })
-
 describe('test User login POST /login', () => {
   it('Test login fail with wrong password responds with json', (done) => {
     request(app)
@@ -32,7 +30,6 @@ describe('test User login POST /login', () => {
     })
   })
 })
-
 describe('test User login POST /login', () => {
   it('Test login fail with wrong email responds with json', (done) => {
     request(app)
@@ -48,7 +45,6 @@ describe('test User login POST /login', () => {
     })
   })
 })
-
 describe('test User login POST /login', () => {
   it('Test login fail with empty email and password responds with json', (done) => {
     request(app)

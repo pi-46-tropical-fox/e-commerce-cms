@@ -2,15 +2,13 @@ const request = require('supertest')
 const app = require('../app')
 const {sequelize} = require('../models')
 const {queryInterface} = sequelize
-const { User, Product } = require('../models')
+const { User } = require('../models')
 const { generateToken } = require('../helpers/jwt')
-
 let productId;
 let access_token;
 let fake_token;
 const users = { email: "admin@mail.com", password: "enkripsi('1234')", role: "admin" }
 const fakeAdmin = { email: "fakeadmin@mail.com", password: "fakeAdmin", role: "customer" }
-
 beforeAll((done) => {
   User
     .create(users)
@@ -31,7 +29,6 @@ beforeAll((done) => {
       done()
     })
 })
-
 afterAll((done) => {
   queryInterface
     .bulkDelete('Products')
@@ -46,7 +43,6 @@ afterAll((done) => {
       done()
     })
 })
-
 describe('test create product POST /products', () => {
   it('Test success create product responds with json', (done) => {
     request(app)
@@ -71,7 +67,6 @@ describe('test create product POST /products', () => {
     })
   })
 })
-
 describe('test get all product GET /products', () => {
   it('Test success get all product responds with json', (done) => {
     request(app)
@@ -87,7 +82,6 @@ describe('test get all product GET /products', () => {
     })
   })
 })
-
 describe('test update a product PUT /products/:id', () => {
   it('Test success update a product responds with json', (done) => {
     request(app)
@@ -111,8 +105,6 @@ describe('test update a product PUT /products/:id', () => {
     })
   })
 })
-
-//Failed create product
 describe('test failed create product POST /products', () => {
   it('Test failed create without access_token responds with json', (done) => {
     request(app)
@@ -134,7 +126,6 @@ describe('test failed create product POST /products', () => {
         done()
     })
   })
-
   it('Test failed create with wrong access_token responds with json', (done) => {
     request(app)
       .post('/products')
@@ -155,7 +146,6 @@ describe('test failed create product POST /products', () => {
         done()
     })
   })
-
   it('Test failed create empty in required field responds with json', (done) => {
     request(app)
       .post('/products')
@@ -178,7 +168,6 @@ describe('test failed create product POST /products', () => {
         done()
       })
   })
-
   it('Test failed input negative price responds with json', (done) => {
     request(app)
       .post('/products')
@@ -195,11 +184,12 @@ describe('test failed create product POST /products', () => {
       .expect('Content-Type', /json/)
       .then(response => {
         const {body, status} = response
+        let error = JSON.parse(response.text)
         expect(status).toBe(400)
+        expect(error.errors[0]).toHaveProperty('message', 'must be a non-negative number')
         done()
       })
   })
-
   it('Test failed input negative stock responds with json', (done) => {
     request(app)
       .post('/products')
@@ -216,11 +206,12 @@ describe('test failed create product POST /products', () => {
       .expect('Content-Type', /json/)
       .then(response => {
         const {body, status} = response
+        let error = JSON.parse(response.text)
         expect(status).toBe(400)
+        expect(error.errors[0]).toHaveProperty('message', 'must be a non-negative number')
         done()
       })
   })
-
   it('Test failed input with wrong data type responds with json', (done) => {
     request(app)
       .post('/products')
@@ -237,12 +228,13 @@ describe('test failed create product POST /products', () => {
       .expect('Content-Type', /json/)
       .then(response => {
         const {body, status} = response
+        let error = JSON.parse(response.text)
         expect(status).toBe(400)
+        expect(error.errors[0]).toHaveProperty('message', 'must be a number')
         done()
       })
   })
 })
-
 describe('test failed update product PUT /products', () => {
   it('Test failed update without access_token responds with json', (done) => {
     request(app)
@@ -260,7 +252,6 @@ describe('test failed update product PUT /products', () => {
       .then(response => {
         const {body, status} = response
         expect(status).toBe(400)
-        // expect(body).toHaveProperty('message', 'user not authenticated')
         done()
     })
   })
@@ -285,7 +276,6 @@ describe('test failed update product PUT /products', () => {
         done()
     })
   })
-
   it('Test failed update with negative price responds with json', (done) => {
     request(app)
       .put(`/products/${productId}`)
@@ -302,11 +292,12 @@ describe('test failed update product PUT /products', () => {
       .expect('Content-Type', /json/)
       .then(response => {
         const {body, status} = response
+        let error = JSON.parse(response.text)
         expect(status).toBe(400)
+        expect(error.errors[0]).toHaveProperty('message', 'must be a non-negative number')
         done()
       })
   })
-
   it('Test failed update with negative stock responds with json', (done) => {
     request(app)
       .put(`/products/${productId}`)
@@ -323,11 +314,12 @@ describe('test failed update product PUT /products', () => {
       .expect('Content-Type', /json/)
       .then(response => {
         const {body, status} = response
+        let error = JSON.parse(response.text)
         expect(status).toBe(400)
+        expect(error.errors[0]).toHaveProperty('message', 'must be a non-negative number')
         done()
       })
   })
-
   it('Test failed update product with wrong data type responds with json', (done) => {
     request(app)
       .put(`/products/${productId}`)
@@ -344,17 +336,13 @@ describe('test failed update product PUT /products', () => {
       .expect('Content-Type', /json/)
       .then(response => {
         const {body, status} = response
+        let error = JSON.parse(response.text)
         expect(status).toBe(400)
+        expect(error.errors[0]).toHaveProperty('message', 'must be a number')
         done()
       })
   })
 })
-
-
-
-
-
-// jadi kalau mau bikin test lain, pastikan delete ini belum dijalanin karena product id nya bakalan gaada di database
 describe('test delete a product DELETE /products/:id', () => {
   it('Test failed delete a product without access_token responds with json', (done) => {
     request(app)
@@ -364,11 +352,9 @@ describe('test delete a product DELETE /products/:id', () => {
       .then(response => {
         const {body, status} = response
         expect(status).toBe(400)
-        // expect(response).toHaveProperty("body", expect.any(Object))
         done()
     })
   })
-
   it('Test failed delete with fake access_token responds with json', (done) => {
     request(app)
       .delete(`/products/${productId}`)
@@ -389,7 +375,6 @@ describe('test delete a product DELETE /products/:id', () => {
         done()
     })
   })
-
   it('Test success delete a product responds with json', (done) => {
     request(app)
       .delete(`/products/${productId}`)
@@ -399,7 +384,6 @@ describe('test delete a product DELETE /products/:id', () => {
       .then(response => {
         const {body, status} = response
         expect(status).toBe(200)
-        // expect(response).toHaveProperty("body", expect.any(Object))
         done()
     })
   })
