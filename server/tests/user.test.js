@@ -1,3 +1,4 @@
+require('dotenv').config();
 const request = require('supertest');
 const app = require('../app');
 const { sequelize } = require('../models');
@@ -12,6 +13,16 @@ const userDataAdmin = {
 const userDataCustomer = {
 	email: 'customer@mail.com',
 	password: '1234',
+};
+
+const userDataAdminInvalid = {
+	email: 'admin@mail.com',
+	password: 'invalidpassword',
+};
+
+const userDataCustomerInvalid = {
+	email: 'customer@mail.com',
+	password: 'invalidpassword',
 };
 
 beforeAll(async done => {
@@ -37,7 +48,7 @@ afterAll(async done => {
 	}
 });
 
-describe('POST /login (User login as admin)', function () {
+describe('POST /login (User login as admin or customer)', function () {
 	test(`200: Success login as admin, return json with user's data`, function (done) {
 		request(app)
 			.post('/login')
@@ -58,19 +69,18 @@ describe('POST /login (User login as admin)', function () {
 			});
 	});
 
-	test('400: Invalid Email or password, return json with error', function () {
+	test('400: Invalid Email or password, return json with error as admin', function (done) {
+		const expectedErrors = [{ name: 'invalidLogin', message: 'Invalid email or password!' }];
 		request(app)
 			.post('/login')
-			.send(userDataAdmin)
+			.send(userDataAdminInvalid)
 			.set('Accept', 'application/json')
 			.expect('Content-Type', /json/)
 			.then(response => {
 				const { body, statusCode } = response;
 
 				expect(statusCode).toBe(400);
-				expect(body).not.toHaveProperty('id', expect.any(Number));
-				expect(body).not.toHaveProperty('email', userDataAdmin.email);
-				expect(body).not.toHaveProperty('access_token', expect.any(String));
+				expect(body.errors).toEqual(expect.arrayContaining(expectedErrors));
 				done();
 			})
 			.catch(err => {
@@ -98,19 +108,18 @@ describe('POST /login (User login as admin)', function () {
 			});
 	});
 
-	test('400: Invalid Email or password, return json with error', function () {
+	test('400: Invalid Email or password, return json with error as customer', function (done) {
+		const expectedErrors = [{ name: 'invalidLogin', message: 'Invalid email or password!' }];
 		request(app)
 			.post('/login')
-			.send(userDataCustomer)
+			.send(userDataCustomerInvalid)
 			.set('Accept', 'application/json')
 			.expect('Content-Type', /json/)
 			.then(response => {
 				const { body, statusCode } = response;
 
 				expect(statusCode).toBe(400);
-				expect(body).not.toHaveProperty('id', expect.any(Number));
-				expect(body).not.toHaveProperty('email', userDataCustomer.email);
-				expect(body).not.toHaveProperty('access_token', expect.any(String));
+				expect(body.errors).toEqual(expect.arrayContaining(expectedErrors));
 				done();
 			})
 			.catch(err => {
