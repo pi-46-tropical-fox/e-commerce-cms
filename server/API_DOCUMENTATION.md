@@ -46,9 +46,7 @@ _Response (200 - OK)_
 ```json
 {
 	"id": "<user id>",
-	"username": "<user username>",
 	"email": "<user email>",
-	"OrganizationId": "<user organization id",
 	"access_token": "<access_token>"
 }
 ```
@@ -164,6 +162,14 @@ _Response (400 - Bad request)_
 			"message": "Stock cannot empty"
 		},
 		{
+			"name": "is_null",
+			"message": "Category id cannot null"
+		},
+		{
+			"name": "notEmpty",
+			"message": "Category id cannot empty"
+		},
+		{
 			"name": "isInt",
 			"message": "Price must be positive numbers with no leading zeroes"
 		},
@@ -243,7 +249,8 @@ _Response (200 - OK)_
 		"price": "<product price>",
 		"stock": "<product stock>",
 		"slug": "<product slug>",
-		"CategoryId": "<product category id>"
+		"CategoryId": "<product category id>",
+		"Category": {}
 	}
 ]
 ```
@@ -302,7 +309,8 @@ _Response (200 - OK)_
 	"price": "<product price>",
 	"stock": "<product stock>",
 	"slug": "<product slug>",
-	"CategoryId": "<product category id>"
+	"CategoryId": "<product category id>",
+	"Category": {}
 }
 ```
 
