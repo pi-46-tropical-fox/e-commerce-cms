@@ -1,8 +1,9 @@
 const {User} = require('../models')
-const jwt = require('jsonwebtoken')
+const {compareBcrypt} = require('../helpers/bcrypt.js')
+const {generateToken} = require('../helpers/jwt.js')
 
 class UserController {
-    static register(req,res) {
+    static register(req,res,next) { 
         
         var userObj = {
             email: req.body.email,
@@ -11,28 +12,40 @@ class UserController {
         
         User.create(userObj)
         .then(user => {
-            res.status(201).json({email: user.email, message: 'Has been successfully registered'})
+            
+            res.status(201).json({email: user.email, message: 'Successfully registered'})
         })
         .catch(err => {
             console.log(err);
-            return res.status(500).json({message: err.message})
+            return next(err)
         })
     }
 
-    static login(req,res) {
-        var userObj = {
-            email: req.body.email,
-            password: req.body.password
-        }
-        User.findOne({where: {email: req.body.email}})
-        .then(user => {
-            const access_token = jwt.sign({id:user.id, email: user.email}, 'rahasiakuuu')
-            res.status(200).json({access_token,email: user.email})
-        })
-        .catch(err => {
+    static async login(req,res,next) {
+
+        const {email,password} = req.body
+        
+        try {
+            const user =  await User.findOne({where: {email}})
+
+            if(!user) {
+                throw {statusCode: 400, msg: "invalid username or password"}
+            }
+
+            const isValid = await compareBcrypt(password, user.password)
+            
+            if(isValid) {
+                const access_token = generateToken(user)
+                
+                return res.status(200).json({id:user.id, email:user.email,role:user.role, access_token})
+            } else {
+                throw {statusCode: 400, msg: "invalid username or password"}
+            }
+            
+        } catch(err) {
             console.log(err);
-            return res.status(500).json({message: err.message})
-        })
+            return next(err)
+        }
     }
 
 }

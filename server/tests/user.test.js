@@ -6,13 +6,13 @@ const {queryInterface} = sequelize
 
 const userData = {email: 'john@mail.com', password: '123456'}
 
-afterAll((done) => {
-    queryInterface.bulkDelete('Users')
-    .then(() => done())
-    .catch(err => {
-        done()
-    })
-  });
+// afterAll((done) => {
+//     queryInterface.bulkDelete('Users')
+//     .then(() => done())
+//     .catch(err => {
+//         done()
+//     })
+//   });
 
 describe('User Registration Test POST /register', function() {
     it('success register and return new object and status 201', function(done) {
@@ -28,15 +28,12 @@ describe('User Registration Test POST /register', function() {
         expect(body).toHaveProperty('message', 'Has been successfully registered')
         done()
         })
-    .catch(err => {
-        done()
-    })
     });
 });
 
 
-describe('User Login Test POST /login', function() {
-    test('success login and return new token,email, and status 200', function(done) {
+describe.only('User Login Test POST /login', function() {
+    it('success login and return new token,email, and status 200', (done) => {
         request(app)
         .post('/login')
         .send(userData)
@@ -44,15 +41,31 @@ describe('User Login Test POST /login', function() {
         .expect('Content-Type', /json/)
         .then(response => {
             const {body,status} =response
+            // console.log(body,status,'<<<<<<<<<<<<<<<');
             expect(status).toBe(200)
+            // console.log(body);
             expect(body).toHaveProperty('email', userData.email)
             expect(body).toHaveProperty('access_token', expect.any(String))
-            done()
-            })
-        .catch(err => {
             done()
         })
     });
 });
+
+// describe('User Login No Email Test POST /login', function() {
+//     it('failed login and return errors and status 400', (done) => {
+//         request(app)
+//         .post('/login')
+//         .send({email: '', password: '123456'})
+//         .set('Accept', 'application/json')
+//         .expect('Content-Type', /json/)
+//         .then(response => {
+//             const {body,status} =response
+//             console.log(body,status,'<<<<<<<<<<<<<<<<<<');
+//             expect(status).toBe(400)
+//             expect(body).toHaveProperty(Object.keys(response.body))
+//             done()
+//         })
+//     });
+// });
 
 
