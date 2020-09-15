@@ -1,5 +1,6 @@
 'use strict';
 const fs = require ("fs")
+const {valid} = require ("../helpers/bcrypt.js")
 
 module.exports = {
   up: (queryInterface, Sequelize) => {
