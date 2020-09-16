@@ -1,0 +1,9 @@
+body{
+    background: linear-gradient(to bottom right, red, blue);
+}
+
+/* Home */
+.card-container{
+    display: flex;
+    justify-content: space-evenly;
+}
