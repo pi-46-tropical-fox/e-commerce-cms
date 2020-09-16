@@ -84,49 +84,49 @@ describe('test user login POST /login', function(){
     })
 })
 
-describe ('Login / Fail Case', () => {
-    test('fail login wrong password', (done) => {
-        const wrongPassword = {...user_data, password:'12'}
-        request(app)
-            .post('/login')
-            .send(wrongPassword)
-            .then(response => {
-                // console.log(response.statusCode, '<<<<< ini response');
-                const {body,statusCode} = response
-                expect(statusCode).toBe(400)
-                expect(body).toHaveProperty('message', 'Username/password wrong')
-                done()
-            })            
-    })
+// describe ('Login / Fail Case', () => {
+//     test('fail login wrong password', (done) => {
+//         const wrongPassword = {...user_data, password:'12'}
+//         request(app)
+//             .post('/login')
+//             .send(wrongPassword)
+//             .then(response => {
+//                 // console.log(response.statusCode, '<<<<< ini response');
+//                 const {body,statusCode} = response
+//                 expect(statusCode).toBe(400)
+//                 expect(body).toHaveProperty('message', 'Username/password wrong')
+//                 done()
+//             })            
+//     })
 
-    test('email not registered', (done) => {
-        const wrongEmail = {email:'asala@gmail.com', password:'1234'}
-        request(app)
-            .post('/login')
-            .send(wrongEmail)
-            .expect('Content-Type', /json/)
-            .then(response => {
-                // console.log(response.body, '<<<<< ini response');
-                const {body,statusCode} = response
-                expect(statusCode).toBe(400)
-                expect(body).toHaveProperty('message', 'Username/password wrong')
-                done()
-            })            
-    })
+//     test('email not registered', (done) => {
+//         const wrongEmail = {email:'asala@gmail.com', password:'1234'}
+//         request(app)
+//             .post('/login')
+//             .send(wrongEmail)
+//             .expect('Content-Type', /json/)
+//             .then(response => {
+//                 // console.log(response.body, '<<<<< ini response');
+//                 const {body,statusCode} = response
+//                 expect(statusCode).toBe(400)
+//                 expect(body).toHaveProperty('message', 'Username/password wrong')
+//                 done()
+//             })            
+//     })
 
-    test('Empty email dan password', (done) => {
-        const emptyEmail = {email:'', password:''}
-        request(app)
-            .post('/login')
-            .send(emptyEmail)
-            .expect('Content-Type', /json/)
-            .then(response => {
-                // console.log(response.body, '<<<<< ini response');
-                const {body,statusCode} = response
-                expect(statusCode).toBe(400)
-                expect(body).toHaveProperty('message', 'Username/password wrong')
-                done()
-            })            
-    })
+//     test('Empty email dan password', (done) => {
+//         const emptyEmail = {email:'', password:''}
+//         request(app)
+//             .post('/login')
+//             .send(emptyEmail)
+//             .expect('Content-Type', /json/)
+//             .then(response => {
+//                 // console.log(response.body, '<<<<< ini response');
+//                 const {body,statusCode} = response
+//                 expect(statusCode).toBe(400)
+//                 expect(body).toHaveProperty('message', 'Username/password wrong')
+//                 done()
+//             })            
+//     })
     
-})
+// })

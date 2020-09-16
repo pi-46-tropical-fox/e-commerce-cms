@@ -10,11 +10,11 @@ class ProductController{
             })
             res.status(201).json({name:product.name,price:product.price})
         } catch (err) {
-            if(err.errors[0].type === 'Validation error') {
-                res.status(400).json({message:err.errors[0].message})
-            } else {
-                res.status(500).json({message:err.message})
-            }
+            // if(err.errors[0].type === 'Validation error') {
+            //     return res.status(400).json({message:err.errors[0].message})
+            // } else {
+            //     res.status(500).json({message:err.message})
+            // }
             return next(err)
         }
 
