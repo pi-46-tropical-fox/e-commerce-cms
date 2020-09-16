@@ -3,7 +3,6 @@ const app = require("../app");
 const { sequelize } = require("../models");
 const { User, Product } = require("../models");
 const { verify, generate } = require("../helper/jwt");
-const { response } = require("express");
 const { queryInterface } = sequelize;
 
 let token = "";
@@ -119,7 +118,7 @@ describe(`creating new product`,()=>{
         .then(response=>{
             const {body,status} = response
             expect(status).toBe(400)
-            expect(body.errors[0]).toHaveProperty('message','Validation notEmpty on name failed')
+            expect(body).toHaveProperty('errors',expect.any(Array))
             done()
         })
     })
@@ -137,7 +136,7 @@ describe(`creating new product`,()=>{
         .then(response=>{
             const {body,status} = response
             expect(status).toBe(400)
-            expect(body.errors[0]).toHaveProperty('message','Validation notEmpty on image_url failed')
+            expect(body).toHaveProperty('errors',expect.any(Array))
             done()
         })
     })
@@ -156,7 +155,7 @@ describe(`creating new product`,()=>{
         .then(response=>{
             const {body,status} = response
             expect(status).toBe(400)
-            expect(body.errors[0]).toHaveProperty('message',"price has to be greater than 0")
+            expect(body).toHaveProperty('errors',expect.any(Array))
             done()
         })
     })
@@ -175,7 +174,7 @@ describe(`creating new product`,()=>{
         .then(response=>{
             const {body,status} = response
             expect(status).toBe(400)
-            expect(body.errors[0]).toHaveProperty('message',"stock has to be greater than 0")
+            expect(body).toHaveProperty('errors',expect.any(Array))
             done()
         })
     })
@@ -193,7 +192,7 @@ describe(`creating new product`,()=>{
         .then(response=>{
             const {body,status} = response
             expect(status).toBe(403)
-            expect(body).toHaveProperty('message','You are not an admin!')
+            expect(body).toHaveProperty('errors',expect.any(Array))
             done()
         })
     })
@@ -210,7 +209,7 @@ describe(`creating new product`,()=>{
         .then(response=>{
             const {body,status} = response
             expect(status).toBe(401)
-            expect(body).toHaveProperty('message','jwt must be provided')
+            expect(body).toHaveProperty('errors',expect.any(Array))
             done()
         })
     })
@@ -232,7 +231,7 @@ describe(`editing product`,()=>{
         .then(response=>{
             const {body,status} = response
             expect(status).toBe(401)
-            expect(body).toHaveProperty('message','jwt must be provided')
+            expect(body).toHaveProperty('errors',expect.any(Array))
             done()
         })
     })
@@ -250,7 +249,7 @@ describe(`editing product`,()=>{
         .then(response=>{
             const {body,status} = response
             expect(status).toBe(403)
-            expect(body).toHaveProperty('message','You are not an admin!')
+            expect(body).toHaveProperty('errors',expect.any(Array))
             done()
         })
     })
@@ -268,7 +267,7 @@ describe(`editing product`,()=>{
         .then(response=>{
             const {body,status} = response
             expect(status).toBe(400)
-            expect(body.errors[0]).toHaveProperty('message',"stock has to be greater than 0")
+            expect(body).toHaveProperty('errors',expect.any(Array))
             done()
         })
     })
@@ -286,7 +285,7 @@ describe(`editing product`,()=>{
         .then(response=>{
             const {body,status} = response
             expect(status).toBe(400)
-            expect(body.errors[0]).toHaveProperty('message',"price has to be greater than 0")
+            expect(body).toHaveProperty('errors',expect.any(Array))
             done()
         })
     })
@@ -304,7 +303,7 @@ describe(`editing product`,()=>{
         .then(response=>{
             const {body,status} = response
             expect(status).toBe(400)
-            expect(body.errors[0]).toHaveProperty('message','Validation isNumeric on price failed')
+            expect(body).toHaveProperty('errors',expect.any(Array))
             done()
         })
     })
@@ -318,7 +317,7 @@ describe(`deleting product`,()=>{
         .then(response=>{
             const {body,status} = response
             expect(status).toBe(401)
-            expect(body).toHaveProperty('message','jwt must be provided')
+            expect(body).toHaveProperty('errors',expect.any(Array))
             done()
         })
     })
@@ -330,7 +329,7 @@ describe(`deleting product`,()=>{
         .then(response=>{
             const {body,status} = response
             expect(status).toBe(403)
-            expect(body).toHaveProperty('message','You are not an admin!')
+            expect(body).toHaveProperty('errors',expect.any(Array))
             done()
         })
     })

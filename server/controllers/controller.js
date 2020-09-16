@@ -1,18 +1,17 @@
 const{User,Product} = require('../models')
-const { param } = require('../routes')
 
 
 class Controller {
-    static list(req,res){
+    static list(req,res,next){
         Product.findAll()
         .then(data=>{
            return res.status(200).json(data)
         })
         .catch(err=>{
-            return res.status(400).json(err)
+            next(err)
         })
     }
-    static add(req,res){
+    static add(req,res,next){
         let params = {
             name:req.body.name,
             image_url:req.body.image_url,
@@ -24,20 +23,20 @@ class Controller {
             return res.status(201).json(data)
         })
         .catch(err=>{
-            return res.status(400).json(err)
+            next(err)
         })
     }
-    static getOne(req,res){
+    static getOne(req,res,next){
         let id ={where:{id:req.params.id}}
         Product.findOne(id)
         .then(data=>{
             return res.status(200).json(data)
         })
         .catch(err=>{
-            return res.status(404).json(err)
+            next(err)
         })
     }
-    static edit(req,res){
+    static edit(req,res,next){
         let params = {
             name:req.body.name,
             image_url:req.body.image_url,
@@ -50,17 +49,17 @@ class Controller {
             return res.status(200).json(data)
         })
         .catch(err=>{
-            return res.status(400).json(err)
+            next(err)
         })
     }
-    static delete (req,res){
+    static delete (req,res,next){
         let id ={where:{id:req.params.id}}
         Product.destroy(id)
         .then(data=>{
             return res.status(200).json(data)
         })
         .catch(err=>{
-            return res.status(400).json(err)
+            next(err)
         })
     }
 

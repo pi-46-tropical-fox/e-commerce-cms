@@ -14,10 +14,10 @@ const authentication = async (req,res,next) =>{
         req.user = user;
         next();
       } else {
-        return res.status(401).json({ message: `Doesnt recognize user` });
+        throw ({ message: `Doesnt recognize user`,statusCode:401 });
       }
-    } catch (error) {
-      return res.status(401).json(error);
+    } catch (err) {
+      next(err)
     }
 }
 
@@ -27,11 +27,11 @@ const authorization = (req,res,next)=>{
     if (userData.role === 'admin') {
       next()
     } else {
-      return res.status(403).json({message: `You are not an admin!`})
+      throw ({message: `You are not an admin!` ,statusCode:403})
     }
   })
   .catch(err => {
-    return res.status(500).json({message: `Internal Server Error`})
+    next(err)
   })
 }
 
