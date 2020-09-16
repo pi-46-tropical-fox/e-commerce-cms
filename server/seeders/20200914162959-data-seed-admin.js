@@ -1,6 +1,6 @@
 'use strict';
 const fs = require ("fs")
-const {valid} = require ("../helpers/bcrypt.js")
+const {hash} = require ("../helpers/bcrypt.js")
 
 module.exports = {
   up: (queryInterface, Sequelize) => {
@@ -23,7 +23,8 @@ module.exports = {
   return queryInterface.bulkInsert ("Users", [
     {
       email: "admin1@email.com",
-      password: "admin1",
+      password: hash("admin1"),
+      // password: "admin1",
       role: "admin",
       createdAt: new Date (),
       updatedAt: new Date ()
@@ -31,7 +32,8 @@ module.exports = {
 
     {
       email: "admin2@email.com",
-      password: "admin2",
+      password: hash("admin2"),
+      // password: "admin2",
       role: "admin",
       createdAt: new Date (),
       updatedAt: new Date ()
@@ -39,7 +41,8 @@ module.exports = {
 
     {
       email: "admin3@email.com",
-      password: "admin3",
+      password: hash("admin3"),
+      // password: "admin3",
       role: "admin",
       createdAt: new Date (),
       updatedAt: new Date ()

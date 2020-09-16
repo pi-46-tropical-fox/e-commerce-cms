@@ -8,7 +8,8 @@ class UserController {
     static registerUsers (req, res) {
         let params = {
             email: req.body.email,
-            password: req.body.password
+            password: req.body.password,
+            role: "customer"
         }
 
         User.create (params)
@@ -57,7 +58,6 @@ class UserController {
 
         .catch (err => {
             console.log (err)
-            // return res.status (400).json (err)
             // return res.status (500).json ({message : "Internal Server Error"})
         })
     }
