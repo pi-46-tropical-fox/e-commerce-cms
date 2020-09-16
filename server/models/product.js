@@ -47,8 +47,12 @@ module.exports = (sequelize, DataTypes) => {
           msg: 'price is required'
         },
         min: {
-          args: 0,
-          msg: 'Tidak boleh minus'
+          args: [0],
+          msg: 'Price tidak boleh minus'
+        },
+        isNumeric: {
+          args: true,
+          msg: 'Price harus number'
         }
       }
     },
@@ -61,8 +65,8 @@ module.exports = (sequelize, DataTypes) => {
           msg: 'stock is required'
         },
         min: {
-          args: 0,
-          msg: 'Tidak boleh minus'
+          args: [0],
+          msg: 'Stock tidak boleh minus'
         }
       }
     }

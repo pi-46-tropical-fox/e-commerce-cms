@@ -43,13 +43,14 @@ class ProductController{
     }
 
     static async updateProduct(req,res,next) {
+        // console.log(req.body)
         const {name,image_url,price,stock} = req.body
         const id = req.params.id
 
         try {
             let data = await Product.update(
                 {
-                    name,image_url,price,stock
+                    name,image_url,price:+price,stock:+stock
                 }, 
                 {where:{id:id}})
             if(data[0]) {
@@ -58,7 +59,9 @@ class ProductController{
                 throw {message: 'Product not found', statusCode: 404}
             }
         } catch (err) {
+            // console.log(err);
             next(err)
+            
         }
     }
 
