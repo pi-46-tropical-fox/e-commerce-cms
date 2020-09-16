@@ -26,4 +26,8 @@ app.use("/banners", bannerRouter);
 // Error Handler
 app.use(errHandler);
 
+app.listen(port, () => {
+  console.log(`CMS App listening at http://localhost:${port}`);
+});
+
 module.exports = app;

@@ -41,12 +41,13 @@ class ProductController {
 
   static async updateProduct(req, res, next) {
     try {
-      const { name, image_url, price, stock } = req.body;
+      const { name, image_url, price, stock, category } = req.body;
       const product = await Product.update({
         name,
         image_url, 
         price,
-        stock
+        stock,
+        category
       }, {
         where: {
           id: +req.params.id

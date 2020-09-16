@@ -304,6 +304,7 @@ describe("Product Endpoints Tests", () => {
         expect(body).toHaveProperty("image_url", editProduct.image_url);
         expect(body).toHaveProperty("price", editProduct.price);
         expect(body).toHaveProperty("stock", editProduct.stock);
+        expect(body).toHaveProperty("category", editProduct.category);
         expect(body).toHaveProperty("createdAt", expect.anything());
         expect(body).toHaveProperty("updatedAt", expect.anything());
         done();
