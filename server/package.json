@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "jest --detectOpenHandles",
+    "test": "jest --detectOpenHandles --runInBand --verbose --forceExit",
     "dev": "NODE_ENV=test nodemon bin/http"
   },
   "keywords": [],
