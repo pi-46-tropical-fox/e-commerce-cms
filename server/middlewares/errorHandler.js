@@ -40,6 +40,13 @@ const errorHandler = (err, req, res, next) => {
 				message: 'Error product not found',
 			});
 			break;
+		case 'notFoundCategory':
+			statusCode = 404;
+			errors.push({
+				name: 'notFoundCategory',
+				message: 'Error category not found',
+			});
+			break;
 
 		default:
 			statusCode = 500;
