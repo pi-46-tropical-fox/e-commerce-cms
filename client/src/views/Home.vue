@@ -5,15 +5,19 @@
           <h1>foxShop</h1>
           <hr />
           <router-link to="/">Home</router-link> |
-          <router-link to="/about">About</router-link>
+          <router-link :to="{name:'About'}">About</router-link>
         </div>
       </div>
       <div class="col-9">
-        <h1>Products</h1>
-        <div class="row">
-          <cards></cards>
+        <div class="d-flex justify-content-between">
+        <h1 id="products">Products</h1>
+        <router-link :to="{name:'addProducts'}">Add Product</router-link>
 
         </div>
+        <!-- <div class="row"> -->
+          <router-view />
+
+        <!-- </div> -->
       </div>
     </div>
 </template>
@@ -27,6 +31,9 @@ export default {
   name: 'Home',
   components: {
     cards
+  },
+  created(){
+    this.$store.dispatch('fetchData')
   }
 }
 </script>
@@ -48,6 +55,7 @@ export default {
   height: 100vh;
   display: flex;
   flex-direction: column;
+  text-align: center;
 }
 
 #nav h1 {
@@ -55,6 +63,7 @@ export default {
   color: aliceblue;
   font-weight: bolder;
   font-size: 3em;
+  margin:50px;
 }
 
 #nav a {
@@ -65,4 +74,5 @@ export default {
 #nav a.router-link-exact-active {
   color: #42b983;
 }
+
 </style>

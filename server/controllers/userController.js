@@ -4,9 +4,12 @@ const { compare } = require("../helper/bcrypt");
 
 class Controller {
   static login(req, res, next) {
+    console.log(req.body.email)
+    console.log(req.body.password)
     User.findOne({ where: { email: req.body.email } })
       .then(data => {
         if (data) {
+          console.log(data)
           const isValid = compare(req.body.password, data.password);
           if (isValid) {
             const access_token = generate(data);

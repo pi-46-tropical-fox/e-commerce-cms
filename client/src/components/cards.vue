@@ -1,23 +1,48 @@
 <template>
-  <div class="col-6">
+<div class="row">
+  <div class="col-6" v-for="product in products" :key="product.id">
     <b-card
-      img-src="https://placekitten.com/300/300"
+      :img-src="product.image_url"
       img-alt="Card image"
+      img-width="200px"
       img-left
       class="mb-3"
+       
     >
       <b-card-text>
-        Some quick example text to build on the card and make up the bulk of the
-        card's content.
+        {{product.name}}
       </b-card-text>
+      
+      <button @click="getId(product.id)"><router-link  :to="{name:'Product',params:{id:product.id}}">View Product</router-link></button>
     </b-card>
+  </div>
   </div>
 </template>
 
 <script>
 export default {
   name: 'cards',
-  props: {}
+  data(){
+    return{
+
+    }
+  },
+  computed:{
+    products(){
+      return this.$store.state.data
+    }
+  },
+  methods: {
+    fetchData () {
+      this.$store.dispatch('fetchData')
+    },
+    getId(id){
+      this.$store.dispatch('getOne',id)
+    }
+  },
+  created(){
+    this.fetchData()
+  }
 }
 </script>
 

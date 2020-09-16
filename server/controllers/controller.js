@@ -30,6 +30,7 @@ class Controller {
         let id ={where:{id:req.params.id}}
         Product.findOne(id)
         .then(data=>{
+            console.log(data,'<<<< controller getone')
             return res.status(200).json(data)
         })
         .catch(err=>{
