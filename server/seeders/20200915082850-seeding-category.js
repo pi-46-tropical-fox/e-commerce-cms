@@ -12,7 +12,12 @@ let data = [
     updatedAt: new Date()
   },
   {
-    name: 'Accessories',
+    name: 'Wearable',
+    createdAt: new Date(),
+    updatedAt: new Date()
+  },
+  {
+    name: 'Accessory',
     createdAt: new Date(),
     updatedAt: new Date()
   }

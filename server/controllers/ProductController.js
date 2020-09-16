@@ -31,6 +31,18 @@ class ProductController {
             return next(err)
         }
     }
+    static async showProductById(req, res, next){
+        try {
+            const product = await Product.findOne({
+                where: {
+                    id : +req.params.productId
+                }
+            })
+            return res.status(200).json(product)
+        } catch (err) {
+            return next(err)
+        }
+    }
     static async updateProduct(req, res, next){
         try {
             let obj = {

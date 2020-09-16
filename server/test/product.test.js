@@ -1,6 +1,6 @@
 const request = require('supertest')
 const app = require('../app')
-const {User, Product, Category} = require('../models')
+const {User, Product} = require('../models')
 const {generateToken} = require('../helpers/jwt')
 
 let access_token
