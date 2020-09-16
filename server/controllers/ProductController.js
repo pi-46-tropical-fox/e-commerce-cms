@@ -13,6 +13,17 @@ class ProductController {
             })
     }
     
+    static getProduct(req,res,next) {
+        Product.findOne({where: {id : req.params.id}})
+            .then(products => {
+                res.status(200).json(products)
+            })
+            .catch(err => {
+                console.log(err);
+                return res.status(500).json({message: err.message})
+            })
+    }
+    
     static postProduct(req,res,next) {
         
         const {name,image_url,price,stock} = req.body

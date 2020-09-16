@@ -6,34 +6,37 @@
     <p class="card-text">Price = Rp {{itemData.price}}</p>
     <p class="card-text">Stock = {{itemData.stock}} pcs</p>
     <a href="#" class="btn btn-primary mr-2" @click="deleteItem(itemData.id)">Go Delete</a>
-    <a href="#" class="btn btn-dark" @click="goToDetail(itemData.id)">Go Edit</a>
+    <a href="#" class="btn btn-dark" @click="goToEdit(itemData.id)">Go Edit</a>
   </div>
 </div>
 </template>
 
 <script>
-import axios from 'axios'
+// import axios from 'axios'
 export default {
   props: ['itemData'],
   methods: {
     deleteItem (id) {
-      console.log('masuk ke delete', id);
-      axios({
-        url: `http://localhost:3000/products/${id}`,
-        method: 'DELETE',
-        headers: {
-          access_token: localStorage.getItem('access_token')
-        }
-      })
-        .then(({data})  => {
-          this.$emit('removeData', id)
-        })
-        .catch(err => {
-          console.log(err)
-        })
+      this.$store.dispatch('deleteProduct', id)
+      console.log('process ke filter', id)
+      this.$emit('removeData', id)
+      // console.log('masuk ke delete', id)
+      // axios({
+      //   url: `http://localhost:3000/products/${id}`,
+      //   method: 'DELETE',
+      //   headers: {
+      //     access_token: localStorage.getItem('access_token')
+      //   }
+      // })
+      //   .then(({ data }) => {
+      //     this.$emit('removeData', id)
+      //   })
+      //   .catch(err => {
+      //     console.log(err)
+      //   })
     },
-    goToDetail (id) {
-      this.$router.push({ path: `/vegetables/${id}` })
+    goToEdit (id) {
+      this.$router.push({ path: `/products/${id}` })
     }
   }
 }

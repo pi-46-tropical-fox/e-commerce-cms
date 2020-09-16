@@ -20,42 +20,35 @@
                 </div>
                 <button type="submit" class="btn btn-primary">Submit</button>
             </form>
-          
+
           </div>
       </div>
   </div>
 </template>
 
 <script>
-import axios from 'axios'
 export default {
   name: 'Login',
-   data () {
+  data () {
     return {
       email: '',
-      password: '',
+      password: ''
     }
   },
+  // computed: {
+  //   data() {
+  //     return this.$store.state.email
+  //   }
+  // },
   methods: {
     login () {
-      let payload = {
-        email : this.email,
-        password : this.password
+      const payload = {
+        email: this.email,
+        password: this.password
       }
-      console.log(payload, "dapet payload");
-      axios({
-        url: 'http://localhost:3000/login',
-        method: "POST",
-        data: payload
-      })
-        .then(({ data }) => {
-          localStorage.setItem('access_token', data.access_token)
-          localStorage.setItem('email', data.email)
-          localStorage.setItem('role', data.role)
-        })
-        .catch(err => console.log(err))
+      this.$store.dispatch('login', payload)
     }
-  },
+  }
 
 }
 </script>

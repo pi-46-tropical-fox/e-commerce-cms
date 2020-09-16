@@ -5,6 +5,9 @@
       <router-link to="/">Dashboard</router-link> |
       <router-link to="/fruits">Fruits</router-link> |
       <router-link to="/about">About</router-link>
+      <div style="float:right;">
+        {{$store.state.email}}
+      </div>
     </div>
     <router-view/>
   </div>
