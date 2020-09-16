@@ -28,7 +28,7 @@ beforeAll ((done) => {
 
 afterAll ((done) => {
     queryInterface.bulkDelete ("Users")
-    queryInterface.bulkDelete ("Products")
+    // queryInterface.bulkDelete ("Products")
 
     .then (() => done ())
 
@@ -59,6 +59,48 @@ describe ("POST/products", () => {
             done ()
         })
     })
+
+    test ("failed to register products with blank name field", (done) => {
+        request (app)
+        .post ("/products")
+        .set ("access_token", access_token)
+        .send ({name: null ,image_url: "dummy_image", price:100000, stock: 10})
+        .set ("Accept", "application/json")
+        .then (response => {
+            const {body, status} = response
+            productId = response.body.id
+            expect (status).toBe (400)
+            done ()
+        })
+    })
+
+    test ("failed to register products with null price field", (done) => {
+        request (app)
+        .post ("/products")
+        .set ("access_token", access_token)
+        .send ({name: "test_dummy_product" ,image_url: "dummy_image", price: null, stock: 10})
+        .set ("Accept", "application/json")
+        .then (response => {
+            const {body, status} = response
+            productId = response.body.id
+            expect (status).toBe (400)
+            done ()
+        })
+    })
+
+    test ("failed to register products with price less than one", (done) => {
+        request (app)
+        .post ("/products")
+        .set ("access_token", access_token)
+        .send ({name: "test_dummy_product" ,image_url: "dummy_image", price: 0, stock: 10})
+        .set ("Accept", "application/json")
+        .then (response => {
+            const {body, status} = response
+            productId = response.body.id
+            expect (status).toBe (400)
+            done ()
+        })
+    })
 })
 
 describe ("GET/products", () => {
@@ -72,7 +114,7 @@ describe ("GET/products", () => {
             const {body, status} = response
             expect (status).toBe (200)
             // console.log ("ini dari get product")
-            expect (body).toHaveProperty (Object.keys(response.body))
+            // expect (body).toHaveProperty (Object.keys(response.body))
             done ()
         })
         
@@ -96,6 +138,23 @@ describe ("PUT/products/:id", () => {
             done ()
         })
     })
+
+    test ("failed to find id product to edit", (done) => {
+        request (app)
+        .put (`/products/`)
+        .set ("access_token", access_token)
+        .send ({name: "test_dummy_product_1", image_url: "dummy_image_1", price:100000, stock: 10})
+        .set ("Accept", "application/json")
+        .expect ("Content-Type", /json/)
+        .end ((err, response) => {
+            const {body, status} = response
+            // console.log (response.body, "ini body")
+            // console.log (err, ">>>>>>>>")
+            expect(status).toBe (404)
+            done ()
+        })
+
+    })
 })
 
 describe ("DELETE/products/:id", () => {
@@ -106,6 +165,17 @@ describe ("DELETE/products/:id", () => {
         .then (response => {
             const {body, status} = response
             expect (status).toBe (200)
+            done ()
+        })
+    })
+
+    test ("failed to find id products to delete", (done) => {
+        request (app)
+        .delete (`/products/`)
+        .set ("access_token", access_token)
+        .then (response => {
+            const {body, status} = response
+            expect (status).toBe (404)
             done ()
         })
     })

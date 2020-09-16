@@ -15,7 +15,7 @@ afterAll ((done) => {
 })
 
 describe ("POST/register", () => {
-    test ("success register responds with json", (done) => {
+    test ("success register", (done) => {
         request (app)
         .post ("/register")
         .send ({email: "dummy_user@email.com", password:"dummy_user"})
@@ -62,7 +62,7 @@ describe ("POST/register", () => {
 
 
 describe ("POST/login", () => {
-    test ("success login responds with json", (done) => {
+    test ("success login", (done) => {
         request (app)
         .post ("/login")
         .send ({email: "dummy_user@email.com", password: "dummy_user"})
