@@ -1,14 +1,6 @@
-require('dotenv').config()
 const http = require('http')
 const app = require('../app')
 const port = process.env.PORT || 3000
-const route = require('../routes')
-const {errHandler} = require('../middlewares/errHandler')
-
-app.set('port', port)
-app.use(route)
-
-app.use(errHandler)
 
 const server = http.createServer(app)
 

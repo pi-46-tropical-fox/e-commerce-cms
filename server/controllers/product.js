@@ -134,6 +134,40 @@ class ProductController {
     }
 }
 
+class CategoryController {
+    static async getCategories (req, res, next) {
+        try {
+            const categories = await Category.findAll({
+                attributes: ['id', 'name']
+            })
+
+            return res.status(200).json({
+                categories
+            })
+        } catch (err) {
+            return next(err)
+        }
+    }
+
+    static async getProductsByCategory (req, res, next) {
+        try {
+            const products = await Product.findAll({
+                where: {
+                    category: req.params.categoryId
+                },
+                attributes: {
+                    exclude: ['createdAt', 'updatedAt']
+                }
+            })
+
+            return res.status(200).json({products})
+        } catch (err) {
+            return next(err)
+        }
+    }
+}
+
  module.exports = {
-     ProductController
+     ProductController,
+     CategoryController
  }
