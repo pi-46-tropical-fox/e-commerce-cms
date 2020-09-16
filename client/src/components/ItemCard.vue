@@ -18,22 +18,7 @@ export default {
   methods: {
     deleteItem (id) {
       this.$store.dispatch('deleteProduct', id)
-      console.log('process ke filter', id)
       this.$emit('removeData', id)
-      // console.log('masuk ke delete', id)
-      // axios({
-      //   url: `http://localhost:3000/products/${id}`,
-      //   method: 'DELETE',
-      //   headers: {
-      //     access_token: localStorage.getItem('access_token')
-      //   }
-      // })
-      //   .then(({ data }) => {
-      //     this.$emit('removeData', id)
-      //   })
-      //   .catch(err => {
-      //     console.log(err)
-      //   })
     },
     goToEdit (id) {
       this.$router.push({ path: `/products/${id}` })

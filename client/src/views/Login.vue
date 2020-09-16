@@ -1,5 +1,6 @@
 <template>
   <div class="container">
+    <NavbarLogin/>
       <div class="row">
           <div class="col-6">
             <img src="../assets/manclothes.jpg" class="card-img-top" alt="Login Image">
@@ -27,8 +28,12 @@
 </template>
 
 <script>
+import NavbarLogin from '../components/NavbarLogin.vue'
 export default {
   name: 'Login',
+  components: {
+    NavbarLogin
+  },
   data () {
     return {
       email: '',

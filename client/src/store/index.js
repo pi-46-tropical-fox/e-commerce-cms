@@ -1,6 +1,6 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
-import axios from 'axios'
+import axios from '../config/axios.js'
 import router from '../router'
 Vue.use(Vuex)
 
@@ -9,7 +9,9 @@ export default new Vuex.Store({
     company: 'hacktiv8',
     products: [],
     email: '',
-    selectedData: {}
+    selectedData: {},
+    role: localStorage.role,
+    user: localStorage.email
   },
   mutations: {
     setProducts (state, payload) {
@@ -20,12 +22,15 @@ export default new Vuex.Store({
     },
     setSelectedData (state, payload) {
       state.selectedData = payload
+    },
+    setCurrentPage (state, payload) {
+      state.currentPage = payload
     }
   },
   actions: {
     fetchProducts ({ commit }) {
       axios({
-        url: 'http://localhost:3000/products/',
+        url: '/products',
         method: 'GET',
         headers: {
           access_token: localStorage.access_token
@@ -34,26 +39,21 @@ export default new Vuex.Store({
         .then(({ data }) => {
           commit('setProducts', data)
         })
-        .catch(err => console.log(err))
     },
     deleteProduct ({ commit }, id) {
       axios({
-        url: `http://localhost:3000/products/${id}`,
+        url: `/products/${id}`,
         method: 'DELETE',
         headers: {
           access_token: localStorage.getItem('access_token')
         }
       })
         .then(({ data }) => {
-
-        })
-        .catch(err => {
-          console.log(err)
         })
     },
     login ({ commit }, payload) {
       axios({
-        url: 'http://localhost:3000/login',
+        url: '/login',
         method: 'POST',
         data: payload
       })
@@ -62,12 +62,12 @@ export default new Vuex.Store({
           localStorage.setItem('email', data.email)
           localStorage.setItem('role', data.role)
           commit('setUserEmail', data.email)
+          router.push('/')
         })
-        .catch(err => console.log(err))
     },
     createProduct ({ commit }, payload) {
       axios({
-        url: 'http://localhost:3000/products',
+        url: '/products',
         method: 'POST',
         data: payload,
         headers: {
@@ -75,12 +75,12 @@ export default new Vuex.Store({
         }
       })
         .then(({ data }) => {
+          router.push('/')
         })
-        .catch(err => console.log(err))
     },
     getProduct ({ commit }, payload) {
       axios({
-        url: `http://localhost:3000/products/${payload}`,
+        url: `/products/${payload}`,
         method: 'GET',
         headers: {
           access_token: localStorage.getItem('access_token')
@@ -89,11 +89,10 @@ export default new Vuex.Store({
         .then(({ data }) => {
           commit('setSelectedData', data)
         })
-        .catch(err => console.log(err))
     },
     editProduct ({ commit }, payload) {
       axios({
-        url: `http://localhost:3000/products/${payload.id}`,
+        url: `/products/${payload.id}`,
         method: 'PUT',
         data: payload,
         headers: {
@@ -103,9 +102,18 @@ export default new Vuex.Store({
         .then(({ data }) => {
           router.push('/')
         })
-        .catch(err => console.log(err))
+    },
+    logout ({ commit }) {
+      commit('setCurrentPage', 'loginPage')
+      localStorage.clear()
     }
   },
+  // getters: {
+  //   filterByCategory (state) {
+  //     console.log(state.products);
+  //     return state.products
+  //   }
+  // },
   modules: {
   }
 })

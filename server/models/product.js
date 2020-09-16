@@ -58,9 +58,17 @@ module.exports = (sequelize, DataTypes) => {
         }
       },
     },
+    category: DataTypes.STRING
   }, {
     sequelize,
     modelName: 'Product',
+    hooks: {
+      beforeCreate(product) {
+        if (!product.category) {
+          product.category = 'Unknown'
+        }
+      }
+    }
   });
   return Product;
 };

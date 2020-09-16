@@ -8,8 +8,7 @@ class ProductController {
                 res.status(200).json({products})
             })
             .catch(err => {
-                console.log(err);
-                return res.status(500).json({message: err.message})
+                return next(err)
             })
     }
     
@@ -19,35 +18,32 @@ class ProductController {
                 res.status(200).json(products)
             })
             .catch(err => {
-                console.log(err);
-                return res.status(500).json({message: err.message})
+                return next(err)
             })
     }
     
     static postProduct(req,res,next) {
         
-        const {name,image_url,price,stock} = req.body
+        const {name,image_url,price,stock,category} = req.body
         
-        Product.create({name,image_url,price,stock})
+        Product.create({name,image_url,price,stock,category})
             .then(product => {
                 // console.log('berhasil post product');
                 res.status(201).json(product)
             })
             .catch(err => {
-                console.log(err);
-                return res.status(500).json({message: err.message})
+                return next(err)
             })
     }
 
     static editProduct(req,res,next) {
-        const {name,image_url,price,stock} = req.body
-        Product.update({name,image_url,price,stock}, {where: {id: req.params.id}})
+        const {name,image_url,price,stock,category} = req.body
+        Product.update({name,image_url,price,stock,category}, {where: {id: req.params.id}})
             .then(products => {
                 res.status(200).json(products)
             })
             .catch(err => {
-                console.log(err);
-                return res.status(500).json({message: err.message})
+                return next(err)
             })
     }
 
@@ -58,8 +54,7 @@ class ProductController {
                 res.status(200).json(products)
             })
             .catch(err => {
-                console.log(err);
-                return res.status(500).json({message: err.message})
+                return next(err)
             })
     }
 }

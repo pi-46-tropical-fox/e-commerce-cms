@@ -7,6 +7,7 @@ import Vegetables from '../views/Vegetables.vue'
 import Foodies from '../components/Foodies.vue'
 import Cakes from '../components/Cakes.vue'
 import EditForm from '../views/EditForm.vue'
+import AddForm from '../views/AddForm.vue'
 
 Vue.use(VueRouter)
 
@@ -52,6 +53,18 @@ const routes = [
     path: '/products/:id',
     name: 'EditForm',
     component: EditForm,
+    beforeEnter: (to, from, next) => {
+      if (localStorage.getItem('access_token')) {
+        next()
+      } else {
+        next('/')
+      }
+    }
+  },
+  {
+    path: '/products',
+    name: 'AddForm',
+    component: AddForm,
     beforeEnter: (to, from, next) => {
       if (localStorage.getItem('access_token')) {
         next()
