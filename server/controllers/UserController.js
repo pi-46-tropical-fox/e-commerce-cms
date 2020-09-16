@@ -10,7 +10,7 @@ class UserController {
             let valid = checkPassword(req.body.password, user.password)
             if(valid){
                 let access_token = generateToken(user)
-                res.status(200).json({access_token})
+                res.status(200).json({access_token, role: user.role})
             }else{
                 res.status(400).json({message: 'Invalid Username or Password'})
             }

@@ -4,24 +4,31 @@ const { generateToken } = require("../helpers/jwt");
 const { sequelize, User } = require("../models");
 const { queryInterface } = sequelize;
 
-// const userData = { email: "admin@mail.com", password: "123456" };
-const userData = { email: "user@mail.com", password: "123456" };
+const userData = { email: "admin@mail.com", password: "123456" };
+const userData1 = { email: "user@mail.com", password: "123456" };
 let access_token;
+let access_token2;
+let productId = 0
 
-// afterAll((done) => {
-//   queryInterface
-//     .bulkDelete("Products")
-//     .then(() => done())
-//     .catch((err) => {
-//       console.log(err);
-//       done();
-//     });
-// });
+afterAll((done) => {
+  queryInterface
+    .bulkDelete("Products")
+    .then(() => done())
+    .catch((err) => {
+      console.log(err);
+      done();
+    });
+});
 beforeAll((done) => {
   User.findOne({ where: { email: userData.email } })
     .then((user) => {
       access_token = generateToken(user);
-      done();
+      // done();
+      return User.findOne({where:{email: userData1.email}})
+    })
+    .then((user2)=>{
+      access_token2 = generateToken(user2)
+      done()
     })
     .catch((err) => {
       console.log(err);
@@ -47,6 +54,7 @@ describe("success test create product", function () {
       .expect("Content-Type", /json/)
       .then((response) => {
         const { body, status } = response;
+        productId = body.id
         expect(status).toBe(201);
         expect(body).toHaveProperty("name", "Lea Jeans");
         expect(body).toHaveProperty(
@@ -89,10 +97,31 @@ describe("success test read product", function () {
     });
 });
 
+describe("success test read product by id", function () {  
+  it("test success read one product with get /product/:id, responds with json", function (done) {
+    request(app)
+      .get(`/product/${productId}`)
+      .set("Accept", "application/json")
+      .set("access_token", access_token)
+      .expect("Content-Type", /json/)
+      .then((response) => {
+        const { body, status } = response;
+        expect(status).toBe(200);
+        expect(body).toHaveProperty("name", expect.any(String));
+        expect(body).toHaveProperty("image_url", expect.any(String));
+        expect(body).toHaveProperty("price", expect.any(Number));
+        expect(body).toHaveProperty("stock", expect.any(Number));
+        expect(body).toHaveProperty("createdAt", expect.any(String));
+        expect(body).toHaveProperty("updatedAt", expect.any(String));
+        done();
+      });
+  });
+});
+
 describe("success test update product", function () {  
     it("test success update product with put /product/:id, responds with json", function (done) {
       request(app)
-        .put("/product/27")
+        .put(`/product/${productId}`)
         .set("Accept", "application/json")
         .set("access_token", access_token)
         .send({
@@ -107,22 +136,6 @@ describe("success test update product", function () {
           const { body, status } = response;
           expect(status).toBe(200);
           expect(body).toHaveProperty("message", "Update Success");
-          done();
-        });
-    });
-});
-
-describe("success test delete product", function () {  
-    it("test success update delete with delete /product/:id, responds with json", function (done) {
-      request(app)
-        .delete("/product/27")
-        .set("Accept", "application/json")
-        .set("access_token", access_token)
-        .expect("Content-Type", /json/)
-        .then((response) => {
-          const { body, status } = response;
-          expect(status).toBe(200);
-          expect(body).toHaveProperty("message", "Delete Success");
           done();
         });
     });
@@ -161,7 +174,7 @@ describe("fail test create product wrong access_token", function () {
       request(app)
         .post("/product")
         .set("Accept", "application/json")
-        .set("access_token", access_token)
+        .set("access_token", access_token2)
         .send({
           name: "Lea Jeans",
           image_url:
@@ -369,9 +382,9 @@ describe("fail test update product without access_token", function () {
 describe("fail test update product wrong access_token", function () {
     it("test fail update product with put /product, responds with json", function (done) {
       request(app)
-        .put("/product/28")
+        .put(`/product/${productId}`)
         .set("Accept", "application/json")
-        .set("access_token", access_token)
+        .set("access_token", access_token2)
         .send({
           name: "Lea Jeans",
           image_url:
@@ -391,7 +404,7 @@ describe("fail test update product wrong access_token", function () {
 describe("fail test update product empty field", function () {
     it("test fail update product (empty name) with put /product, responds with json", function (done) {
       request(app)
-        .put("/product/28")
+        .put(`/product/${productId}`)
         .set("Accept", "application/json")
         .set("access_token", access_token)
         .send({
@@ -411,7 +424,7 @@ describe("fail test update product empty field", function () {
     });
     it("test fail update product (empty image) with put /product, responds with json", function (done) {
         request(app)
-          .put("/product/28")
+          .put(`/product/${productId}`)
           .set("Accept", "application/json")
           .set("access_token", access_token)
           .send({
@@ -430,7 +443,7 @@ describe("fail test update product empty field", function () {
     });
     it("test fail update product (null price) with put /product, responds with json", function (done) {
         request(app)
-          .put("/product/28")
+          .put(`/product/${productId}`)
           .set("Accept", "application/json")
           .set("access_token", access_token)
           .send({
@@ -450,7 +463,7 @@ describe("fail test update product empty field", function () {
     });
     it("test fail update product (price is 0 or mines) with put /product, responds with json", function (done) {
         request(app)
-          .put("/product/28")
+          .put(`/product/${productId}`)
           .set("Accept", "application/json")
           .set("access_token", access_token)
           .send({
@@ -470,7 +483,7 @@ describe("fail test update product empty field", function () {
     });
     it("test fail update product (price is not number) with put /product, responds with json", function (done) {
         request(app)
-          .put("/product/28")
+          .put(`/product/${productId}`)
           .set("Accept", "application/json")
           .set("access_token", access_token)
           .send({
@@ -490,7 +503,7 @@ describe("fail test update product empty field", function () {
     });
     it("test fail update product (null stock) with put /product, responds with json", function (done) {
         request(app)
-          .put("/product/28")
+          .put(`/product/${productId}`)
           .set("Accept", "application/json")
           .set("access_token", access_token)
           .send({
@@ -510,7 +523,7 @@ describe("fail test update product empty field", function () {
     });
     it("test fail update product (stock is 0 or mines) with put /product, responds with json", function (done) {
         request(app)
-          .put("/product/28")
+          .put(`/product/${productId}`)
           .set("Accept", "application/json")
           .set("access_token", access_token)
           .send({
@@ -530,7 +543,7 @@ describe("fail test update product empty field", function () {
     });
     it("test fail update product (stock is not number) with put /product, responds with json", function (done) {
         request(app)
-          .put("/product/28")
+          .put(`/product/${productId}`)
           .set("Accept", "application/json")
           .set("access_token", access_token)
           .send({
@@ -550,13 +563,12 @@ describe("fail test update product empty field", function () {
     });
 });
 
-
 // Fail Delete
 
 describe("fail test delete product without access_token", function () {
     it("test fail delete product with delete /product, responds with json", function (done) {
       request(app)
-        .delete("/product/28")
+        .delete(`/product/${productId}`)
         .set("Accept", "application/json")
         // .set("access_token", access_token)
         .send({
@@ -578,9 +590,9 @@ describe("fail test delete product without access_token", function () {
 describe("fail test delete product wrong access_token", function () {
     it("test fail delete product with delete /product, responds with json", function (done) {
       request(app)
-        .delete("/product/28")
+        .delete(`/product/${productId}`)
         .set("Accept", "application/json")
-        .set("access_token", access_token)
+        .set("access_token", access_token2)
         .send({
           name: "Lea Jeans",
           image_url:
@@ -596,4 +608,22 @@ describe("fail test delete product wrong access_token", function () {
           done();
         });
     });
+});
+
+// success delete
+
+describe("success test delete product", function () {  
+  it("test success update delete with delete /product/:id, responds with json", function (done) {
+    request(app)
+      .delete(`/product/${productId}`)
+      .set("Accept", "application/json")
+      .set("access_token", access_token)
+      .expect("Content-Type", /json/)
+      .then((response) => {
+        const { body, status } = response;
+        expect(status).toBe(200);
+        expect(body).toHaveProperty("message", "Delete Success");
+        done();
+      });
+  });
 });

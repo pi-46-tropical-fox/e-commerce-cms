@@ -20,7 +20,9 @@ class ProductController {
         })
     }
     static show(req,res){
-        Product.findAll()
+        Product.findAll({
+            order: [['id', 'ASC']]
+        })
         .then(product=>{
             return res.status(200).json(product)
         })
@@ -29,7 +31,20 @@ class ProductController {
             return res.status(500).json({message: 'Internal Server Error'})
         })
     }
+    static showById(req,res){
+        Product.findByPk(req.params.id)
+        .then(product=>{
+            return res.status(200).json(product)
+        })
+        .catch(err=>{
+            console.log(err, '<<<<< ini eror')
+            return res.status(500).json({message: 'Internal Server Error'})
+        })
+    }
+
     static update(req,res){
+        console.log(req.params.id, ' <<<<< product id dari update', req.body)
+        
         Product.update({
             name: req.body.name,
             image_url: req.body.image_url,
@@ -40,8 +55,13 @@ class ProductController {
                 id:req.params.id
             }
         })
-        .then(()=>{
-            return res.status(200).json({message: 'Update Success'})
+        .then((data)=>{
+            console.log(data, '<<<< data update')
+            if(data[0] === 1){
+                return res.status(200).json({message: 'Update Success'})
+            }else{
+                return res.status(404).json({message: 'product not found'})
+            }
         })
         .catch(({errors})=>{
             console.log(errors)

@@ -11,6 +11,7 @@ E-Commerce CMS is an application to help you to organize your e-commerce. This a
 - POST /login
 - POST /product
 - GET /product
+- GET /product/:id
 - PUT /product/:id
 - DELETE /product/:id
 ```
@@ -164,6 +165,52 @@ _Response (500 - Internal Server Error)_
 ```
 
 ---
+
+### GET /product/:id
+
+> Show all product by id from database
+
+_Request Header_
+```json
+{
+  "access_token": "<access_token>"
+}
+```
+
+_Request Body_
+```
+not needed
+```
+
+_Response (200)_
+```json
+
+{
+"id": 1,
+"name": "Lea Jeans",
+"image_url": "https://cdn.shopify.com/s/files/1/0028/5825/4382/files/Leajeans-webbanner-4x3-diskon10_1400x.jpg?v=1567404509",
+"price": 489500,
+"stock": 20,
+"createdAt": "2020-03-20T07:15:12.149Z",
+"updatedAt": "2020-03-20T07:15:12.149Z",
+}
+
+```
+_Response (403 - Forbidden Access)_
+```json
+{
+  "message": "user not authenticate"
+}
+```
+
+_Response (500 - Internal Server Error)_
+```json
+{
+  "message": "internal server error"
+}
+```
+
+-------
 
 ### PUT /product/:id
 
