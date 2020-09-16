@@ -4,7 +4,7 @@ if (process.env.NODE_ENV === 'development' || process.env.NODE_ENV === 'test') {
 const express = require("express")
 const app = express()
 const routes = require('./routes')
-const ErrHandler = require('./middleware/ErrHandler')
+const ErrHandler = require('./server/middleware/ErrHandler')
 
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());

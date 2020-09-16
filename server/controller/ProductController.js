@@ -1,4 +1,4 @@
-const { response } = require('../app')
+const { response } = require('../../app')
 const { Product } = require('../models')
 const { format } = require('../helpers/currencyFormatter')
 
