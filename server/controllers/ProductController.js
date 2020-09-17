@@ -3,7 +3,7 @@ const { Product } = require('../models');
 class ProductController {
     static async showProducts(req, res) {
         try{
-            const product = await Product.findAll()
+            const product = await Product.findAll({order: ['id']})
             return res.status(200).json(product)
         }
         catch(err) {

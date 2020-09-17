@@ -43,7 +43,7 @@ module.exports = (sequelize, DataTypes) => {
     hooks: {
       beforeCreate(user, option) {
         user.password = generatePassword(user.password)
-        user.role = 'user'
+        user.role = 'customer'
       } 
     }
   });
