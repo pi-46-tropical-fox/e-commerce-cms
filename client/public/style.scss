@@ -1,0 +1,35 @@
+@import '../node_modules/bulma/bulma.sass';
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.card-container {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    width: 100%;
+    margin: 0 20px;
+    .card {
+        height: auto;
+        width: 250px;
+        margin: 5px;
+        .card-image {
+            position: relative;
+            height: 250px;
+            overflow: hidden;
+            .card-image-popup {
+                margin: 5px;
+                position: absolute;
+                top: 0;
+                right: 0;
+                z-index: 2;
+            }
+        }
+        .card-content {
+            margin: 5px;
+        }
+    }
+}
