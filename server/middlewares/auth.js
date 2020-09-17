@@ -1,5 +1,5 @@
 const {verifyToken} = require('../helpers/jwt.js')
-const {Product, User} = require('../models')
+const {Product, User, Banner} = require('../models')
 
 
 const authentication = async (req, res, next) => {
@@ -30,7 +30,7 @@ const authentication = async (req, res, next) => {
 }
 
 
-const authorization = async (req, res, next) => {
+const authorizationProduct = async (req, res, next) => {
     
     const {id} = req.params
 
@@ -48,4 +48,22 @@ const authorization = async (req, res, next) => {
     }
 }
 
-module.exports = {authentication,authorization}
+const authorizationBanner = async (req, res, next) => {
+    
+    const {id} = req.params
+
+    try {
+        const banner = await Banner.findByPk(id) 
+
+            if(banner && req.userData.role == 'Admin') {
+                next()
+            } else {
+                throw  {msg: "forbidden access", statusCode: 403}
+            }
+
+    } catch(err) {
+        return next(err) 
+    }
+}
+
+module.exports = {authentication, authorizationProduct, authorizationBanner}
