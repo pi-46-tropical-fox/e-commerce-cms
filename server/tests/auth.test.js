@@ -1,4 +1,5 @@
 const { hook, test, queryInterface } = require('./base')
+const errors = require('./errors')
 
 const URL = '/auth/login'
 
