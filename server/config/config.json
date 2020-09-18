@@ -1,0 +1,23 @@
+{
+  "development": {
+    "username": "baker",
+    "password": "baker",
+    "database": "e_commerce_dev",
+    "host": "127.0.0.1",
+    "dialect": "postgresql"
+  },
+  "test": {
+    "username": "baker",
+    "password": "baker",
+    "database": "e_commerce_test",
+    "host": "127.0.0.1",
+    "dialect": "postgresql"
+  },
+  "production": {
+    "username": "root",
+    "password": null,
+    "database": "e_commerce",
+    "host": "127.0.0.1",
+    "dialect": "mysql"
+  }
+}
