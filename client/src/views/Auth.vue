@@ -1,11 +1,10 @@
 <template>
   <div>
-    <h1>
-      Login
+    <h1 class="login-text">
+     Login
     </h1>
     <LoginForm></LoginForm>
   </div>
-
 </template>
 
 <script>

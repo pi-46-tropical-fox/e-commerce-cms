@@ -1,4 +1,3 @@
-const { response } = require('../../app')
 const { Product } = require('../models')
 const { format } = require('../helpers/currencyFormatter')
 
@@ -23,6 +22,14 @@ class ProductController {
             .catch(err => {
                 next(err)
             })
+    }
+
+    static read(req, res, next) {
+        Product.findAll()
+            .then(data => {
+                res.status(200).json({ data })
+            })
+            .catch(next)
     }
 
     static update(req, res, next) {

@@ -19,8 +19,6 @@
             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
               <a class="dropdown-item" href="#">Electronics</a>
               <a class="dropdown-item" href="#">Sporting Goods</a>
-              <!-- <div class="dropdown-divider"></div>
-              <a class="dropdown-item" href="#">Something else here</a> -->
             </div>
           </li>
         </ul>
@@ -28,7 +26,11 @@
           <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
           <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
         </form>
-        <a class="mx-2">Logout</a>
+        <ul class="navbar-nav">
+          <li class="nav-item">
+        <a class="mx-2 nav-link" href="#">Logout</a>
+          </li>
+        </ul>
       </div>
     </nav>
 </template>

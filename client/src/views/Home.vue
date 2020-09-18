@@ -1,17 +1,14 @@
 <template>
   <div>
     <Navbar></Navbar>
-    <hr>
-    <hr>
-    <div class="card-container">
-    <Card
-    v-for="product in products"
-    :key="product.id"
-    :product = product
-    :itemID= product.id
-    ></Card>
+    <div class="card-container my-5">
+      <Card
+      v-for="product in products"
+      :key="product.id"
+      :product = product
+      :itemID= product.id
+      ></Card>
     </div>
-    {{$store.state.products}}
   </div>
 </template>
 

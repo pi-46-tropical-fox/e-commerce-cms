@@ -20,7 +20,7 @@ class UserController {
             })
             .catch(err => {
                 return next(err)
-                    // res.send(err)
+
             })
     }
 
@@ -35,10 +35,7 @@ class UserController {
                     if (user) {
                         let verified = compare(password, user.password)
                         if (verified) {
-                            // console.log(user)
-                            console.log('masuk verified')
                             const access_token = generateToken(user)
-                            console.log(access_token)
                             res.status(200).json({
                                 message: 'Login succeeded',
                                 id: user.id,

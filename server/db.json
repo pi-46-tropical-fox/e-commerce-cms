@@ -1,0 +1,22 @@
+{"data" : [{
+    "name": "Macbook PRO",
+    "imageURL": "https://www.google.com/imgres?",
+    "price": 20000000,
+    "stock": 5,
+    "category": "Electronics"
+},
+{
+    "name": "Macbook AIR",
+    "imageURL": "https://www.google.com/imgres?",
+    "price": 15000000,
+    "stock": 5,
+    "category": "Electronics"
+},
+{
+    "name": "Basketball Jersey",
+    "imageURL": "https://www.google.com/imgres?",
+    "price": 850000,
+    "stock": 5,
+    "category": "SportingGoods"
+}]
+}

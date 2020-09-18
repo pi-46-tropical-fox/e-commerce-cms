@@ -8,6 +8,7 @@ router.post('/register', UserController.register)
 router.post('/login', UserController.login)
 
 router.use(authentication)
+router.get('/product', ProductController.read)
 router.post('/product', ProductController.create)
 router.patch('/product/:id', ProductController.update)
 router.delete('/product/:id', ProductController.delete)
