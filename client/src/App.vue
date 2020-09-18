@@ -3,7 +3,7 @@
     <nav aria-label="breadcrumb">
       <ol class="breadcrumb">
         <li class="breadcrumb-item"><router-link to="/">Home</router-link></li>
-        <li class="breadcrumb-item"><router-link :to="{name:'AddProduct'}">Add Product</router-link></li>
+        <li class="breadcrumb-item"><router-link :to="{name:'Login'}">Login</router-link></li>
       </ol>
     </nav>
     <div class="d-flex justify-content-center align-items-center container">

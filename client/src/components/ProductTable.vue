@@ -34,29 +34,29 @@
 </template>
 
 <script>
-import axios from '../config/axios';
+import axios from '../config/axios'
 export default {
   name: 'ProductTable',
   props: ['products'],
   methods: {
-      toEdit (productId) {
-          this.$router.push({name: 'EditProduct', params: {id:productId}})
-      },
-      deleteProduct (productId) {
-        // console.log(productId);
-        
-          axios({
-              method: 'delete',
-              url: '/products/'+productId,
-          })
-            .then(({data}) => {
-                // this.$router.push({name: 'Home'})
-            })
-            .catch(err => {
-                console.log(err);
-            })
-      }
-  },
+    toEdit (productId) {
+      this.$router.push({ name: 'EditProduct', params: { id: productId } })
+    },
+    deleteProduct (productId) {
+      // console.log(productId);
+
+      axios({
+        method: 'delete',
+        url: '/products/' + productId
+      })
+        .then(({ data }) => {
+          // this.$router.push({name: 'Home'})
+        })
+        .catch(err => {
+          console.log(err)
+        })
+    }
+  }
 }
 </script>
 

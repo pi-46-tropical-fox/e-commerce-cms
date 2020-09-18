@@ -5,13 +5,14 @@ import About from '../views/About.vue'
 import AddProduct from '../views/AddProduct.vue'
 import EditProduct from '../views/EditProduct.vue'
 import NotFound from '../views/NotFound.vue'
-import Trending from '../views/Trending.vue'  
+import Trending from '../views/Trending.vue'
+import Login from '../views/Login'
 
 Vue.use(VueRouter)
 
 const routes = [
   {
-    path: '/dashboard',
+    path: '/',
     name: 'Home',
     component: Home,
     redirect: {
@@ -24,6 +25,11 @@ const routes = [
         component: Trending
       }
     ]
+  },
+  {
+    path: '/login',
+    name: 'Login',
+    component: Login
   },
   {
     path: '/about',
@@ -51,6 +57,11 @@ const router = new VueRouter({
   mode: 'history',
   base: process.env.BASE_URL,
   routes
+})
+
+router.beforeEach((to, from, next) => {
+  if(to.name !== 'Login' && !localStorage.access_token) next({name: 'Login'})
+  else next()
 })
 
 export default router

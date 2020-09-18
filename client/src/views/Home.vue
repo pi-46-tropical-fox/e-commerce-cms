@@ -36,7 +36,7 @@ export default {
     fetchProduct () {
       axios({
         method: 'get',
-        url: '/products'
+        url: '/products',
       })
         .then(({ data }) => {
           // console.log(data, '<<< ini data')
@@ -47,7 +47,7 @@ export default {
         })
     },
     toAddProduct () {
-      this.$router.push({name: 'AddProduct'})
+      this.$router.push({ name: 'AddProduct' })
     }
   },
   created () {

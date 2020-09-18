@@ -15,7 +15,7 @@ const authentication = async (req,res,next) => {
             req.userData = userData
             next()
         } else {
-            throw {message: 'User not autenticated'}
+            throw {message: 'User not autenticated', statusCode: 401}
         }
     } catch (err) {
         return next(err)

@@ -38,32 +38,32 @@ import axios from '../config/axios'
 export default {
   name: 'AddProduct',
   data () {
-      return {
-          name: '',
-          image_url: '',
-          price: 0,
-          stock: 0
-      }
+    return {
+      name: '',
+      image_url: '',
+      price: 0,
+      stock: 0
+    }
   },
   methods: {
-      submitProduct () {
-          axios({
-              method: 'post',
-              url: '/products',
-              data: {
-                 name: this.name,
-                 image_url: this.image_url,
-                 price: this.price,
-                 stock: this.stock 
-              }
-          })
-            .then(({data}) => {
-                this.$router.push({name: 'Home'})
-            })
-            .catch(err => {
-                console.log(err);
-            })
-      }
+    submitProduct () {
+      axios({
+        method: 'post',
+        url: '/products',
+        data: {
+          name: this.name,
+          image_url: this.image_url,
+          price: this.price,
+          stock: this.stock
+        }
+      })
+        .then(({ data }) => {
+          this.$router.push({ name: 'Home' })
+        })
+        .catch(err => {
+          console.log(err)
+        })
+    }
   }
 }
 </script>
