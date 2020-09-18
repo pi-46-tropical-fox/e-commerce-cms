@@ -33,7 +33,6 @@ module.exports = (sequelize, DataTypes) => {
           msg: "You have to specify the product price, and it's not negative."
         },
         isNotNegative(value) {
-          console.log("value contains -> ",value, value < 0);
           if(value < 0) return new Error(`Oh no, don't put negative numbers inside product price!`)
         },
         isNumeric: {
@@ -63,13 +62,18 @@ module.exports = (sequelize, DataTypes) => {
         notEmpty: {
           msg: "You should specify the category!"
         }
+      },
+      references: {
+        model: 'Categories',
+        key: 'id',
+        onUpdate: 'CASCADE',
+        onDelete: 'CASCADE'
       }
     }
   }, {
     sequelize,
     hooks: {
       beforeValidate(instance){
-        console.log("instance.stock contains -> ",instance.stock);
         instance.stock = Number(instance.stock)
         instance.price = instance.price * 100
       }
