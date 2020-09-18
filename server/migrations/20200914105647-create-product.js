@@ -20,7 +20,10 @@ module.exports = {
       CategoryId: {
         type: Sequelize.INTEGER,
         references: {
-          model: 'Categories'
+          model: 'Categories',
+          key: 'id',
+          onUpdate: 'CASCADE',
+          onDelete: 'CASCADE'
         }
       },
       createdAt: {
