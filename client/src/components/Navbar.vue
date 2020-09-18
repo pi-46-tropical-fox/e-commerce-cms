@@ -1,6 +1,6 @@
 <template>
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark sticky-top">
-  <a class="navbar-brand" href="#">Gadget Space</a>
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark sticky-top font-weight-bold">
+  <a class="navbar-brand" @click.prevent="home">Gadget Space <span><font-awesome-icon icon="rocket" /></span></a>
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
   </button>
@@ -10,17 +10,22 @@
       <li class="nav-item">
         <a class="nav-link" @click.prevent="home">Home</a>
       </li>
-      <li class="nav-item dropdown">
+      <li class="nav-item dropdown" v-if="$store.state.isLogin">
         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
           Products
         </a>
         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-          <a class="dropdown-item" @click.prevent="showTableProduct()">Show All Products</a>
-          <a class="dropdown-item" @click.prevent="showAddForm()">Add New Product</a>
+          <a class="dropdown-item font-weight-bold" @click.prevent="showTableProduct()">Show All Products</a>
+          <a class="dropdown-item font-weight-bold" @click.prevent="showAddForm()">Add New Product</a>
         </div>
       </li>
     </ul>
-      <button class="btn btn-outline-light my-2 my-sm-2" type="submit">Logout</button>
+    <div v-if="$store.state.isLogin">
+      <button class="btn btn-outline-light my-2 my-sm-2 font-weight-bold" @click.prevent="logout">Logout</button>
+    </div>
+    <div v-else>
+      <button class="btn btn-outline-light my-2 my-sm-2 font-weight-bold" @click.prevent="login">Login</button>
+    </div>
   </div>
 </nav>
 </template>
@@ -30,18 +35,31 @@ export default {
   name: 'Navbar',
   methods: {
     home () {
-      this.$router.push({ path: '/home', name: 'Home' })
+      this.$router.push({ name: 'Home' })
     },
     showTableProduct () {
       this.$router.push({ path: '/products' })
     },
     showAddForm () {
       this.$router.push({ path: '/products/add' })
+    },
+    logout () {
+      this.$store.dispatch('logoutAccount')
+    },
+    login () {
+      this.$router.push({ name: 'Login' })
     }
   }
 }
 </script>
 
 <style>
-
+.navbar-brand {
+  font-family:'Londrina Solid', cursive;
+  font-size: 30px;
+  letter-spacing: 2px;
+}
+nav a {
+  cursor: pointer;
+}
 </style>

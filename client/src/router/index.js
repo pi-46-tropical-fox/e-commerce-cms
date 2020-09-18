@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 import Main from '../components/Main.vue'
+import Login from '../views/Login.vue'
 import Products from '../views/Products.vue'
 import AddForm from '../views/AddForm.vue'
 import EditForm from '../views/EditForm.vue'
@@ -9,9 +10,14 @@ Vue.use(VueRouter)
 
 const routes = [
   {
-    path: '/home',
+    path: '/',
     name: 'Home',
     component: Main
+  },
+  {
+    path: '/login',
+    name: 'Login',
+    component: Login
   },
   {
     path: '/products',

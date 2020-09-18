@@ -1,30 +1,29 @@
 <template>
   <div id="app">
-    <Home
-     v-if="$store.state.currentPage === 'home'">
-    </Home>
+    <Home></Home>
   </div>
 </template>
 <script>
 import Home from './views/Home'
 export default {
-  data () {
-    return {
-      currentPage: 'login'
-    }
-  },
   components: {
     Home
   },
   created () {
     if (localStorage.getItem('access_token')) {
-      this.$store.state.currentPage = 'home'
+      this.$store.state.isLogin = true
     } else {
-      this.$store.state.currentPage = 'login'
+      this.$store.state.isLogin = false
     }
   }
 }
 </script>
 <style>
-
+@import url('https://fonts.googleapis.com/css2?family=Londrina+Solid&family=Quicksand:wght@400;600&display=swap');
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: 'Quicksand', sans-serif;
+}
 </style>

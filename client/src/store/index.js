@@ -7,11 +7,21 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
-    currentPage: 'login',
     categories: [],
-    products: []
+    products: [],
+    isLogin: false
   },
   mutations: {
+    setLoginStatus (state, data) {
+      state.isLogin = true
+      router.push({ name: 'Home' })
+    },
+    setLogoutStatus (state, data) {
+      state.categories = []
+      state.products = []
+      state.isLogin = false
+      router.push({ name: 'Home' })
+    },
     setCategories (state, data) {
       state.categories = data
     },
@@ -30,6 +40,24 @@ export default new Vuex.Store({
     }
   },
   actions: {
+    loginAccount ({ commit }, payload) {
+      axios({
+        url: '/login',
+        method: 'POST',
+        data: payload
+      })
+        .then(({ data }) => {
+          localStorage.setItem('access_token', data.access_token)
+          commit('setLoginStatus')
+        })
+        .catch(err => {
+          console.log(err.response.data)
+        })
+    },
+    logoutAccount ({ commit }) {
+      localStorage.clear()
+      commit('setLogoutStatus')
+    },
     fetchCategory ({ commit }) {
       axios({
         method: 'GET',
