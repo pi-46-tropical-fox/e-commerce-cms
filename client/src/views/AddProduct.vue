@@ -50,6 +50,9 @@ export default {
       axios({
         method: 'post',
         url: '/products',
+        headers: {
+          access_token:localStorage.access_token
+        },
         data: {
           name: this.name,
           image_url: this.image_url,

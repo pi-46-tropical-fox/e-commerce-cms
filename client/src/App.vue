@@ -1,17 +1,28 @@
 <template>
   <div id="app">
-    <nav aria-label="breadcrumb">
-      <ol class="breadcrumb">
-        <li class="breadcrumb-item"><router-link to="/">Home</router-link></li>
-        <li class="breadcrumb-item"><router-link :to="{name:'Login'}">Login</router-link></li>
-      </ol>
+    <nav class="navbar navbar-light bg-light justify-content-between">
+      <a class="navbar-brand"><router-link to="/">ECommerce</router-link></a>
+      <div class="form-inline">
+        <button class="btn btn-outline-info my-2 my-sm-0" @click="Close">Close</button>
+      </div>
     </nav>
     <div class="d-flex justify-content-center align-items-center container">
-    <router-view/>
+      <router-view/>
     </div>
   </div>
 </template>
 
+<script>
+export default {
+  name: 'App',
+  methods: {
+      Close () {
+          localStorage.clear()
+          this.$router.push({name: 'Login'})
+      }
+  }
+}
+</script>
 <style>
 #app {
   font-family: 'Alata', sans-serif;

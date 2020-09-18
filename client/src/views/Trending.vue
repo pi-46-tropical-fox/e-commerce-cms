@@ -38,7 +38,10 @@ export default {
       const random = Math.ceil(Math.random() * 3)
       axios({
         method: 'get',
-        url: '/products/'
+        url: '/products/',
+        headers: {
+          access_token:localStorage.access_token
+        }
       })
         .then(({ data }) => {
           this.dataTrending = data[random]

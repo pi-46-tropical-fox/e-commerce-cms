@@ -37,13 +37,16 @@ export default {
       axios({
         method: 'get',
         url: '/products',
+        headers: {
+          access_token:localStorage.access_token
+        }
       })
         .then(({ data }) => {
           // console.log(data, '<<< ini data')
           this.products = data
         })
         .catch(err => {
-          console.log(err, '<<< ini error')
+          console.log(err, '<<< ini error fetchdata')
         })
     },
     toAddProduct () {

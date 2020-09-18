@@ -69,7 +69,10 @@ export default {
       const id = this.$route.params.id
       axios({
         method: 'get',
-        url: '/products/' + id
+        url: '/products/' + id,
+        headers: {
+          access_token:localStorage.access_token
+        }
       })
         .then(({ data }) => {
           // console.log(data);
