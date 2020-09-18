@@ -12,7 +12,10 @@ module.exports = (sequelize, DataTypes) => {
     static associate(models) {
       // define association here
       Product.belongsTo(models.Category)
-      Product.hasMany(models.ProductImage)
+      Product.hasMany(models.ProductImage, {
+        onUpdate: 'CASCADE',
+        onDelete: 'CASCADE',
+      })
     }
   };
   Product.init({
@@ -65,9 +68,7 @@ module.exports = (sequelize, DataTypes) => {
       },
       references: {
         model: 'Categories',
-        key: 'id',
-        onUpdate: 'CASCADE',
-        onDelete: 'CASCADE'
+        key: 'id'
       }
     }
   }, {

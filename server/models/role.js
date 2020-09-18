@@ -11,7 +11,10 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
-      Role.hasMany(models.User)
+      Role.hasMany(models.User, {
+        onUpdate: 'CASCADE',
+        onDelete: 'CASCADE',
+      })
     }
   };
   Role.init({
