@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <title>Template HTML</title>
+</head>
+<body>
+    <div class="d-flex justify-content-center align-items-center container">
+    <!-- HOME-PAGE -->
+    <section id="home-page" class="row">
+        <div class="col-4 d-flex align-items-center" id="home-page">
+            <img src="" alt="" class="w-100">
+        </div>
+        <div class="col-8" style="height: 400px;">
+            <div class="d-flex align-items-center justify-content-between">
+                <div class="d-flex align-items-center">
+                    <img src="" alt="" style="width: 50px">
+                    <h3>List Product</h3>
+                </div>
+                <button class="btn btn-info float-right">Add Product</button>
+            </div>
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th scope="col">No</th>
+                        <th scope="col">Image</th>
+                        <th scope="col">Name</th>
+                        <th scope="col">Price</th>
+                        <th scope="col">Stock</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <th scope="row">1</th>
+                        <td>
+                            <img src="https://images-na.ssl-images-amazon.com/images/I/71ughJzu-PL.__AC_SX342_QL70_ML2_.jpg" alt="">
+                        </td>
+                        <td scope="row">Skirt</td>
+                        <td scope="row">50.000</td>
+                        <td scope="row">12</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">1</th>
+                        <td>
+                            <img src="https://imgprd19.hobbylobby.com/9/5f/26/95f264323ae49e65b2a53a909fcd7d9ee659f3c7/350Wx350H-422519-0320.jpg" alt="">
+                        </td>
+                        <td scope="row">Skirt</td>
+                        <td scope="row">50.000</td>
+                        <td scope="row">12</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </section>
+     <!-- ADD-PAGE -->
+    <section id="add-page" class="row">
+        <div class="col-6">
+            <form >
+                <div class="form-group">
+                    <label for="name">Name</label>
+                    <input type="text" class="form-control" id="name" placeholder="Insert name">
+                </div>
+                <div class="form-group">
+                    <label for="imgUrl">Image Url</label>
+                    <input type="text" class="form-control" id="imgUrl" placeholder="Insert imgUrl">
+                </div>
+                <div class="form-group">
+                    <label for="name">Price</label>
+                    <input type="number" class="form-control" id="name" placeholder="Insert price">
+                </div>
+                <div class="form-group">
+                    <label for="stock">Stock</label>
+                    <input type="number" class="form-control" id="stock" placeholder="Insert stock">
+                </div>
+                <button type="submit" class="btn btn-block btn-info">Submit</button>
+            </form>
+        </div>
+    </section>
+     <!-- EDIT-PAGE -->
+    <section id="edit-page" class="row">
+        <div class="col-6">
+            <form >
+                <div class="form-group">
+                    <label for="name">Name</label>
+                    <input type="text" class="form-control" id="name" placeholder="Insert name">
+                </div>
+                <div class="form-group">
+                    <label for="imgUrl">Image Url</label>
+                    <input type="text" class="form-control" id="imgUrl" placeholder="Insert imgUrl">
+                </div>
+                <div class="form-group">
+                    <label for="name">Price</label>
+                    <input type="number" class="form-control" id="name" placeholder="Insert price">
+                </div>
+                <div class="form-group">
+                    <label for="stock">Stock</label>
+                    <input type="number" class="form-control" id="stock" placeholder="Insert stock">
+                </div>
+                <button type="submit" class="btn btn-block btn-info">Submit</button>
+            </form>
+        </div>
+    </section>
+     <!-- LOGIN-PAGE -->
+    <section id="login" class="row">
+        <div class="row">
+            <div class="col-6">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="card-title">Form Login</div>
+                        <form action="" id="loginForm">
+                            <div class="form-group row">
+                                <label for="reloginEmail" class="col-sm-4 col-form-label">Email</label>
+                                <div class="col-sm-8">
+                                    <input type="text" name="" id="loginEmail" class="form-control">
+                                </div>                                
+                            </div>
+                            <div class="form-group row">
+                                <label for="loginPassword" class="col-sm-4 col-form-label">Password</label>
+                                <div class="col-sm-8">
+                                    <input type="password" name="" id="loginPassword" class="form-control">
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <div class="col-sm-6">
+                                    <input type="submit" value="Login" class="form-control btn btn-success">
+                                </div>
+                                <div class="col-sm-6">
+                                    <div class="g-signin2 " data-onsuccess="onSignIn"></div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+</body>
+</html>

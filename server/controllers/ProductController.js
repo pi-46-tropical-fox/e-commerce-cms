@@ -31,7 +31,7 @@ class ProductController{
 
     static async showIdProduct (req,res,next) {
         try {
-            let product = await Product.findByPk(req,params.id)
+            let product = await Product.findByPk(req.params.id)
             if(product) {
                 res.status(200).json(product)
             } else {
