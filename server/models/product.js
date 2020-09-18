@@ -11,15 +11,69 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
+      Product.belongsTo(models.Category)
+      Product.hasMany(models.ProductImage)
     }
   };
   Product.init({
-    name: DataTypes.STRING,
-    price: DataTypes.INTEGER,
-    stock: DataTypes.INTEGER,
-    CategoryId: DataTypes.INTEGER
+    name: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      validate: {
+        notEmpty: {
+          msg: "You have to fill out the product name."
+        }
+      }
+    },
+    price: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      validate: {
+        notEmpty: {
+          msg: "You have to specify the product price, and it's not negative."
+        },
+        isNotNegative(value) {
+          console.log("value contains -> ",value, value < 0);
+          if(value < 0) return new Error(`Oh no, don't put negative numbers inside product price!`)
+        },
+        isNumeric: {
+          msg: "Product stock: Numbers, please."
+        }
+      }
+    },
+    stock: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      validate: {
+        notEmpty: {
+          msg: "You should specify the product stock, and it's not negative."
+        },
+        isNumeric: {
+          msg: "Product stock: Numbers, please."
+        },
+        isNotNegative(value) {
+          if(value < 0) return new Error(`Oh no, don't put negative numbers inside product stock!`)
+        }
+      }
+    },
+    CategoryId: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      validate: {
+        notEmpty: {
+          msg: "You should specify the category!"
+        }
+      }
+    }
   }, {
     sequelize,
+    hooks: {
+      beforeValidate(instance){
+        console.log("instance.stock contains -> ",instance.stock);
+        instance.stock = Number(instance.stock)
+        instance.price = instance.price * 100
+      }
+    },
     modelName: 'Product',
   });
   return Product;
