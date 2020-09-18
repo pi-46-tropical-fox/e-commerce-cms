@@ -32,26 +32,12 @@
 </template>
 
 <script>
-import axios from '../config/axios'
 export default {
   name: 'Table',
   props: ['products'],
   methods: {
     deleteProduct (id) {
-      axios({
-        method: 'DELETE',
-        url: `/products/${id}`,
-        headers: {
-          access_token: localStorage.getItem('access_token')
-        }
-      })
-        .then(({ data }) => {
-          console.log(data)
-          this.$emit('deleteProduct', id)
-        })
-        .catch(err => {
-          console.log(err.response.data)
-        })
+      this.$store.dispatch('deletingProduct', id)
     },
     editProduct (id) {
       this.$router.push({ path: `/products/edit/${id}` })

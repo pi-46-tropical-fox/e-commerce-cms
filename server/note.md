@@ -9,3 +9,8 @@
 ? Save this as a preset for future projects? Yes
 ? Save preset as: superdefault
 3. cd client
+
+## socket
+
+1. npm install socket.io di server
+2. 

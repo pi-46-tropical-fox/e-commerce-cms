@@ -49,13 +49,15 @@
             </div>
         </div>
         <div class="form-group">
-            <div v-if="$route.params.productId !== undefined">
-                <button @click.prevent="editProduct($route.params.productId)" class="btn btn-primary mr-2">Edit Product</button>
+            <div class="row">
+                <div v-if="$route.params.productId !== undefined">
+                    <button @click.prevent="editProduct($route.params.productId)" class="btn btn-primary mr-2">Edit Product</button>
+                </div>
+                <div v-else>
+                    <button @click.prevent="addProduct" class="btn btn-primary mr-2">Add Product</button>
+                </div>
+                <button @click.prevent="back" class="btn btn-danger">Cancel</button>
             </div>
-            <div v-else>
-                <button @click.prevent="addProduct" class="btn btn-primary mr-2">Add Product</button>
-            </div>
-            <button class="btn btn-danger">Cancel</button>
         </div>
     </form>
   </div>
@@ -67,32 +69,19 @@ export default {
   name: 'Form',
   data () {
     return {
-      categories: [],
       name: '',
       color: '',
       capacity: '',
       price: '',
       stock: '',
-      categoryId: '',
-      img_url: ''
+      categoryId: 1,
+      img_url: '',
+      webTitle: ''
     }
   },
   methods: {
     fetchCategory () {
-      axios({
-        method: 'GET',
-        url: '/categories',
-        headers: {
-          access_token: localStorage.getItem('access_token')
-        }
-      })
-        .then(({ data }) => {
-          this.categories = data
-          console.log(data, '<<< category fetched')
-        })
-        .catch(err => {
-          console.log(err.response.data)
-        })
+      this.$store.dispatch('fetchCategory')
     },
     fetchProduct () {
       axios({
@@ -110,67 +99,49 @@ export default {
           this.stock = data.stock
           this.categoryId = data.CategoryId
           this.img_url = data.img_url
-          console.log(data, '<<< product fetched')
+          console.log(data, '<<< product fetched to edit')
         })
         .catch(err => {
           console.log(err.response.data)
         })
     },
     addProduct () {
-      axios({
-        method: 'POST',
-        url: '/products',
-        headers: {
-          access_token: localStorage.getItem('access_token')
-        },
-        data: {
-          name: this.name,
-          color: this.color,
-          capacity: this.capacity,
-          price: this.price,
-          stock: this.stock,
-          CategoryId: this.categoryId,
-          img_url: this.img_url
-        }
-      })
-        .then(({ data }) => {
-          console.log(data)
-          this.$router.push({ path: '/products' })
-        })
-        .catch(err => {
-          console.log(err.response.data)
-        })
+      const data = {
+        name: this.name,
+        color: this.color,
+        capacity: this.capacity,
+        price: this.price,
+        stock: this.stock,
+        CategoryId: this.categoryId,
+        img_url: this.img_url
+      }
+      this.$store.dispatch('addingProduct', data)
     },
     editProduct (id) {
-      axios({
-        method: 'PUT',
-        url: `/products/${id}`,
-        headers: {
-          access_token: localStorage.getItem('access_token')
-        },
-        data: {
-          name: this.name,
-          color: this.color,
-          capacity: this.capacity,
-          price: this.price,
-          stock: this.stock,
-          CategoryId: this.categoryId,
-          img_url: this.img_url
-        }
-      })
-        .then(({ data }) => {
-          console.log(data)
-          this.$router.push({ path: '/products' })
-        })
-        .catch(err => {
-          console.log(err.response.data)
-        })
+      const data = {
+        name: this.name,
+        color: this.color,
+        capacity: this.capacity,
+        price: this.price,
+        stock: this.stock,
+        CategoryId: this.categoryId,
+        img_url: this.img_url
+      }
+      this.$store.dispatch('updatingProduct', { data, id })
+    },
+    back () {
+      this.$router.push({ path: '/products' })
     }
   },
   created () {
     this.fetchCategory()
     if (this.$route.params.productId !== undefined) {
       this.fetchProduct()
+    }
+  },
+  computed: {
+    categories () {
+      return this.$store.state.categories
     }
   }
 }

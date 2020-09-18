@@ -1,7 +1,7 @@
 <template>
   <div>
       <div class="header text-center p-4 ">
-          <h1>Edit Product - {{ $route.params.productId }}</h1>
+          <h1>Edit Product</h1>
       </div>
       <Form></Form>
   </div>

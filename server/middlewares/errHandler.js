@@ -21,7 +21,7 @@ const errHandler = (err, req, res, next) => {
         errors.push(`Forbidden access`)
     }else{
         statusCode = 500
-        errors.push(err)
+        errors.push(`Internal server error`)
     }
     res.status(statusCode).json({ errors });
 }

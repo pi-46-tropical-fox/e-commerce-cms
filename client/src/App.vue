@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <Home
-     v-if="currentPage === 'home'">
+     v-if="$store.state.currentPage === 'home'">
     </Home>
   </div>
 </template>
@@ -18,9 +18,9 @@ export default {
   },
   created () {
     if (localStorage.getItem('access_token')) {
-      this.currentPage = 'home'
+      this.$store.state.currentPage = 'home'
     } else {
-      this.currentPage = 'login'
+      this.$store.state.currentPage = 'login'
     }
   }
 }
