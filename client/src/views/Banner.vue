@@ -4,7 +4,7 @@
     <div class="container mt-5">
       <div class="row">
         <div class="col-6">
-        <router-link class="btn-sm btn-success mr-2" :to="{ name: 'AddProduct' }">Add Banner</router-link>
+        <router-link class="btn-sm btn-success mr-2 p-2" :to="{ name: 'AddBanner' }">Add Banner</router-link>
         <router-view></router-view>
         </div>
       </div>
@@ -22,6 +22,13 @@
               </tr>
             </thead>
             <tbody>
+              <tr v-for="(banner, index) in banners" :key="index">
+                <td>{{ index+1 }}</td>
+                <td>{{ banner.title }}</td>
+                <td>{{ banner.status }}</td>
+                <td>{{ banner.updatedAt }}</td>
+                <td><router-link class="btn-sm btn-info" :to="{ name: 'BannerDetails', params: {id: banner.id} }">Details</router-link></td>
+              </tr>
             </tbody>
           </table>
         </div>
@@ -33,10 +40,20 @@
 
 <script>
 import Navbar from '../components/Navbar'
+import Footer from '../components/Footer'
 export default {
   name: 'Banner',
   components: {
-    Navbar
+    Navbar,
+    Footer
+  },
+  created () {
+    this.$store.dispatch('getBanners')
+  },
+  computed: {
+    banners () {
+      return this.$store.getters.filteredBanners
+    }
   }
 }
 </script>

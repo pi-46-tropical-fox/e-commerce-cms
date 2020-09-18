@@ -7,24 +7,24 @@
           <form @submit.prevent="editProduct">
             <div class="form-group">
               <label>Product Name</label>
-              <input type="text" class="form-control" v-model="selectedProduct.name">
+              <input type="text" class="form-control" v-model="selectedProduct.name" required>
             </div>
             <div class="form-group">
               <label>Image URL</label>
-              <input type="text" class="form-control" v-model="selectedProduct.image_url">
+              <input type="text" class="form-control" v-model="selectedProduct.image_url" required>
               <small><a href="https://imgur.com/t/upload" target="_blank">Get url of your image</a></small>
             </div>
             <div class="form-group">
               <label>Price</label>
-              <input type="number" class="form-control" v-model="selectedProduct.price">
+              <input type="number" class="form-control" v-model="selectedProduct.price" required>
             </div>
             <div class="form-group">
               <label>Stock</label>
-              <input type="number" class="form-control" v-model="selectedProduct.stock">
+              <input type="number" class="form-control" v-model="selectedProduct.stock" required>
             </div>
             <div class="form-group">
               <label>Category</label>
-              <select class="form-control" v-model="selectedProduct.category">
+              <select class="form-control" v-model="selectedProduct.category" required>
                 <option>Electronics</option>
                 <option>Clothes</option>
                 <option>Shoes</option>

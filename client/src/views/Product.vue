@@ -4,7 +4,7 @@
     <div class="container mt-5">
       <div class="row">
         <div class="col-6">
-        <router-link class="btn-sm btn-success mr-2" :to="{ name: 'AddProduct' }">Add Product</router-link>
+        <router-link class="btn-sm btn-success mr-2 p-2" :to="{ name: 'AddProduct' }">Add Product</router-link>
         <router-view></router-view>
         </div>
       </div>
