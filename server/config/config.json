@@ -1,0 +1,20 @@
+{
+  "development": {
+    "username": "postgres",
+    "password": "bravo4432",
+    "database": "e-commerce-dev-db",
+    "host": "localhost",
+    "dialect": "postgres"
+  },
+  "test": {
+    "username": "postgres",
+    "password": "bravo4432",
+    "database": "e-commerce-test_db",
+    "host": "localhost",
+    "dialect": "postgres",
+    "logging": false
+  },
+  "production": {
+    "use_env_variable": "DATABASE_URL"
+  }
+}
