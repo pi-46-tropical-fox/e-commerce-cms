@@ -4,7 +4,7 @@ describe('test User login POST /login', () => {
   it('Test success login responds with json', (done) => {
     request(app)
       .post('/login')
-      .send({email: "admin@mail.com", password: "enkripsi(1234)"})
+      .send({email: "admin@mail.com", password: "enkripsi123"})
       .set('Accept', 'application/json')
       .expect('Content-Type', /json/)
       .then(response => {

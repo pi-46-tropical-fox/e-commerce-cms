@@ -29,6 +29,7 @@ const authentication = async (req, res, next) => {
 const authorization = async (req, res, next) => {
   try {
     const user = await User.findByPk(req.userData.id)
+    // console.log(user, 'user.role');
     if(user && user.role === 'admin') {
       next()
     } else {

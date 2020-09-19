@@ -7,11 +7,11 @@ const { generateToken } = require('../helpers/jwt')
 let productId;
 let access_token;
 let fake_token;
-const users = { email: "admin@mail.com", password: "enkripsi('1234')", role: "admin" }
-const fakeAdmin = { email: "fakeadmin@mail.com", password: "fakeAdmin", role: "customer" }
+const users = { email: "admin@mail.com", role: "admin" }
+const fakeAdmin = { email: "fakeadmin@mail.com", role: "customer" }
 beforeAll((done) => {
   User
-    .create(users)
+    .findOne({where: {email: users.email}})
     .then(user => {
       access_token = generateToken(user)
       done()
@@ -20,7 +20,7 @@ beforeAll((done) => {
       done()
     })
   User
-    .create(fakeAdmin)
+    .findOne({where: {email: fakeAdmin.email}})
     .then(user => {
       fake_token = generateToken(user)
       done()
@@ -32,12 +32,6 @@ beforeAll((done) => {
 afterAll((done) => {
   queryInterface
     .bulkDelete('Products')
-    .then(()=> done())
-    .catch(err => {
-      done()
-    })
-  queryInterface
-    .bulkDelete('Users')
     .then(()=> done())
     .catch(err => {
       done()

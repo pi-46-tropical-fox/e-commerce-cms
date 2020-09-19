@@ -6,11 +6,18 @@ module.exports = {
     return queryInterface.bulkInsert('Users', [
       {
         email: "admin@mail.com",
-        password: bcrypt.hashSync("enkripsi(1234)", 8),
+        password: bcrypt.hashSync("enkripsi123", 8),
         role: "admin",
         createdAt: new Date(),
         updatedAt: new Date()
-      }
+      },
+      {
+        email: "fakeadmin@mail.com",
+        password: bcrypt.hashSync("fakeAdmin", 8),
+        role: "customer",
+        createdAt: new Date(),
+        updatedAt: new Date()
+      },
     ])
     /**
      * Add seed commands here.

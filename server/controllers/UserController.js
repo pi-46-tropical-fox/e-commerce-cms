@@ -6,6 +6,7 @@ class UserController {
 
   static login(req, res, next) {
     const { email, password } = req.body
+    console.log(req.body,'ini req body');
     User.findOne({
       where: { email }
     })
@@ -13,6 +14,7 @@ class UserController {
       if(user) {
         return user
       }
+      console.log(user, 'masuk user then pertama');
       return res.status(400).json({message:'invalid email or password'})
     })
     .then(user => {
