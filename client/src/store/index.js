@@ -8,10 +8,13 @@ export default new Vuex.Store({
   state: {
     company: 'hacktiv8',
     products: [],
+    banners: [],
     email: '',
     selectedData: {},
     role: localStorage.role,
-    user: localStorage.email
+    user: localStorage.email,
+    name: '',
+    loadingStatus: false
   },
   mutations: {
     setProducts (state, payload) {
@@ -25,10 +28,20 @@ export default new Vuex.Store({
     },
     setCurrentPage (state, payload) {
       state.currentPage = payload
+    },
+    setBanners (state, payload) {
+      state.banners = payload
+    },
+    setName (state, payload) {
+      state.name = payload
+    },
+    setLoadingStatus (state, payload) {
+      state.loadingStatus = payload
     }
   },
   actions: {
     fetchProducts ({ commit }) {
+      commit('setLoadingStatus', true)
       axios({
         url: '/products',
         method: 'GET',
@@ -38,6 +51,9 @@ export default new Vuex.Store({
       })
         .then(({ data }) => {
           commit('setProducts', data)
+        })
+        .finally(() => {
+          commit('setLoadingStatus', false)
         })
     },
     deleteProduct ({ commit }, id) {
@@ -106,8 +122,73 @@ export default new Vuex.Store({
     logout ({ commit }) {
       commit('setCurrentPage', 'loginPage')
       localStorage.clear()
+    },
+    fetchBanners ({ commit }) {
+      axios({
+        url: '/banners',
+        method: 'GET',
+        headers: {
+          access_token: localStorage.access_token
+        }
+      })
+        .then(({ data }) => {
+          commit('setBanners', data)
+        })
+        .finally(() => {
+          commit('setLoadingStatus', false)
+        })
+    },
+    deleteBanner ({ commit }, id) {
+      axios({
+        url: `/banners/${id}`,
+        method: 'DELETE',
+        headers: {
+          access_token: localStorage.getItem('access_token')
+        }
+      })
+        .then(({ data }) => {
+        })
+    },
+    getBanner ({ commit }, payload) {
+      axios({
+        url: `/banners/${payload}`,
+        method: 'GET',
+        headers: {
+          access_token: localStorage.getItem('access_token')
+        }
+      })
+        .then(({ data }) => {
+          commit('setSelectedData', data)
+        })
+    },
+    editBanner ({ commit }, payload) {
+      axios({
+        url: `/banners/${payload.id}`,
+        method: 'PUT',
+        data: payload,
+        headers: {
+          access_token: localStorage.getItem('access_token')
+        }
+      })
+        .then(({ data }) => {
+          router.push('/banners')
+        })
+    },
+    createBanner ({ commit }, payload) {
+      axios({
+        url: '/banners',
+        method: 'POST',
+        data: payload,
+        headers: {
+          access_token: localStorage.getItem('access_token')
+        }
+      })
+        .then(({ data }) => {
+          router.push('/')
+        })
     }
   },
+
   // getters: {
   //   filterByCategory (state) {
   //     console.log(state.products);

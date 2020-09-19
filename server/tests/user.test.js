@@ -4,7 +4,7 @@ const {sequelize} = require('../models')
 const {queryInterface} = sequelize
 
 
-const userData = {email: 'john@mail.com', password: '123456'}
+const userData = {email: 'john@mail.com', password: '123456', role: 'Admin'}
 
 // afterAll((done) => {
 //     queryInterface.bulkDelete('Users')
@@ -14,7 +14,7 @@ const userData = {email: 'john@mail.com', password: '123456'}
 //     })
 //   });
 
-describe('User Registration Test >> POST /register', function() {
+describe.only('User Registration Test >> POST /register', function() {
     it('success register and return new object and status 201', function(done) {
     request(app)
     .post('/register')
@@ -41,9 +41,8 @@ describe.only('User Login Test >> POST /login', function() {
         .expect('Content-Type', /json/)
         .then(response => {
             const {body,status} =response
-            // console.log(body,status,'<<<<<<<<<<<<<<<');
-            expect(status).toBe(200)
             console.log(body);
+            expect(status).toBe(200)
             expect(body).toHaveProperty('role', 'Admin')
             expect(body).toHaveProperty('email', userData.email)
             expect(body).toHaveProperty('access_token', expect.any(String))

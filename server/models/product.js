@@ -37,7 +37,7 @@ module.exports = (sequelize, DataTypes) => {
       validate: {
         notEmpty: {
           args: true,
-          msg: `Image Url is required!`,
+          msg: `price Url is required!`,
         },
         min: {
           args: [0],
@@ -50,7 +50,7 @@ module.exports = (sequelize, DataTypes) => {
       validate: {
         notEmpty: {
           args: true,
-          msg: `Image Url is required!`,
+          msg: `stock Url is required!`,
         },
         min: {
           args: [0],

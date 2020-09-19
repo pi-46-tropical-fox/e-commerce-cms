@@ -4,20 +4,22 @@ const {sequelize,User} = require('../models')
 const {queryInterface} = sequelize
 const jwt = require('jsonwebtoken')
 
-const userDummy = {email: 'john@mail.com', password: '123456'}
+const userDummy = {email: 'john@mail.com', password: '123456', role:'Admin'}
 const productDummy = {
     name: 'Baju bekas',
     image_url: 'https://www.gstatic.com/webp/gallery/1.sm.jpg',
     price: 1000000,
+    category: 'Kaos',
     stock: 30
     }
 const editedDummy = {
     name: 'Baju lusuh',
     image_url: 'https://www.gstatic.com/webp/gallery/1.sm.jpg',
     price: 15000,
+    category: 'Kaos',
     stock: 10
     }
-let access_token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiZW1haWwiOiJqb2huQG1haWwuY29tIiwiaWF0IjoxNjAwMTU3MTY4fQ.JE-1hSarHPcCRbZAByM221oydmHGCLKbh9fp4n9UTdI'
+let access_token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiZW1haWwiOiJqb2huQG1haWwuY29tIiwiaWF0IjoxNjAwNTA2ODU3fQ.hr6VB88EZ53xtsPTDXKqdE47F2dMm-xNTKDb9V_KpXo'
 
 // afterAll((done) => {
 //     queryInterface.bulkDelete('Products')
@@ -56,7 +58,8 @@ describe.only('Get All Products >> GET /products', function() {
                 expect(obj).toHaveProperty('id', expect.any(Number))
                 expect(obj).toHaveProperty('name', expect.any(String))
                 expect(obj).toHaveProperty('image_url', expect.any(String))
-                expect(obj).toHaveProperty('price', expect.any(Number))
+                expect(obj).toHaveProperty('category', expect.any(String))
+                expect(obj).toHaveProperty('price', expect.any(String)) //dirubah ke format rupiah
                 expect(obj).toHaveProperty('stock', expect.any(Number))
             });
             done()
@@ -76,10 +79,10 @@ describe('Products Create >> POST /products', function() {
         .expect('Content-Type', /json/)
         .then(response => {
             const {body,status} = response
-            // console.log(body,'<<<<<<<<<<<<<<<<<<<');
             expect(status).toBe(201)
             expect(body).toHaveProperty('name', expect.any(String))
             expect(body).toHaveProperty('image_url', expect.any(String))
+            expect(body).toHaveProperty('category', expect.any(String))
             expect(body).toHaveProperty('price', expect.any(Number))
             expect(body).toHaveProperty('stock', expect.any(Number))
             done()
@@ -87,7 +90,7 @@ describe('Products Create >> POST /products', function() {
     });    
 });
 
-describe('Create products without access_token >> POST /products', function() {
+describe.only('Create products without access_token >> POST /products', function() {
     it('failed create product return errors and status 401', function(done) {
     request(app)
         .post('/products')
@@ -126,7 +129,7 @@ describe('Create products with wrong access_token >> POST /products', function()
 });
 
 describe('Create products with empty values >> POST /products', function() {
-    it('failed create product return errors and status 500', function(done) {
+    it('failed create product return errors and status 401', function(done) {
     request(app)
         .post('/products')
         .send( {name: '',image_url: '',})
@@ -136,7 +139,7 @@ describe('Create products with empty values >> POST /products', function() {
         .then(response => {
             const {body,status} = response
             // console.log(body,status,'errrosnya apa neeh');
-            expect(status).toBe(500)
+            expect(status).toBe(401)
             expect(body).toHaveProperty(Object.keys(response.body));
             done()
         })
@@ -144,7 +147,7 @@ describe('Create products with empty values >> POST /products', function() {
 });
 
 describe('Create products with stocks less than 0 >> POST /products', function() {
-    it('failed create product return errors and status 500', function(done) {
+    it('failed create product return errors and status 401', function(done) {
     request(app)
         .post('/products')
         .send({
@@ -159,7 +162,7 @@ describe('Create products with stocks less than 0 >> POST /products', function()
         .then(response => {
             const {body,status} = response
             // console.log(body,status,'errrosnya apa neeh');
-            expect(status).toBe(500)
+            expect(status).toBe(401)
             expect(body).toHaveProperty(Object.keys(response.body));
             done()
         })
@@ -167,7 +170,7 @@ describe('Create products with stocks less than 0 >> POST /products', function()
 });
 
 describe('Create products with prices less than 0 >> POST /products', function() {
-    it('failed create product return errors and status 500', function(done) {
+    it('failed create product return errors and status 401', function(done) {
     request(app)
         .post('/products')
         .send({
@@ -182,7 +185,7 @@ describe('Create products with prices less than 0 >> POST /products', function()
         .then(response => {
             const {body,status} = response
             // console.log(body,status,'errrosnya apa neeh');
-            expect(status).toBe(500)
+            expect(status).toBe(401)
             expect(body).toHaveProperty(Object.keys(response.body));
             done()
         })
@@ -217,7 +220,7 @@ describe('Create products with wrong data types >> POST /products', function() {
 describe('Edit Product by Id >> PUT /products', function() {
     it('return edited value and status 200', function(done) {
     request(app)
-        .put('/products/43')
+        .put('/products/4')
         .set('access_token', access_token)
         .set('Accept', 'application/json')
         .send(editedDummy)
@@ -235,7 +238,7 @@ describe('Edit Product by Id >> PUT /products', function() {
 describe('Update products without access_token >> PUT /products', function() {
     it('failed update product return errors and status 401', function(done) {
     request(app)
-        .put('/products/46')
+        .put('/products/4')
         .send(editedDummy)
         .set('access_token', '')
         .set('Accept', 'application/json')
@@ -254,7 +257,7 @@ describe('Update products without access_token >> PUT /products', function() {
 describe('Update products with wrong access_token >> PUT /products', function() {
     it('failed update product return errors and status 401', function(done) {
     request(app)
-        .put('/products/46')
+        .put('/products/4')
         .send(editedDummy)
         .set('access_token', 'tokensiapanichhh')
         .set('Accept', 'application/json')
@@ -271,9 +274,9 @@ describe('Update products with wrong access_token >> PUT /products', function() 
 });
 
 describe('Update products with empty values >> put /products', function() {
-    it('failed Update product return errors and status 500', function(done) {
+    it('failed Update product return errors and status 401', function(done) {
     request(app)
-        .put('/products/46')
+        .put('/products/4')
         .send( {name: '',image_url: '',})
         .set('access_token', access_token)
         .set('Accept', 'application/json')
@@ -281,7 +284,7 @@ describe('Update products with empty values >> put /products', function() {
         .then(response => {
             const {body,status} = response
             // console.log(body,status,'errrosnya apa neeh');
-            expect(status).toBe(500)
+            expect(status).toBe(401)
             expect(body).toHaveProperty(Object.keys(response.body));
             done()
         })
@@ -289,9 +292,9 @@ describe('Update products with empty values >> put /products', function() {
 });
 
 describe('Update products with stocks less than 0 >> put /products', function() {
-    it('failed Update product return errors and status 500', function(done) {
+    it('failed Update product return errors and status 401', function(done) {
     request(app)
-        .put('/products/46')
+        .put('/products/4')
         .send({
             name: 'Baju bekas',
             image_url: 'https://www.gstatic.com/webp/gallery/1.sm.jpg',
@@ -304,7 +307,7 @@ describe('Update products with stocks less than 0 >> put /products', function() 
         .then(response => {
             const {body,status} = response
             // console.log(body,status,'errrosnya apa neeh');
-            expect(status).toBe(500)
+            expect(status).toBe(401)
             expect(body).toHaveProperty(Object.keys(response.body));
             done()
         })
@@ -312,9 +315,9 @@ describe('Update products with stocks less than 0 >> put /products', function() 
 });
 
 describe('Update products with prices less than 0 >> put /products', function() {
-    it('failed Update product return errors and status 500', function(done) {
+    it('failed Update product return errors and status 401', function(done) {
     request(app)
-        .put('/products/46')
+        .put('/products/4')
         .send({
             name: 'Baju bekas',
             image_url: 'https://www.gstatic.com/webp/gallery/1.sm.jpg',
@@ -327,7 +330,7 @@ describe('Update products with prices less than 0 >> put /products', function() 
         .then(response => {
             const {body,status} = response
             // console.log(body,status,'errrosnya apa neeh');
-            expect(status).toBe(500)
+            expect(status).toBe(401)
             expect(body).toHaveProperty(Object.keys(response.body));
             done()
         })
@@ -338,7 +341,7 @@ describe('Update products with prices less than 0 >> put /products', function() 
 describe('Update products with wrong data types >> put /products', function() {
     it('failed Update product return errors and status 500', function(done) {
     request(app)
-        .put('/products/46')
+        .put('/products/4')
         .send({
             name: 123123,
             image_url: 33333,
@@ -363,7 +366,7 @@ describe('Update products with wrong data types >> put /products', function() {
 describe('Delete Product by Id >> DELETE /products', function() {
     it('return deleted value and status 200', function(done) {
     request(app)
-        .delete('/products/43')
+        .delete('/products/4')
         .set('access_token', access_token)
         .set('Accept', 'application/json')
         .expect('Content-Type', /json/)
@@ -380,8 +383,7 @@ describe('Delete Product by Id >> DELETE /products', function() {
 describe('Delete products without access_token >> DELETE /products', function() {
     it('failed delete product return errors and status 401', function(done) {
     request(app)
-        .delete('/products/46')
-        .send(editedDummy)
+        .delete('/products/4')
         .set('access_token', '')
         .set('Accept', 'application/json')
         .expect('Content-Type', /json/)
@@ -396,11 +398,10 @@ describe('Delete products without access_token >> DELETE /products', function() 
     });    
 });
 
-describe('Delete products with wrong access_token >> DELETE /products', function() {
+describe.only('Delete products with wrong access_token >> DELETE /products', function() {
     it('failed delete product return errors and status 401', function(done) {
     request(app)
-        .delete('/products/46')
-        .send(editedDummy)
+        .delete('/products/3')
         .set('access_token', 'tokensiapanichhh')
         .set('Accept', 'application/json')
         .expect('Content-Type', /json/)

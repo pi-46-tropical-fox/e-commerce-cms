@@ -5,6 +5,9 @@ class ProductController {
     static getProducts(req,res,next) {
         Product.findAll()
             .then(products => {
+                products.forEach(e => {
+                    e.price =`Rp ${new Intl.NumberFormat('ID').format(e.price)}`
+                });
                 res.status(200).json({products})
             })
             .catch(err => {

@@ -2,11 +2,7 @@
 node_modules
 /dist
 
-Vegetables.vue
-Fruits.vue
-Cakes.vue
-Foodies.vue
-vue.config.js
+
 
 # local env files
 .env.local

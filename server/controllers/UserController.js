@@ -10,7 +10,6 @@ class UserController {
             password: req.body.password,
             role: req.body.role || null
         }
-        console.log(userObj);
         User.create(userObj)
         .then(user => {
             res.status(201).json({email: user.email, message: 'Successfully registered'})

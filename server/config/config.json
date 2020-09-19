@@ -9,7 +9,7 @@
   "test": {
     "username": "postgres",
     "password": "postgres",
-    "database": "eCommerceCMS_test",
+    "database": "eCommerceCMS_test2",
     "host": "localhost",
     "dialect": "postgres"
   },
