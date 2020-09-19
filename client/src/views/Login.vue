@@ -1,6 +1,6 @@
 <template>
   <div class="container" style="margin-top: 200px;">
-    <div class="container bg-dark shadow" style="width: 400px; padding: 30px 0;border-radius: 10px;">
+    <div class="container bg-dark shadow animate__animated animate__zoomIn" style="width: 400px; padding: 30px 0;border-radius: 10px;">
         <form @submit.prevent="loginSubmit">
           <div class="form-group">
             <div class="col">

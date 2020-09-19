@@ -1,5 +1,5 @@
 <template>
-  <div class="home" style="margin-top: 80px;">
+  <div class="home animate__animated animate__zoomIn" style="margin-top: 80px;">
     <img alt="logo" src="https://cdn.pixabay.com/photo/2016/03/31/19/42/clothes-1295223_960_720.png" style="height: 150px; margin-bottom: 20px;">
     <HelloWorld msg="Welcome to Sepatu-KW"/>
   </div>

@@ -1,5 +1,5 @@
 <template>
-  <div class="container" style="margin-top: 80px">
+  <div class="container animate__animated animate__zoomIn" style="margin-top: 80px">
     <h2>Add New Product</h2>
     <div class="container col-6 mt-4">
     <form @submit.prevent="addProduct">
@@ -52,11 +52,10 @@ export default {
         category: this.category
       }
       this.$store.dispatch('addProduct', payload)
-      this.$router.push({ path: '/product' })
       this.name = ''
       this.image_url = ''
-      this.price = ''
-      this.stock = ''
+      this.price = null
+      this.stock = null
       this.category = ''
     }
   }

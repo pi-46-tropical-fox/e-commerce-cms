@@ -36,6 +36,7 @@ export default {
       this.$router.push({ path: '/' })
     },
     addProduct () {
+      this.$store.commit('SET_ADD_SUCCESS', false)
       this.$router.push({ path: '/add' })
     }
   },

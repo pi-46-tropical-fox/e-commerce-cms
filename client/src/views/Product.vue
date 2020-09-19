@@ -1,5 +1,5 @@
 <template>
-  <div class="container">
+  <div class="container animate__animated animate__fadeIn">
     <!-- <h1>This is an product page</h1> -->
       <div class="row col-centered">
         <Card v-for="product in productRp" :key="product.id" :product="product"></Card>

@@ -8,6 +8,7 @@ class ProductController {
             image_url: req.body.image_url,
             price: req.body.price,
             stock: req.body.stock,
+            category: req.body.category,
             createdAt: new Date,
             updatedAt: new Date
         })

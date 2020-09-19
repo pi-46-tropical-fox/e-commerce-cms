@@ -1,5 +1,5 @@
 <template>
-  <div class="hello container">
+  <div class="hello container animate__animated animate__zoomIn">
     <h1>{{ msg }}</h1>
     <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Sed ad dolorem a in veritatis error, id sequi. Nihil ducimus sunt, ex, fuga fugiat cum itaque sint reiciendis modi voluptatum alias.</p>
     <div class="container" v-if="$store.state.isLogin === false">

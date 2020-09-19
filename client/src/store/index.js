@@ -1,6 +1,8 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 import axios from 'axios'
+import Swal from 'sweetalert2'
+import router from '../router'
 
 Vue.use(Vuex)
 
@@ -10,7 +12,9 @@ export default new Vuex.Store({
     product: {},
     price: '',
     isLogin: false,
-    role: ''
+    role: '',
+    addSuccess: false,
+    editSuccess: false
   },
   mutations: {
     SET_PRODUCTS (state, payload) {
@@ -37,6 +41,12 @@ export default new Vuex.Store({
     },
     SET_ROLE (state, payload) {
       state.role = payload
+    },
+    SET_ADD_SUCCESS (state, payload) {
+      state.addSuccess = payload
+    },
+    SET_EDIT_SUCCESS (state, payload) {
+      state.editSuccess = payload
     }
   },
   actions: {
@@ -84,10 +94,17 @@ export default new Vuex.Store({
       })
         .then(({ data }) => {
           console.log(data)
+          commit('SET_ADD_SUCCESS', true)
           commit('ADD_PRODUCT', data)
+          router.push({ path: '/product' })
+          Swal.fire({
+            icon: 'success',
+            title: 'Success Add Product'
+          })
         })
-        .catch((err) => {
-          console.log(err)
+        .catch(({ response }) => {
+          console.log(response.data.message)
+          Swal.fire(response.data.message)
         })
     },
     deleteProduct ({ commit }, id) {
@@ -101,6 +118,7 @@ export default new Vuex.Store({
         .then(() => {
           console.log('sukses delete')
           commit('DELETE_PRODUCT', +id)
+          router.push({ path: '/product' })
         })
         .catch((err) => {
           console.log(err)
@@ -118,9 +136,11 @@ export default new Vuex.Store({
         .then(({ data }) => {
           console.log(data)
           commit('SET_EDIT_PRODUCT', payload)
+          commit('SET_EDIT_SUCCESS', true)
         })
-        .catch((err) => {
-          console.log(err)
+        .catch(({ response }) => {
+          // console.log(response.data.message)
+          Swal.fire(response.data.message)
         })
     },
     login ({ commit }, payload) {
@@ -137,8 +157,9 @@ export default new Vuex.Store({
           commit('SET_ROLE', data.role)
           console.log(data)
         })
-        .catch((err) => {
-          console.log(err)
+        .catch(({ response }) => {
+          // console.log(response.data.message)
+          Swal.fire(response.data.message)
         })
     },
     logout ({ commit }) {

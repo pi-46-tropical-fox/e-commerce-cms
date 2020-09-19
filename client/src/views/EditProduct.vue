@@ -1,5 +1,5 @@
 <template>
-  <div class="container" style="margin-top: 80px">
+  <div class="container animate__animated animate__zoomIn" style="margin-top: 80px">
     <h2>Edit Product</h2>
     <div class="container col-6 mt-4">
     <form @submit.prevent="editProduct">
@@ -47,21 +47,23 @@ export default {
         category: this.product.category
       }
       this.$store.dispatch('editProduct', payload)
-      this.$router.push({ path: `/product/${this.$route.params.id}` })
-      // this.name = ''
-      // this.image_url = ''
-      // this.price = ''
-      // this.stock = ''
-      // this.category = ''
     }
   },
   computed: {
     product () {
       return this.$store.state.product
+    },
+    isSuccess () {
+      return this.$store.state.editSuccess
     }
   },
   created () {
     this.getProduct()
+  },
+  updated () {
+    if (this.$store.state.editSuccess) {
+      this.$router.push({ path: `/product/${this.$route.params.id}` })
+    }
   }
 }
 </script>
