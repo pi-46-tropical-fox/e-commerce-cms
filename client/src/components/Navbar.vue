@@ -12,12 +12,15 @@
                 <li class="nav-item">
                     <router-link to="/add" class="nav-link">Add Product</router-link>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#" @click="logout()" >Logout</a>
-                </li>
+                
                 <!-- <li class="nav-item">
                     <a class="nav-link" href="#">Pricing</a>
                 </li> -->
+            </ul>
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item">
+                    <a class="nav-link text-primary" href="#" @click="logout()" >Logout</a>
+                </li>
             </ul>
         </div>
     </nav>
