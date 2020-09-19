@@ -5,7 +5,8 @@
 	"main": "app.js",
 	"scripts": {
 		"test": "npx jest --detectOpenHandles --forceExit --runInBand --verbose --watchAll",
-		"dev": "npx nodemon -r dotenv/config ./bin/www"
+		"dev": "npx nodemon -r dotenv/config ./bin/www",
+		"start": "node ./bin/www"
 	},
 	"keywords": [],
 	"author": "",
