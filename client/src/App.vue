@@ -16,10 +16,10 @@
 export default {
   name: 'App',
   methods: {
-      Close () {
-          localStorage.clear()
-          this.$router.push({name: 'Login'}).catch(() => {})
-      }
+    Close () {
+      localStorage.clear()
+      this.$router.push({ name: 'Login' }).catch(() => {})
+    }
   }
 }
 </script>

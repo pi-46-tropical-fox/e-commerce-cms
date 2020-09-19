@@ -10,7 +10,7 @@
                                 <label for="reloginEmail" class="col-sm-4 col-form-label">Email</label>
                                 <div class="col-sm-8">
                                     <input v-model="email" type="text" name="" id="loginEmail" class="form-control">
-                                </div>                                
+                                </div>
                             </div>
                             <div class="form-group row">
                                 <label for="loginPassword" class="col-sm-4 col-form-label">Password</label>
@@ -35,23 +35,22 @@
 export default {
   name: 'Login',
   data () {
-      return {
-          email: '',
-          password: ''
-      }
+    return {
+      email: '',
+      password: ''
+    }
   },
   methods: {
-      login () {
-          this.$store.dispatch('login', {
-              email: this.email,
-              password: this.password
-          })
-      }
+    login () {
+      this.$store.dispatch('login', {
+        email: this.email,
+        password: this.password
+      })
+    }
   }
 }
 </script>
 
 <style scoped>
-
 
 </style>

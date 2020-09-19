@@ -16,7 +16,7 @@ export default new Vuex.Store({
       state.products = payload
     },
     // fetch product by id
-    setSelectedProduct (state,payload) {
+    setSelectedProduct (state, payload) {
       state.selectedProduct = payload
     },
     // merubah v model pada selectedProduct
@@ -31,21 +31,21 @@ export default new Vuex.Store({
     },
     setStock (state, payload) {
       state.selectedProduct.stock = payload
-    },
+    }
   },
   actions: {
     // action untuk login
     login (context, payload) {
-      const {email, password} = payload
+      const { email, password } = payload
 
       axios({
         method: 'post',
         url: '/login',
         data: {
-          email,password
+          email, password
         }
       })
-        .then(({data}) => {
+        .then(({ data }) => {
           // console.log(data)
           Swal.fire(
             'Good job!',
@@ -53,25 +53,25 @@ export default new Vuex.Store({
             'success'
           )
           localStorage.setItem('access_token', data.access_token)
-          router.push({name: 'Home'})
+          router.push({ name: 'Home' })
         })
         .catch(err => {
           // console.log(err.response.data);
           Swal.fire({
             icon: 'error',
             title: 'Oops...',
-            text: `${err.response.data.message}`,
+            text: `${err.response.data.message}`
           })
         })
     },
     // action untuk fetch data
-    fetchProducts ({commit}) {
+    fetchProducts ({ commit }) {
       // context.commit => distruct {commit}
       axios({
         method: 'get',
         url: '/products',
         headers: {
-          access_token:localStorage.access_token
+          access_token: localStorage.access_token
         }
       })
         .then(({ data }) => {
@@ -85,12 +85,12 @@ export default new Vuex.Store({
         })
     },
     // fetch Product By Id
-    fetchProductById ({commit}, id) {
+    fetchProductById ({ commit }, id) {
       axios({
         method: 'get',
         url: '/products/' + id,
         headers: {
-          access_token:localStorage.access_token
+          access_token: localStorage.access_token
         }
       })
         .then(({ data }) => {
@@ -106,13 +106,13 @@ export default new Vuex.Store({
         })
     },
     // action edit Product
-    editProduct (_,payload) {
-      const {id, name, image_url,price,stock} = payload
+    editProduct (_, payload) {
+      const { id, name, image_url, price, stock } = payload
       axios({
         method: 'put',
         url: '/products/' + id,
         headers: {
-          access_token:localStorage.access_token
+          access_token: localStorage.access_token
         },
         data: {
           name,
@@ -134,19 +134,18 @@ export default new Vuex.Store({
           Swal.fire({
             icon: 'error',
             title: 'Oops...',
-            text: `${err.response.data.errors}`,
+            text: `${err.response.data.errors}`
           })
-
         })
     },
     // submit Product
     submitProduct (_, payload) {
-      const {name,image_url,price,stock} = payload
+      const { name, image_url, price, stock } = payload
       axios({
         method: 'post',
         url: '/products',
         headers: {
-          access_token:localStorage.access_token
+          access_token: localStorage.access_token
         },
         data: {
           name,
@@ -168,18 +167,18 @@ export default new Vuex.Store({
           Swal.fire({
             icon: 'error',
             title: 'Oops...',
-            text: `${err.response.data.errors}`,
+            text: `${err.response.data.errors}`
           })
         })
     },
     // delete Product
     deleteProduct (_, payload) {
-      const {id} = payload
+      const { id } = payload
       axios({
         method: 'delete',
         url: '/products/' + id,
         headers: {
-          access_token:localStorage.access_token
+          access_token: localStorage.access_token
         }
       })
         .then(({ data }) => {
@@ -188,7 +187,7 @@ export default new Vuex.Store({
             'Good job!',
             `${data.message}`,
             'success')
-          router.push({name: 'Home'}).catch(err => {})
+          router.push({ name: 'Home' }).catch(err => {})
         })
         .catch(err => {
           console.log(err)

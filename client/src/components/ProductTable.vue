@@ -44,7 +44,8 @@ export default {
     },
     deleteProduct (id) {
       // console.log(productId);
-      this.$store.dispatch('deleteProduct', {id})
+      this.$store.dispatch('deleteProduct', { id })
+      this.$store.state.products = this.$store.state.products.filter(item => item.id !== id)
       // axios({
       //   method: 'delete',
       //   url: '/products/' + id,

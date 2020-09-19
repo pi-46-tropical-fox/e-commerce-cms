@@ -47,7 +47,7 @@ export default {
   },
   methods: {
     submitProduct () {
-      const {name,image_url, price, stock} = this
+      const { name, image_url, price, stock } = this
       this.$store.dispatch('submitProduct', {
         name, image_url, price, stock
       })

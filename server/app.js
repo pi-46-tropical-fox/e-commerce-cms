@@ -13,8 +13,8 @@ app.use(express.json())
 app.use(route)
 
 app.use(errHandler)
-app.listen(PORT, () => console.log(`server is listen on port ${PORT}`))
-// module.exports = app
+// app.listen(PORT, () => console.log(`server is listen on port ${PORT}`))
+module.exports = app
 
 
 

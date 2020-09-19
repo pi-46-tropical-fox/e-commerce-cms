@@ -40,7 +40,7 @@ export default {
         method: 'get',
         url: '/products/',
         headers: {
-          access_token:localStorage.access_token
+          access_token: localStorage.access_token
         }
       })
         .then(({ data }) => {

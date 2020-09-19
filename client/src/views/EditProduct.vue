@@ -76,7 +76,7 @@ export default {
       set (value) {
         this.$store.commit('setStock', value)
       }
-    },
+    }
     // selectedProduct () {
     //   return this.$store.state.selectedProduct
     // }
@@ -136,7 +136,7 @@ export default {
   },
   created () {
     this.fetchProductById()
-  },
+  }
 }
 </script>
 
