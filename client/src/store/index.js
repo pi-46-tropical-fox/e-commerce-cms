@@ -47,11 +47,21 @@ export default new Vuex.Store({
       })
         .then(({data}) => {
           // console.log(data)
+          Swal.fire(
+            'Good job!',
+            `${data.email} has been logged`,
+            'success'
+          )
           localStorage.setItem('access_token', data.access_token)
           router.push({name: 'Home'})
         })
         .catch(err => {
-          console.log(err);
+          // console.log(err.response.data);
+          Swal.fire({
+            icon: 'error',
+            title: 'Oops...',
+            text: `${err.response.data.message}`,
+          })
         })
     },
     // action untuk fetch data
@@ -65,7 +75,7 @@ export default new Vuex.Store({
         }
       })
         .then(({ data }) => {
-          console.log(data, '<<< ini data dari store')
+          // console.log(data, '<<< ini data dari store')
           // this.products = data
           // sebelum dimasukan kedalam state panggil dulu mutation (commit)
           commit('setProducts', data)
@@ -84,7 +94,7 @@ export default new Vuex.Store({
         }
       })
         .then(({ data }) => {
-          console.log(data);
+          // console.log(data);
           // this.name = data.name
           // this.image_url = data.image_url
           // this.price = data.price
@@ -112,10 +122,21 @@ export default new Vuex.Store({
         }
       })
         .then(({ data }) => {
+          // console.log(data)
+          Swal.fire(
+            'Good job!',
+            `${data.message}`,
+            'success')
           router.push({ name: 'Home' })
         })
         .catch(err => {
-          console.log(err)
+          // console.log(err.response.data.errors)
+          Swal.fire({
+            icon: 'error',
+            title: 'Oops...',
+            text: `${err.response.data.errors}`,
+          })
+
         })
     },
     // submit Product
@@ -135,10 +156,20 @@ export default new Vuex.Store({
         }
       })
         .then(({ data }) => {
+          // console.log(data)
+          Swal.fire(
+            'Good job!',
+            `${data.name} has been added`,
+            'success')
           router.push({ name: 'Home' })
         })
         .catch(err => {
-          console.log(err)
+          // console.log(err.response.data.errors)
+          Swal.fire({
+            icon: 'error',
+            title: 'Oops...',
+            text: `${err.response.data.errors}`,
+          })
         })
     },
     // delete Product
@@ -152,6 +183,11 @@ export default new Vuex.Store({
         }
       })
         .then(({ data }) => {
+          // console.log(data)
+          Swal.fire(
+            'Good job!',
+            `${data.message}`,
+            'success')
           router.push({name: 'Home'}).catch(err => {})
         })
         .catch(err => {

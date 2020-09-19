@@ -34,7 +34,7 @@
 </template>
 
 <script>
-import axios from '../config/axios'
+// import axios from '../config/axios'
 export default {
   name: 'ProductTable',
   props: ['products'],
