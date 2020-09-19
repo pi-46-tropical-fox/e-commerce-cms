@@ -9,8 +9,7 @@ class UserController {
                 firstName: req.body.firstName.trim(),
                 lastName: req.body.lastName.trim(),
                 email: req.body.email.trim(),
-                password: req.body.password.trim(),
-                role: req.body.role.trim()
+                password: req.body.password.trim()
             }
             const user = await User.create(obj)
             const access_token = generateToken(user)

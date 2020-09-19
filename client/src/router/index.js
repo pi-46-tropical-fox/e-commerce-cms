@@ -18,42 +18,49 @@ const routes = [
     path: '/login',
     name: 'Login',
     component: Login
+    // beforeEnter: (to, from, next) => {
+    //   if (localStorage.getItem('access_token')) {
+    //     next({ name: 'Home' })
+    //   } else {
+    //     next()
+    //   }
+    // }
   },
   {
     path: '/products',
     name: 'Products',
-    component: Products,
-    beforeEnter: (to, from, next) => {
-      if (localStorage.getItem('access_token')) {
-        next()
-      } else {
-        next({ name: 'Home' })
-      }
-    }
+    component: Products
+    // beforeEnter: (to, from, next) => {
+    //   if (localStorage.getItem('access_token')) {
+    //     next()
+    //   } else {
+    //     next({ name: 'Home' })
+    //   }
+    // }
   },
   {
     path: '/products/add',
     name: 'Add Form',
-    component: AddForm,
-    beforeEnter: (to, from, next) => {
-      if (localStorage.getItem('access_token')) {
-        next()
-      } else {
-        next({ name: 'Home' })
-      }
-    }
+    component: AddForm
+    // beforeEnter: (to, from, next) => {
+    //   if (localStorage.getItem('access_token')) {
+    //     next()
+    //   } else {
+    //     next({ name: 'Home' })
+    //   }
+    // }
   },
   {
     path: '/products/edit/:productId',
     name: 'Edit Form',
-    component: EditForm,
-    beforeEnter: (to, from, next) => {
-      if (localStorage.getItem('access_token')) {
-        next()
-      } else {
-        next({ name: 'Home' })
-      }
-    }
+    component: EditForm
+    // beforeEnter: (to, from, next) => {
+    //   if (localStorage.getItem('access_token')) {
+    //     next()
+    //   } else {
+    //     next({ name: 'Home' })
+    //   }
+    // }
   }
 ]
 
@@ -61,6 +68,16 @@ const router = new VueRouter({
   mode: 'history',
   base: process.env.BASE_URL,
   routes
+})
+
+router.beforeEach((to, from, next) => {
+  if (to.name !== 'Login' && !localStorage.getItem('access_token')) {
+    next({ name: 'Login' })
+  } else if (to.name === 'Login' && localStorage.getItem('access_token')) {
+    next({ name: 'Home' })
+  } else {
+    next()
+  }
 })
 
 export default router

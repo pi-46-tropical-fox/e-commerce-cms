@@ -18,7 +18,7 @@ let data = [
     lastName: 'Hamka',
     email: 'salman@mail.com',
     password: bcrypt.hashSync('123456', salt),
-    role: 'admin',
+    role: 'customer',
     createdAt: new Date(),
     updatedAt: new Date()
   }
