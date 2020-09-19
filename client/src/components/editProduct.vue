@@ -8,7 +8,7 @@
       </div>
       <div class="col-6">
         <div class="container">
-          <div class="container">
+          <div class="container col-9">
             <h1>Edit Product</h1>
             <form @submit.prevent="editProduct">
               <div class="form-group">
@@ -63,35 +63,38 @@
 
 <script>
 export default {
-  name: "EditProduct",
-  data() {
+  name: 'EditProduct',
+  data () {
     return {
-      dataProd: {},
+      dataProd: {}
     //   image_url: this.dataProd.image_url,
     //   name: this.dataProd.name,
     //     price: this.dataProd.price,
     //     stock: this.dataProd.stock
-    };
+    }
   },
   methods: {
-    editProduct() {
-      let data = {
+    editProduct () {
+      const data = {
         image_url: this.dataProd.image_url,
         name: this.dataProd.name,
         price: this.dataProd.price,
         stock: this.dataProd.stock
-      };
-      let id = this.$route.params.id;
-      this.$store.dispatch("edit", { data, id });
+      }
+      const id = this.$route.params.id
+      this.$store.dispatch('edit', { data, id })
     }
   },
   computed: {
-    product() {
-      this.dataProd = this.$store.state.productData;
-      return this.$store.state.productData;
+    product () {
+      this.dataProd = this.$store.state.productData
+      return this.$store.state.productData
     }
+  },
+  created(){
+    this.$store.dispatch('getOne',this.$route.params.id)
   }
-};
+}
 </script>
 
 <style></style>

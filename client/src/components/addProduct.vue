@@ -52,28 +52,28 @@
 
 <script>
 export default {
-  name: "addProduct",
+  name: 'addProduct',
   props: {},
-  data(){
-    return{
-      image_url:'',
-      name:'',
-      price:null,
-      stock:null
+  data () {
+    return {
+      image_url: '',
+      name: '',
+      price: null,
+      stock: null
     }
   },
-  methods:{
-    addProduct(){
-      let newProduct = {
-        image_url:this.image_url,
-        name:this.name,
-        price:this.price,
-        stock:this.stock
+  methods: {
+    addProduct () {
+      const newProduct = {
+        image_url: this.image_url,
+        name: this.name,
+        price: this.price,
+        stock: this.stock
       }
-      this.$store.dispatch('add',newProduct)
+      this.$store.dispatch('add', newProduct)
     }
   }
-};
+}
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
