@@ -2,7 +2,7 @@ import axios from 'axios'
 import Swal from 'sweetalert'
 
 const instance = axios.create({
-    baseURL: 'http://localhost:3000'
+    baseURL: 'https://desolate-bastion-39685.herokuapp.com/'
 })
 
 // Add a response interceptor
