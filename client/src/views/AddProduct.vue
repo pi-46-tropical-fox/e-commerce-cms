@@ -33,7 +33,7 @@
 </template>
 
 <script>
-import axios from '../config/axios'
+// import axios from '../config/axios'
 
 export default {
   name: 'AddProduct',
@@ -47,25 +47,29 @@ export default {
   },
   methods: {
     submitProduct () {
-      axios({
-        method: 'post',
-        url: '/products',
-        headers: {
-          access_token:localStorage.access_token
-        },
-        data: {
-          name: this.name,
-          image_url: this.image_url,
-          price: this.price,
-          stock: this.stock
-        }
+      const {name,image_url, price, stock} = this
+      this.$store.dispatch('submitProduct', {
+        name, image_url, price, stock
       })
-        .then(({ data }) => {
-          this.$router.push({ name: 'Home' })
-        })
-        .catch(err => {
-          console.log(err)
-        })
+      // axios({
+      //   method: 'post',
+      //   url: '/products',
+      //   headers: {
+      //     access_token:localStorage.access_token
+      //   },
+      //   data: {
+      //     name: this.name,
+      //     image_url: this.image_url,
+      //     price: this.price,
+      //     stock: this.stock
+      //   }
+      // })
+      //   .then(({ data }) => {
+      //     this.$router.push({ name: 'Home' })
+      //   })
+      //   .catch(err => {
+      //     console.log(err)
+      //   })
     }
   }
 }

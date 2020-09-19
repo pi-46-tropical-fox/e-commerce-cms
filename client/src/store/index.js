@@ -117,6 +117,29 @@ export default new Vuex.Store({
         .catch(err => {
           console.log(err)
         })
+    },
+    // submit Product
+    submitProduct (_, payload) {
+      const {name,image_url,price,stock} = payload
+      axios({
+        method: 'post',
+        url: '/products',
+        headers: {
+          access_token:localStorage.access_token
+        },
+        data: {
+          name,
+          image_url,
+          price,
+          stock
+        }
+      })
+        .then(({ data }) => {
+          router.push({ name: 'Home' })
+        })
+        .catch(err => {
+          console.log(err)
+        })
     }
   },
   // getters: {
