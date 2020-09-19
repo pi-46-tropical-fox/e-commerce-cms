@@ -1,0 +1,10 @@
+[debug] [2020-09-19T08:49:05.843Z] ----------------------------------------------------------------------
+[debug] [2020-09-19T08:49:05.847Z] Command:       /usr/local/bin/node /usr/local/bin/firebase login
+[debug] [2020-09-19T08:49:05.848Z] CLI Version:   8.10.0
+[debug] [2020-09-19T08:49:05.848Z] Platform:      darwin
+[debug] [2020-09-19T08:49:05.848Z] Node Version:  v10.15.1
+[debug] [2020-09-19T08:49:05.849Z] Time:          Sat Sep 19 2020 15:49:05 GMT+0700 (Western Indonesia Time)
+[debug] [2020-09-19T08:49:05.849Z] ----------------------------------------------------------------------
+[debug] [2020-09-19T08:49:05.850Z] 
+[info] i  Firebase optionally collects CLI usage and error reporting information to help improve our products. Data is collected in accordance with Google's privacy policy (https://policies.google.com/privacy) and is not used to identify you.
+ 
