@@ -4,20 +4,30 @@ const {User} = require('../models')
 
 class UserController{
     static login (req, res, next) {
-        User.findOne({where:{email: req.body.email}})
-        .then(user =>{
-            let valid = comparer(req.body.password, user.password)
-            if(valid){
-                let access_token = generateToken(user)
-                res.status(200).json({access_token, email: data.email})
-            }
-            else{
-                res.status(400).json({message: 'Invalid Username or Password'})
+        let options = {
+            where: {
+                email: req.body.email,
+            },
+        };
+        User.findOne(options)
+        .then((data) => {
+            if (data) {
+            let isValid = comparer(req.body.password, data.password);
+                if (isValid) {
+                    const access_token = generateToken(data);
+                    return res.status(200).json({ access_token, email: data.email });
+                } 
+                else {
+                    throw { message: "Invalid email or password", statusCode: 400 };
+                }
+            } 
+            else {
+                throw { message: "Invalid email or password", statusCode: 400 };
             }
         })
-        .catch(err =>{
-            res.status(400).json({message: 'Invalid Username or Password'})
-        })
+        .catch((err) => {
+            return next(err);
+        });
     }
 
 }

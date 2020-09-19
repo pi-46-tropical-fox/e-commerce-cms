@@ -1,5 +1,5 @@
 'use strict';
-
+const {hash}= require('../helpers/bcrypt')
 module.exports = {
   up: async (queryInterface, Sequelize) => {
     /**
@@ -11,10 +11,11 @@ module.exports = {
      *   isBetaMember: false
      * }], {});
     */
+
     return queryInterface.bulkInsert('Users', [{
       name: 'chika',
       email: 'merchika@gmail.com',
-      password: "12345",
+      password: hash('terserah'),
       role: 'admin',
       createdAt: new Date(),
       updatedAt: new Date()
