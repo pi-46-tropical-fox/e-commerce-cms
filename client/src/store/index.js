@@ -7,12 +7,11 @@ Vue.use(Vuex)
 export default new Vuex.Store({
   state: {
     products: [],
-    product: {},
+    product: [],
     filters: [{ gender: 'Men' }, { gender: 'Women' }],
     categories: [],
-    isLogin: false,
-    notification: []
-
+    notification: [],
+    isLogin: false
   },
   mutations: {
     SET_IS_LOGIN (state, payload) {
@@ -22,7 +21,7 @@ export default new Vuex.Store({
       state.products = payload
     },
     SET_PRODUCT (state, payload) {
-      state.product = payload.product
+      state.product = payload
     },
     SET_CATEGORIES (state, payload) {
       state.categories = payload
@@ -76,19 +75,21 @@ export default new Vuex.Store({
         })
     },
     addProduct (context, payload) {
-      ProductsAPI({
-        url: '/products/add',
-        method: 'PUT',
-        headers: { access_token: localStorage.getItem('access_token') },
-        data: payload
+      return new Promise((resolve, reject) => {
+        ProductsAPI({
+          url: '/products/add',
+          method: 'POST',
+          headers: { access_token: localStorage.getItem('access_token') },
+          data: payload
+        })
+          .then(({ data }) => {
+            context.dispatch('fetchProducts')
+            resolve(data)
+          })
+          .catch(err => {
+            reject(err)
+          })
       })
-        .then(({ data }) => {
-          console.log(data)
-          context.dispatch('fetchProducts')
-        })
-        .catch(err => {
-          console.log(err)
-        })
     },
     editProduct (context, payload) {
       ProductsAPI({
@@ -97,42 +98,46 @@ export default new Vuex.Store({
         headers: { access_token: localStorage.getItem('access_token') }
       })
         .then(({ data }) => {
-          console.log(data)
-          context.commit('SET_PRODUCT', data)
+          console.log(data.product, '<<<ini dr edit')
+          context.commit('SET_PRODUCT', data.product)
         })
         .catch(err => {
           console.log(err)
         })
     },
     updateProduct (context, payload) {
-      ProductsAPI({
-        url: `/products/edit/${payload}`,
-        method: 'PUT',
-        headers: { access_token: localStorage.getItem('access_token') },
-        data: payload
+      return new Promise((resolve, reject) => {
+        ProductsAPI({
+          url: `/products/edit/${payload.id}`,
+          method: 'PUT',
+          headers: { access_token: localStorage.getItem('access_token') },
+          data: payload
+        })
+          .then(({ data }) => {
+            resolve(data)
+          })
+          .catch(err => {
+            reject(err)
+          })
       })
-        .then(({ data }) => {
-          console.log(data)
-          context.dispatch('fetchProducts')
-        })
-        .catch(err => {
-          console.log(err)
-        })
     },
     deleteProduct (context, payload) {
-      ProductsAPI({
-        url: `/products/delete/${payload.id}`,
-        method: 'DELETE',
-        headers: { access_token: localStorage.getItem('access_token') },
-        data: payload
-      })
-        .then(({ data }) => {
-          console.log(data)
-          context.dispatch('fetchProducts')
+      const agreement = confirm('Are you sure to delete this item?')
+      if (agreement) {
+        ProductsAPI({
+          url: `/products/delete/${payload.id}`,
+          method: 'DELETE',
+          headers: { access_token: localStorage.getItem('access_token') },
+          data: payload
         })
-        .catch(err => {
-          console.log(err)
-        })
+          .then(({ data }) => {
+            console.log(data)
+            context.dispatch('fetchProducts')
+          })
+          .catch(err => {
+            console.log(err)
+          })
+      }
     },
     fetchCategories (context) {
       ProductsAPI({
@@ -147,6 +152,23 @@ export default new Vuex.Store({
         .catch(err => {
           console.log(err)
         })
+    },
+    addCategory (context, payload) {
+      return new Promise((resolve, reject) => {
+        ProductsAPI({
+          url: '/categories/add',
+          method: 'POST',
+          headers: { access_token: localStorage.getItem('access_token') },
+          data: payload
+        })
+          .then(({ data }) => {
+            context.dispatch('fetchProducts')
+            resolve(data)
+          })
+          .catch(err => {
+            reject(err)
+          })
+      })
     }
   },
   modules: {

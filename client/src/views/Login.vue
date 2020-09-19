@@ -60,8 +60,13 @@ export default {
       }
 
       this.$store.dispatch('login', payload)
-      this.$store.commit('SET_IS_LOGIN', true)
-      this.$router.push('/Home')
+        .then(() => {
+          this.$store.commit('SET_IS_LOGIN', true)
+          this.$router.push('/Home')
+        })
+        .catch(err => {
+          console.log(err)
+        })
     }
   }
 }

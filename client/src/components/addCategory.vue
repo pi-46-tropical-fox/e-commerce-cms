@@ -45,6 +45,12 @@ export default {
       }
 
       this.$store.dispatch('addCategory', payload)
+        .then(() => {
+          this.$router.push('/Home')
+        })
+        .catch(err => {
+          console.log(err)
+        })
     }
   }
 }

@@ -11,7 +11,7 @@
               <b-form  class="mt-5" @submit.prevent="updateProduct">
                 <b-form-group label="Name :">
                   <b-form-input
-                    v-model="name"
+                    v-model="product.name"
                     type="text"
                     required
                     placeholder="Enter Product Name"
@@ -22,7 +22,7 @@
                 <b-form-group label="Image URL :">
                   <b-form-input
                     type="text"
-                    v-model="image_url"
+                    v-model="product.image_url"
                     required
                     placeholder="Enter Image URL"
                   ></b-form-input>
@@ -31,7 +31,7 @@
                 <b-form-group label="Price:">
                   <b-form-input
                     type="number"
-                    v-model="price"
+                    v-model="product.price"
                     required
                     placeholder="Enter Price"
                   ></b-form-input>
@@ -40,7 +40,7 @@
                 <b-form-group label="Stock:">
                   <b-form-input
                     type="number"
-                    v-model="stock"
+                    v-model="product.stock"
                     required
                     placeholder="Enter Stock"
                   ></b-form-input>
@@ -49,7 +49,7 @@
                 <b-form-group label="Gender">
                   <b-form-select
                     id="title-input"
-                    v-model="gender"
+                    v-model="product.gender"
                     :options="filters"
                     required
                     value-field="gender"
@@ -60,14 +60,13 @@
                 <b-form-group label="Category">
                   <b-form-select
                     id="title-input"
-                    v-model="CategoryId"
+                    v-model="product.CategoryId"
                     :options="categories"
                     required
                     value-field="id"
                     text-field="category"
                   ></b-form-select>
                 </b-form-group>
-
                 <b-button type="submit" variant="primary">Submit</b-button>
               </b-form>
             </b-card-body>
@@ -99,27 +98,27 @@ export default {
     categories () {
       return this.$store.state.categories
     },
-    product () {
-      return this.store.state.product.products
+    product: {
+      get () {
+        return this.$store.state.product
+      }
     }
   },
 
   methods: {
     updateProduct () {
-      const payload = {
-        name: this.name,
-        image_url: this.image_url,
-        price: this.price,
-        stock: this.stock,
-        gender: this.gender,
-        CategoryId: this.CategoryId
-      }
-
-      this.$store.dispatch('updateProduct', payload)
+      this.$store.dispatch('updateProduct', this.product)
+        .then(() => {
+          this.$router.push('/Home')
+        })
+        .catch(err => {
+          console.log(err)
+        })
     }
   },
   created () {
     this.$store.dispatch('editProduct', this.$route.params.id)
+    // console.log(this.product, '<<<< ini dr product created')
   }
 }
 </script>

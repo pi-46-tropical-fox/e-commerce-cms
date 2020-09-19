@@ -111,6 +111,9 @@ export default {
       }
 
       this.$store.dispatch('addProduct', payload)
+        .then(() => {
+          this.$router.push('/Home')
+        })
     }
   },
   created () {

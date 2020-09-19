@@ -7,6 +7,7 @@ import AddProduct from '../components/addProduct.vue'
 import EditProduct from '../components/editProduct.vue'
 import CardGroup from '../components/CardGroup.vue'
 import AddCategory from '../components/addCategory'
+import Dashboard from '../views/dashboard.vue'
 
 Vue.use(VueRouter)
 
@@ -42,6 +43,11 @@ const routes = [
         component: AddCategory
       }
     ]
+  },
+  {
+    path: '/',
+    name: 'Dashboard',
+    component: Dashboard
   },
   {
     path: '/Login',
