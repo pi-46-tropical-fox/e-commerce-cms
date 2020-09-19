@@ -11,6 +11,9 @@ export default new Vuex.Store({
   mutations: {
     setProducts (state, payload) {
       state.products = payload
+    },
+    removeProduct (state, payload) {
+      state.products = state.products.filter(product => product.id !== payload)
     }
   },
   actions: {

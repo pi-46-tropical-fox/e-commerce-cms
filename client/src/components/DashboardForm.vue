@@ -3,7 +3,7 @@
     <!-- <h1>This is supposed to be Dashboard</h1> -->
     <div class="container" >
       <div class="row">
-         <ItemCard v-for="product in products" :key="product.id" :productData="product" @removeData="removeProduct"></ItemCard>
+         <ItemCard v-for="product in products" :key="product.id" :productData="product"></ItemCard>
       </div>
     </div>
 </div>
@@ -24,9 +24,6 @@ export default {
   methods: {
     fetchProducts () {
       this.$store.dispatch('fetchProducts')
-    },
-    removeProduct (id) {
-      this.products = this.products.filter(product => product.id !== id)
     }
   },
   created () {

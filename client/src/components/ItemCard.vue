@@ -7,7 +7,7 @@
             <p class="card-text">Price: {{ productData.price }}</p>
             <p class="card-text">Stock: {{ productData.stock }}</p>
             <a class="btn btn-primary mr-2">
-                <img src="../assets/edit.svg" @click="editProduct(productData.id)">
+                <img src="../assets/edit.svg" @click.prevent="editProduct(productData.id)">
                 Edit
                 </a>
             <a class="btn btn-primary" @click.prevent="deleteProduct(productData.id)">
@@ -32,7 +32,7 @@ export default {
       })
 
         .then(({ response }) => {
-          this.$emit('removeData', id)
+          this.$store.commit('removeProduct', id)
         })
 
         .catch(({ err }) => {

@@ -36,6 +36,18 @@ class ProductController {
 
     }
 
+    static getProductbyId (req, res) {
+        Product.findByPk (req.params.id)
+
+        .then (data => {
+            return res.status (200).json (data)
+        })
+
+        .catch (err => {
+            console.log (err)
+        })
+    }
+
     static editProducts (req, res) {
         let params = {
             name : req.body.name,
