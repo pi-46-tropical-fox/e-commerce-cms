@@ -22,7 +22,8 @@ export default new Vuex.Store({
 
                 router.push('/')
             }).catch(e => {
-                Vue.swal.fire('Error', e.data)
+                Vue.swal.fire(
+                    {icon : 'Error', title : 'Email/Password salah'})
             })
         },
         logout({state}){

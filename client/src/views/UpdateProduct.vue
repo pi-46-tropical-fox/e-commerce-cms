@@ -4,7 +4,7 @@
         <div class="row">
             <div class="col">
                 <ProductItem :noLinks="true" :data="product"/>
-                <ProductForm @submitForm="submitForm" :name="product.name" ::image_url="product.image_url" :price="product.price" :stock="product.stock" :update="true"/>
+                <ProductForm @submitForm="submitForm" :name="product.name" :image_url="product.image_url" :price="product.price" :stock="product.stock" :update="true"/>
             </div>
         </div>
     </div>
