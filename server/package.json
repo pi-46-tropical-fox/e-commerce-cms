@@ -1,0 +1,34 @@
+{
+  "name": "e-commerce-cms",
+  "version": "1.0.0",
+  "description": "Membuat Content Management System untuk e-commerce",
+  "main": "index.js",
+  "scripts": {
+    "test": "jest --runInBand --detectOpenHandles --forceExit",
+    "initdb": "sequelize db:create --env=test && sequelize db:migrate && sequelize db:seed:all --env=test",
+    "start": "node app.js",
+    "dev": "NODE_ENV=development nodemon app.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Obos-NMS/e-commerce-cms.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Obos-NMS/e-commerce-cms/issues"
+  },
+  "homepage": "https://github.com/Obos-NMS/e-commerce-cms#readme",
+  "dependencies": {
+    "bcrypt": "^5.0.0",
+    "cors": "^2.8.5",
+    "dotenv": "^8.2.0",
+    "express": "^4.17.1",
+    "jest": "^26.4.2",
+    "jsonwebtoken": "^8.5.1",
+    "pg": "^8.3.3",
+    "sequelize": "^6.3.5",
+    "supertest": "^4.0.2"
+  }
+}
