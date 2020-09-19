@@ -25,7 +25,7 @@ class UserController {
             if (!isValid) {
                 return res.status(400).json({message: "Invalid Password"})
             }
-            const access_token = generateToken({email: user.email, id: user.id})
+            const access_token = generateToken({email: user.email, id: user.id, role: user.role})
             return res.status(200).json({access_token})
         }
         catch(err) {

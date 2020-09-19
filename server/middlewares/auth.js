@@ -19,7 +19,15 @@ const authentication = async function (req, res, next) {
     }
 }
 const authorization = async function(req, res, next) {
-    try {}
+    try {
+        const {access_token} = req.headers
+        const userData = verifyToken(access_token)
+        if(userData.role == 'admin') {
+            next()
+        } else {
+            return res.status(401).json({message: 'User not authenticated'})
+        }
+    }
     catch(err) {
         console.log(err, '<<< ini error authorization')
         return res.status(500).json({message: 'Internal Server Error'})
