@@ -1,0 +1,50 @@
+@import '../node_modules/bulma/bulma.sass';
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.card-container {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    width: 100%;
+    margin: 0 20px;
+    .card {
+        height: auto;
+        width: 250px;
+        margin: 5px;
+        .card-image {
+            position: relative;
+            height: 250px;
+            overflow: hidden;
+            .card-image-popup {
+                margin: 5px;
+                position: absolute;
+                top: 0;
+                right: 0;
+                z-index: 2;
+            }
+        }
+        .card-content {
+            margin: 5px;
+        }
+    }
+}
+.form-container {
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: rgb(0, 127, 196);
+    form {
+        background-color: white;
+        width: 325px;
+        // box-shadow: 5px 1px 15px 1px rgba(0,0,0,0.49);
+        border-radius: 4px;
+        padding: 40px 20px;
+    }
+}
