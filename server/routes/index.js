@@ -11,5 +11,4 @@ routes.use('/', userRoutes)
 routes.use('/', productRoutes)
 routes.use('/', bannerRoutes)
 
-
 module.exports = routes
