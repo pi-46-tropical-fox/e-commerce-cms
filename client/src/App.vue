@@ -4,7 +4,9 @@
       <!-- <router-link to="/">Home</router-link> -->
       <Navbar/>
     </div>
-    <router-view/>
+    <div class="container my-3">
+      <router-view/>
+    </div>
   </div>
 </template>
 

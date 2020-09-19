@@ -1,28 +1,16 @@
 <template>
   <div class="about">
-    <b-form @submit.prevent="onSubmitLogin">
-      <b-form-group label="Email">
-        <b-form-input
-          id="input-1"
-          v-model="form.email"
-          type="email"
-          required
-          placeholder="Email"
-        ></b-form-input>
-      </b-form-group>
-
-      <b-form-group label="Email">
-        <b-form-input
-          id="input-1"
-          v-model="form.password"
-          type="password"
-          required
-          placeholder="Password"
-        ></b-form-input>
-      </b-form-group>
-
-         <b-button type="submit" variant="primary">Submit</b-button>
-    </b-form>
+    <form @submit.prevent="onSubmitLogin">
+      <div class="form-group">
+        <label class="form-label">Email</label>
+        <input v-model="form.email" class="form-control" type="text" required placeholder="email">
+      </div>
+      <div class="form-group">
+        <label class="form-label">Password</label>
+        <input v-model="form.password" class="form-control" type="password" required placeholder="password">
+      </div>
+      <input type="submit" class="form-control btn btn-primary">
+    </form>
   </div>
 </template>
 
@@ -38,8 +26,7 @@ export default {
     },
     methods:{
       onSubmitLogin(){
-        this.$store.dispatch('login')
-        console.log(this.form.email)
+        this.$store.dispatch('login', {email : this.form.email, password: this.form.password })
       }
     }
 }

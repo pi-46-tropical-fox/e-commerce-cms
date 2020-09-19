@@ -3,11 +3,12 @@ import App from './App.vue'
 import router from './router'
 import store from './store'
 
-import { BootstrapVue } from 'bootstrap-vue'
-import 'bootstrap-vue/dist/bootstrap-vue.min.css'
 import 'bootstrap/dist/css/bootstrap.css'
+import 'sweetalert2/dist/sweetalert2.min.css';
 
-Vue.use(BootstrapVue)
+import VueSweetalert2 from 'vue-sweetalert2'
+
+Vue.use(VueSweetalert2)
 
 Vue.config.productionTip = false
 

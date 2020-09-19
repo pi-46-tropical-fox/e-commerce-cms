@@ -3,6 +3,7 @@ const ProductController = require('../controller/ProductController')
 const { authorization } = require('../middlewares/auth')
 
 router.get('/', ProductController.getProducts)
+router.get('/:id', ProductController.getProductById)
 
 router.use(authorization)
 

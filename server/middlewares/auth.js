@@ -1,13 +1,17 @@
 const { verifyToken, decryptJwt } = require('../helpers/jwt')
 const { User } = require('../models')
 
-const authentication = (req, res, next) => {
+const authentication = async (req, res, next) => {
     try{
-        const { accesss_token } = req.headers
+        const { access_token } = req.headers
 
-        const payload = decryptJwt(accesss_token)
+        if(!access_token){
+            throw { message : 'User not Authenticated', statusCode : 401 }
+        }
 
-        const user = User.findOne({
+        const payload = decryptJwt(access_token)
+
+        const user = await User.findOne({
             where : {
                 id : payload.id,
                 email : payload.email
@@ -27,7 +31,15 @@ const authentication = (req, res, next) => {
 }
 
 const authorization = (req, res, next) => {
-
+    try {
+        if(req.userData.role === 'admin'){
+            next()
+        } else {
+            throw { message : 'Forbidden', statusCode : 403 }
+        }
+    } catch (err){
+        next(err)
+    }
 }
 
 

@@ -35,3 +35,79 @@ none
     "message" : "Email/Password combination not found!"
 }
 ```
+
+## GET /products
+### Request Headers
+```json
+{
+    "access_token" : "<jwt>"
+}
+
+```
+
+### Response Body (200)
+```json
+[
+    {
+        "id" : 1,
+        "name" : ""
+    }
+]
+```
+
+## POST /products
+### Request Headers
+```json
+{
+    "access_token" : "<jwt>"
+}
+```
+
+### Request Body
+```json
+
+```
+
+
+### Response Body (201)
+```json
+{
+
+}
+```
+
+
+## PUT /products/:id
+```json
+{
+    "access_token" : "<jwt>"
+}
+```
+
+### Request Body
+```json
+
+```
+
+
+### Response Body (201)
+```json
+{
+
+}
+```
+
+
+## DELETE /products/:id
+```json
+{
+    "access_token" : "<jwt>"
+}
+```
+
+### Response Body (200)
+```json
+{
+    "message" : "Item deleted"
+}
+```

@@ -15,10 +15,10 @@ module.exports = {
     */
 
     let data = [{
-      name : 'Hal',
+      name : 'admin',
       email : 'hal@g.com',
       role : 'admin',
-      password : 'password',
+      password : '1234',
       createdAt : new Date(),
       updatedAt : new Date()
     }]

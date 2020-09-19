@@ -1,7 +1,6 @@
 const jwt = require('jsonwebtoken')
 const JWT_SECRET = process.env.JWT_SECRET || 'rahasia'
 
-
 function signPayload(payload){
     return jwt.sign(payload, JWT_SECRET)
 }

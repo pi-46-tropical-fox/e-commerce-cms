@@ -60,8 +60,4 @@ afterAll((done) => {
         truncate: true
     }).then(() => done())
     .catch(err => done())
-
-    // queryInterface.bulkDelete('Users', null)
-    // .then(done)
-    // .catch(err => done())
 })
