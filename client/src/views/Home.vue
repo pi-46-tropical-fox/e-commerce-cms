@@ -7,7 +7,7 @@
       <Card
       v-for="product in products"
       :key="product.id"
-      :product = product
+      :product ="product"
       ></Card>
     </div>
   </div>

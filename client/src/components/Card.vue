@@ -10,7 +10,8 @@
          <i class="delete-product fas fa-trash-alt" @click="deleteProduct(product.id)">Delete</i>
         </div>
         <EditForm
-          :product="product"
+          :id="product.id"
+          :item="product"
           ></EditForm>
     </div>
 </template>
@@ -20,6 +21,11 @@ import EditForm from '../components/EditForm'
 export default {
   name: 'Card',
   props: ['product'],
+  data: function () {
+    return  {
+      item: this.product
+    }
+  },
   components: {
     EditForm
   },
@@ -30,6 +36,7 @@ export default {
   },
   computed: {
     currencyFormat () {
+      console.log(this.product.id)
       const output = `Rp${new Intl.NumberFormat().format(this.product.price)},00`
       return output
     }

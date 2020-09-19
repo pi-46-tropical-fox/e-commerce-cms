@@ -7,22 +7,38 @@
 .navbar {
 border-radius: 10px;
 background: linear-gradient(145deg, #e13636, #bd2d2d);
-box-shadow:  20px 20px 39px #9e2626, 
-             -20px -20px 39px #ff3f3f;
+box-shadow:  20px 20px 39px #9e2626, -20px -20px 39px #ff3f3f;
+height: 8vh;
+display: flex;
+align-items: center;
 }
 
 .add-item {
     cursor: pointer;
 }
+.navbar-brand {
+    font-family: 'Fredoka One', cursive;
+    font-size: 3rem;
+}
+.nav-link {
+    font-family: 'Fredoka One', cursive;
+    font-size: 2rem;
+}
 
 /* Home */
+.front-text {
+ font-family: 'Fredoka One', cursive;
+ font-size: 15rem;
+ text-align: center;
+}
 body{
+    border: 10px solid;
     background: #d23232;
     color: #f5efef;
 }
 .card-container{
     display: flex;
-    justify-content: flex-end;
+    justify-content: space-between;
     flex-wrap: wrap-reverse;
     color: #f5efef;
 }
@@ -54,7 +70,7 @@ body{
     display: flex;
     flex-direction: column;
     justify-content: flex-end;
-    max-width: 300px;
+    width: 300px;
     height: 500px;
     margin: 1rem;
     flex-grow: 1;
@@ -97,4 +113,16 @@ body{
     display: flex;
     justify-content: space-between;
     padding: 10%;
+}
+.front-container {
+ display: flex;
+ flex-direction: column;
+ justify-content: center;
+ align-items: center;
+}
+.front-text {
+    border-radius: 12px;
+    background: #d23232;
+    box-shadow:  27px 27px 74px #541414, -27px -27px 74px #ff5050;
+
 }
