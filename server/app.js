@@ -3,6 +3,7 @@
 // if (process.env.NODE_ENV === 'development' || process.env_NODE_ENV === 'test') {
 //   require('dotenv').config()
 // }
+
 require('dotenv').config()
 const express = require('express')
 const app = express()
@@ -22,8 +23,8 @@ app.get('/', (req, res) => {
 app.use('/', router)
 app.use(errorHandler)
 
-// app.listen(port, () => {
-//   console.log('Listening on port:' , port);
-// })
+app.listen(port, () => {
+  console.log('Listening on port:' , port);
+})
 
 module.exports = app
