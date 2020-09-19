@@ -119,6 +119,11 @@ export default new Vuex.Store({
         })
     }
   },
+  // getters: {
+  //   filteredProduct (state) {
+  //     return state.products.filter(product => product.price <= 25000)
+  //   }
+  // },
   modules: {
   }
 })
