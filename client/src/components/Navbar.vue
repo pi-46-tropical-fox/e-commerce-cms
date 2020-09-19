@@ -15,8 +15,7 @@
           Products
         </a>
         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-          <a class="dropdown-item font-weight-bold" @click.prevent="showTableProduct()">Show All Products</a>
-          <a class="dropdown-item font-weight-bold" @click.prevent="showAddForm()">Add New Product</a>
+          <router-link to="/products" class="dropdown-item font-weight-bold">Show All Products</router-link>
         </div>
       </li>
     </ul>
@@ -36,12 +35,6 @@ export default {
   methods: {
     home () {
       this.$router.push({ name: 'Home' })
-    },
-    showTableProduct () {
-      this.$router.push({ path: '/products' })
-    },
-    showAddForm () {
-      this.$router.push({ path: '/products/add' })
     },
     logout () {
       this.$store.dispatch('logoutAccount')

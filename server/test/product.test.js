@@ -91,7 +91,7 @@ describe('Test POST /products', () => {
                         expect(res.body).toHaveProperty('product.price', product_data.price)
                         expect(res.body).toHaveProperty('product.stock', product_data.stock)
                         expect(res.body).toHaveProperty('product.CategoryId', product_data.CategoryId)
-                        expect(res.body).toHaveProperty('message', 'Product added successfully')
+                        expect(res.body).toHaveProperty('message', 'New product has been added')
                         id = res.body.product.id
                         return done()
                     }
@@ -324,7 +324,7 @@ describe('Test PUT /products/:productId', () => {
                     if(err) return done(err)
                     else{
                         expect(res.status).toBe(200)  
-                        expect(res.body).toHaveProperty('message', 'Product updated successfully')
+                        expect(res.body).toHaveProperty('message', 'Product has been updated')
                         expect(res.body).not.toBeFalsy()
                         return done()
                     }
@@ -517,7 +517,7 @@ describe('Test DELETE /products/:productId', () => {
                     if(err) return done(err)
                     else{
                         expect(res.status).toBe(200)  
-                        expect(res.body).toHaveProperty('message', 'Product deleted successfully')
+                        expect(res.body).toHaveProperty('message', 'Product has been deleted')
                         expect(res.body).not.toBeFalsy()
                         return done()
                     }

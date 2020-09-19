@@ -13,7 +13,7 @@ class ProductController {
                 CategoryId: req.body.CategoryId
             }
             const product = await Product.create(obj)
-            return res.status(201).json({product, message: 'Product added successfully'})
+            return res.status(201).json({product, message: 'New product has been added'})
         } catch (err) {
             return next(err)
         }
@@ -59,7 +59,7 @@ class ProductController {
                     id : +req.params.productId
                 }
             })
-            return res.status(200).json({message: 'Product updated successfully'})
+            return res.status(200).json({message: 'Product has been updated'})
         } catch (err) {
             return next(err)
         }
@@ -71,7 +71,7 @@ class ProductController {
                     id : +req.params.productId
                 }
             })
-            return res.status(200).json({message: 'Product deleted successfully'})
+            return res.status(200).json({message: 'Product has been deleted'})
         } catch (err) {
             return next(err)
         }

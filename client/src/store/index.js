@@ -2,6 +2,7 @@ import Vue from 'vue'
 import Vuex from 'vuex'
 import axios from '../config/axios'
 import router from '../router'
+import Swal from 'sweetalert2'
 
 Vue.use(Vuex)
 
@@ -32,7 +33,6 @@ export default new Vuex.Store({
       state.products = state.products.filter(product => product.id !== id)
     },
     addProduct (state, data) {
-      state.products.push(data)
       router.push({ path: '/products' })
     },
     updateProduct (state, data) {
@@ -47,14 +47,28 @@ export default new Vuex.Store({
         data: payload
       })
         .then(({ data }) => {
+          Swal.fire(
+            'Login success!',
+            '',
+            'success'
+          )
           localStorage.setItem('access_token', data.access_token)
           commit('setLoginStatus')
         })
         .catch(err => {
-          console.log(err.response.data)
+          Swal.fire({
+            icon: 'error',
+            title: 'Oops...',
+            text: `${err.response.data.errors.join(', ')}`
+          })
         })
     },
     logoutAccount ({ commit }) {
+      Swal.fire(
+        'Logout success!',
+        '',
+        'success'
+      )
       localStorage.clear()
       commit('setLogoutStatus')
     },
@@ -68,10 +82,13 @@ export default new Vuex.Store({
       })
         .then(({ data }) => {
           commit('setCategories', data)
-          console.log(data, '<<< categories fetched')
         })
         .catch(err => {
-          console.log(err.response.data)
+          Swal.fire({
+            icon: 'error',
+            title: 'Oops...',
+            text: `${err.response.data.errors.join(', ')}`
+          })
         })
     },
     fetchProduct ({ commit }) {
@@ -87,7 +104,11 @@ export default new Vuex.Store({
           console.log(data, '<<< products fetched')
         })
         .catch(err => {
-          console.log(err.response.data)
+          Swal.fire({
+            icon: 'error',
+            title: 'Oops...',
+            text: `${err.response.data.errors.join(', ')}`
+          })
         })
     },
     deletingProduct ({ commit }, id) {
@@ -99,11 +120,19 @@ export default new Vuex.Store({
         }
       })
         .then(({ data }) => {
-          console.log(data)
+          Swal.fire(
+            'Deleted!',
+            `${data.message}`,
+            'success'
+          )
           commit('deleteProduct', id)
         })
         .catch(err => {
-          console.log(err.response.data)
+          Swal.fire({
+            icon: 'error',
+            title: 'Oops...',
+            text: `${err.response.data.errors.join(', ')}`
+          })
         })
     },
     addingProduct ({ commit }, payload) {
@@ -116,11 +145,19 @@ export default new Vuex.Store({
         data: payload
       })
         .then(({ data }) => {
-          console.log(data)
+          Swal.fire(
+            'Added!',
+            `${data.message}`,
+            'success'
+          )
           commit('addProduct', data.product)
         })
         .catch(err => {
-          console.log(err.response.data)
+          Swal.fire({
+            icon: 'error',
+            title: 'Oops...',
+            text: `${err.response.data.errors.join(', ')}`
+          })
         })
     },
     updatingProduct ({ commit }, payload) {
@@ -133,11 +170,19 @@ export default new Vuex.Store({
         data: payload.data
       })
         .then(({ data }) => {
-          console.log(data)
+          Swal.fire(
+            'Saved!',
+            `${data.message}`,
+            'success'
+          )
           commit('updateProduct', data)
         })
         .catch(err => {
-          console.log(err.response.data)
+          Swal.fire({
+            icon: 'error',
+            title: 'Oops...',
+            text: `${err.response.data.errors.join(', ')}`
+          })
         })
     }
   },

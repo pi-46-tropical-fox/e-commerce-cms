@@ -4,7 +4,6 @@ const {authorization} = require('../middlewares/auth')
 const router = require('express').Router()
 
 router.get('/', ProductController.showAllProduct)
-// router.get('/:categoryId', authorization, ProductController.showProductByCategoryId)
 router.get('/:productId', authorization, ProductController.showProductById)
 router.post('/', authorization, ProductController.createNewProduct)
 router.put('/:productId', authorization, ProductController.updateProduct)

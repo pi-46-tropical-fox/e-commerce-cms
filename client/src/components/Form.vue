@@ -65,6 +65,7 @@
 
 <script>
 import axios from '../config/axios'
+import Swal from 'sweetalert2'
 export default {
   name: 'Form',
   data () {
@@ -115,7 +116,19 @@ export default {
         CategoryId: this.categoryId,
         img_url: this.img_url
       }
-      this.$store.dispatch('addingProduct', data)
+      Swal.fire({
+        title: 'Do you want to save the changes?',
+        showDenyButton: true,
+        showCancelButton: true,
+        confirmButtonText: 'Save',
+        denyButtonText: "Don't save"
+      }).then((result) => {
+        if (result.isConfirmed) {
+          this.$store.dispatch('addingProduct', data)
+        } else if (result.isDenied) {
+          Swal.fire('Changes are not saved', '', 'info')
+        }
+      })
     },
     editProduct (id) {
       const data = {
@@ -127,7 +140,19 @@ export default {
         CategoryId: this.categoryId,
         img_url: this.img_url
       }
-      this.$store.dispatch('updatingProduct', { data, id })
+      Swal.fire({
+        title: 'Do you want to save the changes?',
+        showDenyButton: true,
+        showCancelButton: true,
+        confirmButtonText: 'Save',
+        denyButtonText: "Don't save"
+      }).then((result) => {
+        if (result.isConfirmed) {
+          this.$store.dispatch('updatingProduct', { data, id })
+        } else if (result.isDenied) {
+          Swal.fire('Changes are not saved', '', 'info')
+        }
+      })
     },
     back () {
       this.$router.push({ path: '/products' })

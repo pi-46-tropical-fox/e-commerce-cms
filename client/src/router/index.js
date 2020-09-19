@@ -22,17 +22,38 @@ const routes = [
   {
     path: '/products',
     name: 'Products',
-    component: Products
+    component: Products,
+    beforeEnter: (to, from, next) => {
+      if (localStorage.getItem('access_token')) {
+        next()
+      } else {
+        next({ name: 'Home' })
+      }
+    }
   },
   {
     path: '/products/add',
     name: 'Add Form',
-    component: AddForm
+    component: AddForm,
+    beforeEnter: (to, from, next) => {
+      if (localStorage.getItem('access_token')) {
+        next()
+      } else {
+        next({ name: 'Home' })
+      }
+    }
   },
   {
     path: '/products/edit/:productId',
     name: 'Edit Form',
-    component: EditForm
+    component: EditForm,
+    beforeEnter: (to, from, next) => {
+      if (localStorage.getItem('access_token')) {
+        next()
+      } else {
+        next({ name: 'Home' })
+      }
+    }
   }
 ]
 
