@@ -1,4 +1,5 @@
-const request = require('supertest')
+let request;
+if(process.env.NODE_ENV === 'development'){ request = require('supertest')}
 const app = require("../app")
 const { Product } = require("../models")
 const { format } = require('../helpers/currencyFormatter')
@@ -121,7 +122,7 @@ describe('CREATE', () => {
                 stock: null,
                 category: 'Electronics'
             }
-            const expectedErrors = ['Price must be filled']
+            const expectedErrors = ['Stock must be filled']
             const result = await request(app)
                 .post('/product')
                 .send(dummyProduct)

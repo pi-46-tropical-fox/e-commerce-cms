@@ -1,18 +1,33 @@
 <template>
-    <div class="card mx-3" style="width: 18rem">
-     <!-- <img :src="product.imageURL" class="card-img-top" alt="..."> -->
+    <div class="card mx-3 p-3" style="width: 18rem">
+     <img :src="product.imageURL" class="card-img-top card-image" alt="...">
      <div class="card-body">
         <h5 class="card-title">{{product.name}}</h5>
         <p class="card-text">{{currencyFormat}}</p>
-         <a href="#" class="btn btn-primary">Show Detail</a>
      </div>
+        <div class="footer">
+        <i class="fas fa-edit show-info" type="button" data-toggle="modal" data-target="#exampleModal">Edit</i>
+         <i class="delete-product fas fa-trash-alt" @click="deleteProduct(product.id)">Delete</i>
+        </div>
+        <EditForm
+          :product="product"
+          ></EditForm>
     </div>
 </template>
 
 <script>
+import EditForm from '../components/EditForm'
 export default {
   name: 'Card',
   props: ['product'],
+  components: {
+    EditForm
+  },
+  methods: {
+    deleteProduct (id) {
+      this.$store.dispatch('deleteProduct', id)
+    }
+  },
   computed: {
     currencyFormat () {
       const output = `Rp${new Intl.NumberFormat().format(this.product.price)},00`

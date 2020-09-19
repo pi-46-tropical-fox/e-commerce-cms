@@ -13,6 +13,7 @@ class ProductController {
         Product.create(params)
             .then(response => {
                 res.status(201).json({
+                    id: response.id,
                     message: 'Product has been successfully added',
                     name: response.name,
                     stock: response.stock,
@@ -32,8 +33,16 @@ class ProductController {
             .catch(next)
     }
 
+    static getOne (req, res, next) {
+        const {id} = req.params
+        Product.findByPk(id)
+        .then(data => {
+            res.status(200).json({data})
+        }).catch(next)
+    }
+
     static update(req, res, next) {
-        const { id } = req.params;
+        const { id } = req.params
         const params = {...req.body }
         Product.update(params, { where: { id } })
             .then(data => {

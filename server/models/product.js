@@ -54,11 +54,11 @@ module.exports = (sequelize, DataTypes) => {
             validate: {
                 notEmpty: {
                     args: true,
-                    msg: 'Price must be filled'
+                    msg: 'Stock must be filled'
                 },
                 notNull: {
                     args: true,
-                    msg: 'Price must be filled'
+                    msg: 'Stock must be filled'
                 },
                 isLessTHanZero(value) {
                     if (value < 0) {

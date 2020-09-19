@@ -1,5 +1,5 @@
 <template>
-<div class="form-container mx-auto">
+<div class="form-container mx-aut">
   <form @submit.prevent='login'>
     <div class="form-group">
         <label for="exampleInputEmail1">Email address</label>
@@ -38,10 +38,12 @@ export default {
       })
         .then(response => {
           localStorage.setItem('access_token', response.data.access_token)
+          this.$store.dispatch('login')
           this.$router.push({ path: '/home' })
         })
-        .catch(err => {
+        .catch (err => {
           console.log(err)
+          alertify.dialog('alert').set({ transition: 'flipx', message: 'Email or Password is invalid' }).show()
         })
     }
   }

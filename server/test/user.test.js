@@ -1,4 +1,7 @@
-const request = require('supertest');
+let request;
+if(process.env.NODE_ENV == 'development'){
+    request = require('supertest');
+}
 const app = require("../app");
 const { User } = require('../models')
 
