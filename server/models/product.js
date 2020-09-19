@@ -53,9 +53,9 @@ module.exports = (sequelize, DataTypes) => {
     gender: {
       type: DataTypes.STRING,
       validate: {
-        contains : {
-          args: 'male',
-          msg : "please input with male or female"
+        notEmpty : {
+          args: true,
+          msg : "Gender cannot empty"
         }
       }
     },

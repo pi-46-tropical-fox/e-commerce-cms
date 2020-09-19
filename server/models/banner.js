@@ -14,9 +14,34 @@ module.exports = (sequelize, DataTypes) => {
     }
   };
   Banner.init({
-    title: DataTypes.STRING,
-    status: DataTypes.STRING,
-    image_url: DataTypes.STRING
+    title: {
+      type: DataTypes.STRING,
+      validate: {
+        notEmpty : {
+          args: true,
+          msg: " Title cannot empty"
+        }
+      }
+    },
+    status: {
+      type: DataTypes.STRING,
+      validate: {
+        is: {
+          args: [/Actif/, /Not Actif/],
+          msg: "Please input with Actif or Not Actif"
+        }
+      }  
+
+    },
+    image_url: {
+      type: DataTypes.STRING, 
+      validate: {
+        notEmpty : {
+          args: true,
+          msg: "Image url cannot empty"
+        }
+      }
+    }
   }, {
     sequelize,
     modelName: 'Banner',

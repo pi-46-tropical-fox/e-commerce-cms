@@ -4,9 +4,9 @@ const { validate } = require('../helpers/bcrypt')
 
 class UserController {
     static register (req,res, next) {
-        const { name, email, password, role } = req.body
+        const { name, email, password } = req.body
 
-        User.create({ name, email, password, role })
+        User.create({ name, email, password })
             .then( user => {
                 const payload = { id: user.id , name: user.name, email: user.email }
                 return res.status(201).json({message: "Successfully create new User", id: user.id , name: user.name, email: user.email})

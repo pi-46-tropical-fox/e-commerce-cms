@@ -54,7 +54,9 @@ module.exports = (sequelize, DataTypes) => {
   User.addHook("beforeCreate", (user, options) => {
     const hash = createHash(user.password)
     user.password = hash
-    
+    if(!user.role){
+      user.role = 'customer'
+    }
   })
   return User;
 };
