@@ -8,12 +8,18 @@
       v-for="product in products"
       :key="product.id"
       :product ="product"
-      ></Card>
+      >
+      <EditForm
+      :id="product.id"
+      :item="product"
+      ></EditForm>
+      </Card>
     </div>
   </div>
 </template>
 
 <script>
+import EditForm from '../components/EditForm'
 import AddForm from '../components/AddForm'
 import Navbar from '../components/Navbar'
 import Card from '../components/Card'
@@ -27,7 +33,8 @@ export default {
   components: {
     Card,
     Navbar,
-    AddForm
+    AddForm,
+    EditForm
   },
   methods: {
     toggleStatus () {

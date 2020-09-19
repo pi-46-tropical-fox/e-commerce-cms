@@ -1,43 +1,31 @@
 <template>
-<div class="modal fade edit-form" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Edit Product</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
-        <form @submit.prevent='goEdit'>
-          <div class="form-group">
-              <label for="exampleInputEmail1">Product's Name</label>
-              <input type="text" class="form-control" v-model="name">
-          </div>
-          <div class="form-group">
-              <label for="exampleInputPassword1">Price</label>
-              <input type="number" class="form-control" v-model="price">
-          </div>
-          <div class="form-group">
-              <label for="exampleInputPassword1">Stock</label>
-              <input type="number" class="form-control" v-model="stock">
-          </div>
-          <div class="form-group">
-              <label for="exampleInputPassword1">Image URL</label>
-              <input type="text" class="form-control" v-model="imageURL">
-          </div>
-          <div class="form-group">
-              <label for="exampleInputPassword1">Category</label>
-              <select class="form-control" v-model="category">
-              <option value="Electronics">Electronics</option>
-              <option value="Sporting Goods">Sporting Goods</option>
-              </select>
-          </div>
-          <button type="submit" class="btn btn-primary">Submit</button>
-        </form>
-      </div>
+<div class="edit-form-container mx-auto">
+  <form @submit.prevent='goEdit'>
+    <div class="form-group">
+        <label for="exampleInputEmail1">Product's Name</label>
+        <input type="text" class="form-control" v-model="name" aria-describedby="emailHelp">
     </div>
-  </div>
+    <div class="form-group">
+        <label for="exampleInputPassword1">Price</label>
+        <input type="number" class="form-control" v-model="price">
+    </div>
+    <div class="form-group">
+        <label for="exampleInputPassword1">Stock</label>
+        <input type="number" class="form-control" v-model="stock">
+    </div>
+     <div class="form-group">
+        <label for="exampleInputPassword1">URL</label>
+        <input type="text" class="form-control" v-model="imageURL">
+    </div>
+     <div class="form-group">
+        <label for="exampleInputPassword1">Category</label>
+        <select class="form-control" v-model="category">
+          <option value="electronics">Electronics</option>
+          <option value="sportinggoods">Sporting Goods</option>
+        </select>
+    </div>
+    <button type="submit" class="btn btn-primary">Submit</button>
+  </form>
 </div>
 </template>
 
@@ -56,6 +44,7 @@ export default {
   },
   methods: {
     goEdit (event) {
+      console.log(this.item, this.id)
       const payload = {
         name: this.name,
         price: +this.price,
@@ -64,10 +53,11 @@ export default {
         category: this.category,
         id: this.product.id
       }
+      console.log(payload)
       this.$store.dispatch('editProduct', payload)
+      this.$router.push('/')
     }
   }
-
 }
 </script>
 
