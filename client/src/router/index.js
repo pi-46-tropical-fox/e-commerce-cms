@@ -3,6 +3,7 @@ import VueRouter from 'vue-router'
 import Login from '../views/Login.vue'
 import Dashboard from '../views/Dashboard.vue'
 import Register from '../views/Register.vue'
+import EditItemForm from '../views/EditItemForm.vue'
 // import Home from '../views/Home.vue'
 
 Vue.use(VueRouter)
@@ -22,6 +23,11 @@ const routes = [
     path: '/dashboard',
     name: 'Dashboard',
     component: Dashboard
+  },
+  {
+    path: '/edit/:id',
+    name: 'EditPage',
+    component: EditItemForm
   },
   {
     path: '/about',

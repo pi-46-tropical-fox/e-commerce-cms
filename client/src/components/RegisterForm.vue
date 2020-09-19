@@ -7,13 +7,13 @@
             <h5 class="card-title">Register</h5>
               <form>
                 <div class="form-group">
-                  <label for="emailLogin">Email Address</label>
-                  <input type="email" class="form-control" id="emailLogin" aria-describedby="emailHelp">
+                  <label for="emailRegister">Email Address</label>
+                  <input type="email" class="form-control" id="emailRegister" aria-describedby="emailHelp">
                   <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
                 </div>
                 <div class="form-group">
-                  <label for="passwordLogin">Password</label>
-                  <input type="password" class="form-control" id="passwordLogin">
+                  <label for="passwordRegister">Password</label>
+                  <input type="password" class="form-control" id="passwordRegister">
                 </div>
                 <button type="submit" class="btn btn-primary">Register</button>
               </form>

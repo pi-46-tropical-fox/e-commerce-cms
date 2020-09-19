@@ -1,6 +1,6 @@
 <template>
 <div class="dashboard">
-   <div class="col" style="height: 100%; position: fixed; top: 10px; ">
+   <div class="col">
      <NavBar></NavBar>
      <DashboardForm></DashboardForm>
     </div>

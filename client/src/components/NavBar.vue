@@ -5,7 +5,8 @@
       <p><a href="" class="text-white">Admin</a></p>
   </div>
   <div class="bg-primary shadow">
-       <p><a href="" class="text-white">Products</a></p>
+       <img src="../assets/gift.svg" alt="">
+       <p><a href="" class="text-white">Add Products</a></p>
   </div>
   <div class="bg-primary shadow">
         <img src="../assets/log-out.svg">
