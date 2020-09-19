@@ -33,6 +33,16 @@ class ProductController {
         })
     }
 
+    static getOneProduct(req, res, next) {
+        Product.findOne({where: {id:req.params.productId}})
+        .then(data => {
+            return res.status(200).json(data)
+        })
+        .catch(err => {
+            next(err)
+        })
+    }
+
     static updateProduct(req, res, next) {
         let params = {
             name: req.body.name,
