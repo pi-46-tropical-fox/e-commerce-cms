@@ -1,0 +1,103 @@
+#login-page {
+    display: flex;
+    width: 100vw;
+    height: 100vh;
+    align-items: center;
+    overflow: hidden;
+    font-family: 'Fira Sans Condensed', sans-serif;
+}
+
+.login-page-left {
+    width: 60%;
+    background-color: white;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    background-image: url('https://cdn.dribbble.com/users/1162077/screenshots/4382009/animated-pattern.gif');
+}
+
+.login-page-left img {
+    width: 60%;
+    z-index: 999;
+}
+
+.login-page-right {
+    width: 40%;
+    padding: 0 1rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.login-page-right h1 {
+    font-size: 2rem;
+    margin-bottom: 1rem;
+}
+
+.login-page-right form {
+    display: flex;
+    width: 90%;
+    flex-direction: column;
+    z-index: 99;
+    border-radius: 10px;
+}
+
+.login-page-right input {
+    margin: 1rem 0;
+    height: 30px;
+}
+
+.login-btn {
+    background-color: blue;
+    color: white;
+    border: none;
+    cursor: pointer;
+    padding: 10px 0;
+}
+#navbar {
+    background: #8dcaff;
+    font-family: 'Fira Sans Condensed', sans-serif;
+    font-size: 20px;
+}
+
+#logo {
+    width: 100px;
+}
+
+#product {
+    border-radius: 20px;
+    -webkit-box-shadow: 10px 12px 5px -2px rgba(0,0,0,0.75);
+-moz-box-shadow: 10px 12px 5px -2px rgba(0,0,0,0.75);
+box-shadow: 10px 12px 5px -2px rgba(0,0,0,0.75);
+font-family: 'Fira Sans Condensed', sans-serif;
+}
+
+#add {
+    font-family: 'Fira Sans Condensed', sans-serif;
+}
+
+#addpage {
+    text-align: center;
+    padding: 250px;
+    background-image: url('https://cdn.dribbble.com/users/1162077/screenshots/4382009/animated-pattern.gif');
+    background-size: 200px;
+    background-repeat: repeat;
+    font-family: 'Fira Sans Condensed', sans-serif;
+}
+
+
+.add {
+    background: #FFFEFE;
+    color: black;
+    width: 500px;
+    display: block;
+    margin: 0px auto;
+    padding: 70px;
+    border-radius: 50px;
+    -webkit-box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.75);
+    -moz-box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.75);
+    box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.75);
+}
