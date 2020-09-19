@@ -1,6 +1,13 @@
 # e-commerce-cms
 Content Management System for E-Commerce
 
+Admin Role:
+Username: admin@gmail.com
+password: 'rahasia'
+
+Default Login Localhost URL Client-Side:
+http://localhost:8081/admin/login
+
 Admin link: https://ecommerce-4fca5.web.app/admin/login
 
 ### Restfull API
