@@ -38,7 +38,7 @@ const routes = [
     beforeEnter: (to, from, next) => {
       console.log(from)
       if (localStorage.getItem('access_token')) {
-        next({path: from.path})
+        next({ path: from.path })
       } else {
         next()
       }
