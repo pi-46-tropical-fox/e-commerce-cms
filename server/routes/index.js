@@ -4,7 +4,7 @@ const productRoutes = require('./product')
 const bannerRoutes = require('./banner')
 
 routes.get('/', (req, res, next) => {
-    res.send('Heellooooww')
+    return res.status(200).json({message: "Hellow"})
 })
 
 routes.use('/', userRoutes)
