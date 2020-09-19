@@ -54,7 +54,19 @@ none
 [
     {
         "id" : 1,
-        "name" : ""
+        "name" : "Kuaci",
+        "image_url" : "https://goocl.c/a.jpg",
+        "stock" : 2,
+        "price" : 21390
+    }
+]
+```
+
+### Response Body (401) (No JWT Provided)
+```json
+[
+    {
+        "message" : "User not authenticated"
     }
 ]
 ```
@@ -69,17 +81,34 @@ none
 
 ### Request Body
 ```json
-
+{
+    "name" : "Kuaci",
+    "image_url" : "https://goocl.c/a.jpg",
+    "stock" : 2,
+    "price" : 21390
+}
 ```
 
 
 ### Response Body (201)
 ```json
 {
-
+    "id" : 1,
+    "name" : "Kuaci",
+    "image_url" : "https://goocl.c/a.jpg",
+    "stock" : 2,
+    "price" : 21390
 }
 ```
 
+### Response Body (401) (No JWT Provided)
+```json
+[
+    {
+        "message" : "User not authenticated"
+    }
+]
+```
 
 ## PUT /products/:id
 ```json
@@ -90,17 +119,33 @@ none
 
 ### Request Body
 ```json
-
-```
-
-
-### Response Body (201)
-```json
 {
-
+    "name" : "Kuaci",
+    "image_url" : "https://goocl.c/a.jpg",
+    "stock" : 2,
+    "price" : 1000
 }
 ```
 
+### Response Body (200)
+```json
+{
+    "id" : 1,
+    "name" : "Kuaci",
+    "image_url" : "https://goocl.c/a.jpg",
+    "stock" : 2,
+    "price" : 1000
+}
+```
+
+### Response Body (401) (No JWT Provided)
+```json
+[
+    {
+        "message" : "User not authenticated"
+    }
+]
+```
 
 ## DELETE /products/:id
 ```json
@@ -114,4 +159,13 @@ none
 {
     "message" : "Item deleted"
 }
+```
+
+### Response Body (401) (No JWT Provided)
+```json
+[
+    {
+        "message" : "User not authenticated"
+    }
+]
 ```

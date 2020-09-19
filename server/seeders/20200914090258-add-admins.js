@@ -14,14 +14,25 @@ module.exports = {
      * }], {});
     */
 
-    let data = [{
-      name : 'admin',
-      email : 'hal@g.com',
-      role : 'admin',
-      password : '1234',
-      createdAt : new Date(),
-      updatedAt : new Date()
-    }]
+    let data = [
+      {
+        name : 'admin',
+        email : 'hal@g.com',
+        role : 'admin',
+        password : '1234',
+        createdAt : new Date(),
+        updatedAt : new Date()
+      },
+      {
+        name : 'admin',
+        email : 'admin@mail.com',
+        role : 'admin',
+        password : '1234',
+        createdAt : new Date(),
+        updatedAt : new Date()
+      },
+      
+    ]
 
     data.forEach(e => {
       e.password = hashPassword(e.password)

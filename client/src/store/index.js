@@ -63,7 +63,7 @@ export default new Vuex.Store({
         },
         createProduct({state}, data){
             axios.post('/products', data, { headers : { access_token : state.access_token } }).then(res => {
-                router.push(`/products/${res.data.id}`)
+                router.push(`/`)
             })
         }
     },
