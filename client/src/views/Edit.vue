@@ -66,10 +66,12 @@ export default {
         }
     },
     created() {
-        this.$store.dispatch('getByIdProducts', this.$route.params.id)
         console.log(this.$route.params.id, '<< route params id');
         console.log(this.$store.state.productById)
-        this.populateForm()
+        this.$store.dispatch('getByIdProducts', this.$route.params.id)
+        .then(()=>{
+            this.populateForm()
+        })
     }
     
 };

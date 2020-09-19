@@ -13,7 +13,7 @@
                     <router-link to="/add" class="nav-link">Add Product</router-link>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#" >Logout</a>
+                    <a class="nav-link" href="#" @click="logout()" >Logout</a>
                 </li>
                 <!-- <li class="nav-item">
                     <a class="nav-link" href="#">Pricing</a>
@@ -25,6 +25,11 @@
 
 <script>
 export default {
-
+    methods: {
+        logout() {
+            this.$store.dispatch('logout')
+            .then(() => this.$router.push('/login'))
+        }
+    }
 }
 </script>
