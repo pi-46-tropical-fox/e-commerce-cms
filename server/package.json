@@ -6,7 +6,8 @@
   "scripts": {
     "test": "jest --detectOpenHandles --forceExit --runInBand",
     "dev": "nodemon ./bin/www",
-    "initdb": "sequelize db:create --env=test && sequelize db:migrate --env=test"
+    "initdb": "sequelize db:create --env=test && sequelize db:migrate --env=test",
+    "start": ""
   },
   "keywords": [],
   "author": "",

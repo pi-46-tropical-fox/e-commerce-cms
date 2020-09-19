@@ -83,12 +83,12 @@ describe('Product test - Success', () => {
         .then(res => {
             const {body, status} = res
             expect(status).toBe(200)
-            expect(body).toHaveProperty('products', expect.any(Array))
-            expect(body.products[0]).toHaveProperty('id', expect.any(Number))
-            expect(body.products[0]).toHaveProperty('name', testItem.name)
-            expect(body.products[0]).toHaveProperty('price', testItem.price)
-            expect(body.products[0]).toHaveProperty('stock', testItem.stock)
-            expect(body.products[0]).toHaveProperty('category', expect.any(Number))
+            expect(body).toHaveProperty('products', expect.any(Object))
+            expect(body.products.magical).toHaveProperty('id', expect.any(Number))
+            expect(body.products.magical).toHaveProperty('name', testItem.name)
+            expect(body.products.magical).toHaveProperty('price', testItem.price)
+            expect(body.products.magical).toHaveProperty('stock', testItem.stock)
+            expect(body.products.magical).toHaveProperty('category', expect.any(Number))
             done()
         })
     })
