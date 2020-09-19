@@ -41,7 +41,7 @@ export default {
         password: this.password
       })
         .then(() => {
-          this.$router.push('/')
+          this.$router.push('/home')
         })
         .catch(err => {
           console.log(err)

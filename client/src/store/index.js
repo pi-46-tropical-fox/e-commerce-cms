@@ -7,7 +7,8 @@ Vue.use(Vuex)
 export default new Vuex.Store({
   state: {
     items: [],
-    isLogin: false
+    isLogin: false,
+    newProduct: {}
   },
   mutations: {
     setItems (state, payload) {
@@ -19,6 +20,9 @@ export default new Vuex.Store({
     LOGOUT (state, payload) {
       state.isLogin = payload
       localStorage.clear()
+    },
+    SET_NEW_PRODUCT (state, payload) {
+      state.newProduct = payload
     }
   },
   actions: {
@@ -60,20 +64,50 @@ export default new Vuex.Store({
       })
     },
     checkLogin (context) {
-      if(localStorage.getItem('access_token')) {
+      if (localStorage.getItem('access_token')) {
         context.commit('SET_LOGIN', true)
       }
     },
-    logout ({ commit }) {
-      commit('LOGOUT', false)
-    },
-    updateItem (context, payload) {
+    addProduct ({ commit }, payload) {
       axios({
-        method: 'PUT',
-        url: `http://localhost:3333/product/${payload}`,
+        method: 'POST',
+        url: 'http://localhost:3333/product',
+        headers: {
+          access_token: localStorage.access_token
+        },
+        data: {
+          name: payload.name,
+          image_url: payload.image_url,
+          price: payload.price,
+          stock: payload.stock
+        }
+      })
+        .then(({ data }) => {
+          commit('SET_NEW_PRODUCT', data)
+          this.dispatch('fetchItems')
+          return data
+        })
+        .catch(err => {
+          console.log(err, 'ini error add item')
+          return err
+        })
+    },
+    deleteProduct (context, payload) {
+      axios({
+        method: 'DELETE',
+        url: `http://localhost:3333/product/${payload.id}`,
         headers: {
           access_token: localStorage.access_token
         }
+      })
+      .then(({data}) => {
+        console.log(data, 'ini dari delete actions');
+        this.dispatch('fetchItems')
+        return data
+      })
+      .catch(err => {
+        console.log(err, 'ini err dari action delete');
+        return err
       })
     }
   }
