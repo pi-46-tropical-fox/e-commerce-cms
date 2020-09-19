@@ -33,72 +33,110 @@
 </template>
 
 <script>
-import axios from '../config/axios'
+// import axios from '../config/axios'
 export default {
   name: 'EditProduct',
-  data () {
-    return {
-      name: '',
-      image_url: '',
-      price: 0,
-      stock: 0
-    }
+  // data () {
+  //   return {
+  //     name: '',
+  //     image_url: '',
+  //     price: 0,
+  //     stock: 0
+  //   }
+  // },
+  computed: {
+    name: {
+      get () {
+        return this.$store.state.selectedProduct.name
+      },
+      set (value) {
+        this.$store.commit('setName', value)
+      }
+    },
+    image_url: {
+      get () {
+        return this.$store.state.selectedProduct.image_url
+      },
+      set (value) {
+        this.$store.commit('setImage_url', value)
+      }
+    },
+    price: {
+      get () {
+        return this.$store.state.selectedProduct.price
+      },
+      set (value) {
+        this.$store.commit('setPrice', value)
+      }
+    },
+    stock: {
+      get () {
+        return this.$store.state.selectedProduct.stock
+      },
+      set (value) {
+        this.$store.commit('setStock', value)
+      }
+    },
+    // selectedProduct () {
+    //   return this.$store.state.selectedProduct
+    // }
   },
   methods: {
     editProduct () {
       const id = this.$route.params.id
       const { name, image_url, price, stock } = this
-      axios({
-        method: 'put',
-        url: '/products/' + id,
-        headers: {
-          access_token:localStorage.access_token
-        },
-        data: {
-          name,
-          image_url,
-          price,
-          stock
-        }
+      // axios({
+      //   method: 'put',
+      //   url: '/products/' + id,
+      //   headers: {
+      //     access_token:localStorage.access_token
+      //   },
+      //   data: {
+      //     name,
+      //     image_url,
+      //     price,
+      //     stock
+      //   }
+      // })
+      //   .then(({ data }) => {
+      //     this.$router.push({ name: 'Home' })
+      //   })
+      //   .catch(err => {
+      //     console.log(err)
+      //   })
+      this.$store.dispatch('editProduct', {
+        id,
+        name,
+        image_url,
+        price,
+        stock
       })
-        .then(({ data }) => {
-          this.$router.push({ name: 'Home' })
-        })
-        .catch(err => {
-          console.log(err)
-        })
     },
     fetchProductById () {
       const id = this.$route.params.id
-      axios({
-        method: 'get',
-        url: '/products/' + id,
-        headers: {
-          access_token:localStorage.access_token
-        }
-      })
-        .then(({ data }) => {
-          // console.log(data);
-          this.name = data.name
-          this.image_url = data.image_url
-          this.price = data.price
-          this.stock = data.stock
-        })
-        .catch(err => {
-          console.log(err.response, '<<< ini errornya')
-        })
+      // axios({
+      //   method: 'get',
+      //   url: '/products/' + id,
+      //   headers: {
+      //     access_token:localStorage.access_token
+      //   }
+      // })
+      //   .then(({ data }) => {
+      //     // console.log(data);
+      //     this.name = data.name
+      //     this.image_url = data.image_url
+      //     this.price = data.price
+      //     this.stock = data.stock
+      //   })
+      //   .catch(err => {
+      //     console.log(err.response, '<<< ini errornya')
+      //   })
+      this.$store.dispatch('fetchProductById', id)
     }
   },
   created () {
     this.fetchProductById()
   },
-//   beforeRouteEnter (to, from, next) {
-//     if (localStorage.access_token) {
-//       next()
-//     } else {
-//       next({ name: 'Home' })
-//     }
-//   }
 }
 </script>
 

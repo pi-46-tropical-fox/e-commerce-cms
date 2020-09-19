@@ -7,13 +7,31 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
-    products: []
+    products: [],
+    selectedProduct: {}
   },
   mutations: {
     // fetch products
     setProducts (state, payload) {
       state.products = payload
-    }
+    },
+    // fetch product by id
+    setSelectedProduct (state,payload) {
+      state.selectedProduct = payload
+    },
+    // merubah v model pada selectedProduct
+    setName (state, payload) {
+      state.selectedProduct.name = payload
+    },
+    setImage_url (state, payload) {
+      state.selectedProduct.image_url = payload
+    },
+    setPrice (state, payload) {
+      state.selectedProduct.price = payload
+    },
+    setStock (state, payload) {
+      state.selectedProduct.stock = payload
+    },
   },
   actions: {
     // action untuk login
@@ -54,6 +72,50 @@ export default new Vuex.Store({
         })
         .catch(err => {
           console.log(err.response, '<<< ini error fetchdata store')
+        })
+    },
+    // fetch Product By Id
+    fetchProductById ({commit}, id) {
+      axios({
+        method: 'get',
+        url: '/products/' + id,
+        headers: {
+          access_token:localStorage.access_token
+        }
+      })
+        .then(({ data }) => {
+          console.log(data);
+          // this.name = data.name
+          // this.image_url = data.image_url
+          // this.price = data.price
+          // this.stock = data.stock
+          commit('setSelectedProduct', data)
+        })
+        .catch(err => {
+          console.log(err.response, '<<< ini errornya')
+        })
+    },
+    // action edit Product
+    editProduct (_,payload) {
+      const {id, name, image_url,price,stock} = payload
+      axios({
+        method: 'put',
+        url: '/products/' + id,
+        headers: {
+          access_token:localStorage.access_token
+        },
+        data: {
+          name,
+          image_url,
+          price,
+          stock
+        }
+      })
+        .then(({ data }) => {
+          router.push({ name: 'Home' })
+        })
+        .catch(err => {
+          console.log(err)
         })
     }
   },
