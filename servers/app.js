@@ -18,4 +18,4 @@ app.use(errHandler)
 
 module.exports = app
 
-// app.listen(PORT, _=> { console.log(`Listening on PORT ${PORT}`) })
+app.listen(PORT, _=> { console.log(`Listening on PORT ${PORT}`) })
