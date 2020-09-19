@@ -5,7 +5,8 @@
   "main": "index.js",
   "scripts": {
     "test": "jest --detectOpenHandles --forceExit --runInBand --verbose",
-    "dev": "nodemon bin/http.js"
+    "dev": "nodemon bin/http.js",
+    "start": "npm run dev"
   },
   "keywords": [],
   "author": "",
