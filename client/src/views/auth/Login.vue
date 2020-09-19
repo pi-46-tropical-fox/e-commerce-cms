@@ -1,5 +1,5 @@
 <template>
-  <div class="container shadow p-4">
+  <div class="container shadow p-4" style="width:40em">
     <div v-for="(err, i) in error" :key="i">
       <span style="color:red"> {{ err }} </span>
     </div> 
@@ -27,7 +27,9 @@
           v-model="password"
         ></b-form-input>
       </b-form-group>
-      <b-button type="submit" variant="primary">Login</b-button>
+      <div style="display:flex;justify-content:center;">
+        <b-button style="width:10em" type="submit" variant="primary">Login</b-button>
+      </div>
     </b-form>
   </div>
 </template>

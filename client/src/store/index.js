@@ -26,7 +26,7 @@ export default new Vuex.Store({
       return new Promise((resolve, rejects) => {
         axios({
           method: "post",
-          url: "http://localhost:3000/auth/login",
+          url: "https://ardy-cms.herokuapp.com/auth/login",
           data: credential
         })
           .then(res => {
@@ -44,7 +44,7 @@ export default new Vuex.Store({
     getProduct(context) {
       axios({
         method: "get",
-        url: "http://localhost:3000/product",
+        url: "https://ardy-cms.herokuapp.com/product",
         headers: {
           access_token: localStorage.getItem("access_token")
         }
@@ -64,7 +64,7 @@ export default new Vuex.Store({
       return new Promise((resolve, rejects) => {
         axios({
           method: "delete",
-          url: `http://localhost:3000/product/${id}`,
+          url: `https://ardy-cms.herokuapp.com/product/${id}`,
           headers: {
             access_token: localStorage.getItem("access_token")
           }
@@ -81,7 +81,7 @@ export default new Vuex.Store({
       return new Promise((resolve, rejects) => {
         axios({
           method: "post",
-          url: `http://localhost:3000/product`,
+          url: `https://ardy-cms.herokuapp.com/product`,
           headers: {
             access_token: localStorage.getItem("access_token")
           },
@@ -100,7 +100,7 @@ export default new Vuex.Store({
       return new Promise((resolve, rejects) => {
         axios({
           method: "get",
-          url: `http://localhost:3000/product/${id}`,
+          url: `https://ardy-cms.herokuapp.com/product/${id}`,
           headers: {
             access_token: localStorage.getItem("access_token")
           },
@@ -118,7 +118,7 @@ export default new Vuex.Store({
       return new Promise((resolve, rejects) => {
         axios({
           method: "put",
-          url: `http://localhost:3000/product/${data.id}`,
+          url: `https://ardy-cms.herokuapp.com/product/${data.id}`,
           headers: {
             access_token: localStorage.getItem("access_token")
           },

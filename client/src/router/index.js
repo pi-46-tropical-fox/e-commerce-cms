@@ -22,7 +22,7 @@ const routes = [
     },
   },
   {
-    path: "",
+    path: "/",
     component: Index,
     meta: {
       requiresAuth: true

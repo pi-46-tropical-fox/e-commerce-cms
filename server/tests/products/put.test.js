@@ -14,12 +14,12 @@ beforeAll(async (done) => {
         createdId = data.dataValues.id
 
         // user admin
-        const userData = await User.findOne({where : { email : 'bla@mail.com'}})
+        const userData = await User.findOne({ where: { email: 'bla@mail.com' } })
         // user member
-        const userData2 = await User.findOne({where : { email : 'kab@mail.com'}})
+        const userData2 = await User.findOne({ where: { email: 'kab@mail.com' } })
 
-        const token = generateToken({id : userData.id, email : userData.email, role : userData.role})
-        const token2 = generateToken({id : userData2.id, email : userData2.email, role : userData2.role})
+        const token = generateToken({ id: userData.id, email: userData.email, role: userData.role })
+        const token2 = generateToken({ id: userData2.id, email: userData2.email, role: userData2.role })
         access_token = token
         access_token2 = token2
         done()
@@ -50,8 +50,9 @@ describe('test /product PUT', () => {
             .set('access_token', access_token)
             .expect('Content-Type', /json/)
             .then(response => {
-                const { status } = response
+                const { status, body } = response
                 expect(status).toBe(200)
+                expect(body.message).toBe('Data Successfully Edited')
                 done()
             })
     }),
@@ -65,8 +66,10 @@ describe('test /product PUT', () => {
                 .set('access_token', access_token)
                 .expect('Content-Type', /json/)
                 .then(response => {
-                    const { status } = response
+                    const { status, body } = response
                     expect(status).toBe(400)
+                    expect(body.errors[0]).toBe('Validation isInt on price failed')
+                    expect(body.errors[1]).toBe('Validation isInt on stock failed')
                     done()
                 })
         })
@@ -74,13 +77,14 @@ describe('test /product PUT', () => {
     test('failed case, input filled with undefined, green mean its working', (done) => {
         request(app)
             .put(`/product/${createdId}`)
-            .send({})
+            .send({ name: undefined, image_url: undefined, price: undefined, stock: undefined })
             .set('Accept', 'application/json')
             .set('access_token', access_token)
             .expect('Content-Type', /json/)
             .then(response => {
-                const { status } = response
+                const { status, body } = response
                 expect(status).toBe(400)
+                expect(body.errors[0]).toBe('Data Cant be Undefined')
                 done()
             })
             .catch(err => {
@@ -97,8 +101,12 @@ describe('test /product PUT', () => {
             .set('access_token', access_token)
             .expect('Content-Type', /json/)
             .then(response => {
-                const { status } = response
+                const { status, body } = response
                 expect(status).toBe(400)
+                expect(body.errors[0]).toBe('Product.name cannot be null')
+                expect(body.errors[1]).toBe('Product.image_url cannot be null')
+                expect(body.errors[2]).toBe('Product.price cannot be null')
+                expect(body.errors[3]).toBe('Product.stock cannot be null')
                 done()
             })
     })
@@ -111,8 +119,14 @@ describe('test /product PUT', () => {
             .set('access_token', access_token)
             .expect('Content-Type', /json/)
             .then(response => {
-                const { status } = response
+                const { status, body } = response
                 expect(status).toBe(400)
+                expect(body.errors[0]).toBe('Validation notEmpty on name failed')
+                expect(body.errors[1]).toBe('Validation notEmpty on image_url failed')
+                expect(body.errors[2]).toBe('Validation isInt on price failed')
+                expect(body.errors[3]).toBe('Validation notEmpty on price failed')
+                expect(body.errors[4]).toBe('Validation isInt on stock failed')
+                expect(body.errors[5]).toBe('Validation notEmpty on stock failed')
                 done()
             })
     })
@@ -125,8 +139,10 @@ describe('test /product PUT', () => {
             .set('access_token', access_token)
             .expect('Content-Type', /json/)
             .then(response => {
-                const { status } = response
+                const { status, body } = response
                 expect(status).toBe(400)
+                expect(body.errors[0]).toBe('Validation min on price failed')
+                expect(body.errors[1]).toBe('Validation min on stock failed')
                 done()
             })
     })
@@ -138,8 +154,11 @@ describe('test /product PUT', () => {
             .set('Accept', 'application/json')
             .expect('Content-Type', /json/)
             .then(response => {
-                const { status } = response
+                const { status, body } = response
                 expect(status).toBe(401)
+                body.errors.forEach(err => {
+                    expect(err).toBe('User Not Authenticated')
+                })
                 done()
             })
     })
@@ -152,8 +171,11 @@ describe('test /product PUT', () => {
             .set('access_token', access_token2)
             .expect('Content-Type', /json/)
             .then(response => {
-                const { status } = response
+                const { status, body } = response
                 expect(status).toBe(403)
+                body.errors.forEach(err => {
+                    expect(err).toBe('Forbidden')
+                })
                 done()
             })
     })

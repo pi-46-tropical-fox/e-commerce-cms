@@ -52,8 +52,11 @@ describe('test failed /product DELETE', () => {
             .set('Accept', 'application/json')
             .expect('Content-Type', /json/)
             .then(response => {
-                const { status } = response
+                const { status, body } = response
                 expect(status).toBe(401)
+                body.errors.forEach(err => {
+                    expect(err).toBe('User Not Authenticated')
+                })
                 done()
             })
     })
@@ -65,8 +68,11 @@ describe('test failed /product DELETE', () => {
             .set('access_token', access_token2)
             .expect('Content-Type', /json/)
             .then(response => {
-                const { status } = response
+                const { status, body } = response
                 expect(status).toBe(403)
+                body.errors.forEach(err => {
+                    expect(err).toBe('Forbidden')
+                })
                 done()
             })
     })

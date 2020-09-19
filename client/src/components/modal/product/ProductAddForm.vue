@@ -82,8 +82,15 @@ export default {
       };
 
       this.$emit("productManipulate", {payload, modal : this.$refs['add-modal']} );
+      setTimeout(() => {
+        this.$refs['add-modal'].hide();
+        this.name = '',
+        this.image_url = '',
+        this.price = '',
+        this.stock = ''
+      }, 500)
     },
-  },
+  }
 };
 </script>
 

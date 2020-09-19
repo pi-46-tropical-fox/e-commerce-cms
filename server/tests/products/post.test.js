@@ -65,8 +65,10 @@ describe('Test product /POST failed', () => {
             .set('access_token', access_token)
             .expect('Content-Type', /json/)
             .then(response => {
-                const { status } = response
+                const { status, body } = response
                 expect(status).toBe(400)
+                expect(body.errors[0]).toBe('Validation isInt on price failed')
+                expect(body.errors[1]).toBe('Validation isInt on stock failed')
                 done()
             })
     })
@@ -79,8 +81,12 @@ describe('Test product /POST failed', () => {
             .set('access_token', access_token)
             .expect('Content-Type', /json/)
             .then(response => {
-                const { status } = response
+                const { status, body } = response
                 expect(status).toBe(400)
+                expect(body.errors[0]).toBe('Product.name cannot be null')
+                expect(body.errors[1]).toBe('Product.image_url cannot be null')
+                expect(body.errors[2]).toBe('Product.price cannot be null')
+                expect(body.errors[3]).toBe('Product.stock cannot be null')
                 done()
             })
     })
@@ -93,8 +99,12 @@ describe('Test product /POST failed', () => {
             .set('access_token', access_token)
             .expect('Content-Type', /json/)
             .then(response => {
-                const { status } = response
+                const { status, body } = response
                 expect(status).toBe(400)
+                expect(body.errors[0]).toBe('Product.name cannot be null')
+                expect(body.errors[1]).toBe('Product.image_url cannot be null')
+                expect(body.errors[2]).toBe('Product.price cannot be null')
+                expect(body.errors[3]).toBe('Product.stock cannot be null')                     
                 done()
             })
     })
@@ -107,8 +117,14 @@ describe('Test product /POST failed', () => {
             .set('access_token', access_token)
             .expect('Content-Type', /json/)
             .then(response => {
-                const { status } = response
+                const { status, body } = response
                 expect(status).toBe(400)
+                expect(body.errors[0]).toBe('Validation notEmpty on name failed')
+                expect(body.errors[1]).toBe('Validation notEmpty on image_url failed')             
+                expect(body.errors[2]).toBe('Validation isInt on price failed')
+                expect(body.errors[3]).toBe('Validation notEmpty on price failed')
+                expect(body.errors[4]).toBe('Validation isInt on stock failed')
+                expect(body.errors[5]).toBe('Validation notEmpty on stock failed')
                 done()
             })
     })
@@ -121,8 +137,10 @@ describe('Test product /POST failed', () => {
             .set('access_token', access_token)
             .expect('Content-Type', /json/)
             .then(response => {
-                const { status } = response
+                const { status, body } = response
                 expect(status).toBe(400)
+                expect(body.errors[0]).toBe('Validation min on price failed')
+                expect(body.errors[1]).toBe('Validation min on stock failed')
                 done()
             })
     })
@@ -134,8 +152,11 @@ describe('Test product /POST failed', () => {
             .set('Accept', 'application/json')
             .expect('Content-Type', /json/)
             .then(response => {
-                const { status } = response
+                const { status, body } = response
                 expect(status).toBe(401)
+                body.errors.forEach(err => {
+                    expect(err).toBe('User Not Authenticated')
+                })
                 done()
             })
     })
@@ -148,8 +169,11 @@ describe('Test product /POST failed', () => {
             .set('access_token', access_token2)
             .expect('Content-Type', /json/)
             .then(response => {
-                const { status } = response
+                const { status, body } = response
                 expect(status).toBe(403)
+                body.errors.forEach(err => {
+                    expect(err).toBe('Forbidden')
+                })
                 done()
             })
     })

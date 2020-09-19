@@ -54,6 +54,11 @@ export default {
         .dispatch("deleteProduct", value)
         .then(() => {
           this.getProducts();
+          this.$swal.fire({
+            icon: "success",
+            title: "Success",
+            text: 'Deleted Successfully',
+          });
         })
         .catch((err) => {
           this.$swal.fire({
@@ -66,9 +71,12 @@ export default {
     addProduct(value) {
       this.$store
         .dispatch("addProduct", value.payload)
-        .then(() => {
-          value.modal.hide();
-          value.payload.name = "";
+        .then(res => {
+          this.$swal.fire({
+            icon: "success",
+            title: "Success",
+            text: res.data.message,
+          });
         })
         .catch((err) => {
           this.$swal.fire({
@@ -84,8 +92,13 @@ export default {
     editProduct(modal) {
       this.$store
         .dispatch("updateProduct", this.detailProduct)
-        .then(() => {
+        .then(res => {
           this.getProducts();
+          this.$swal.fire({
+            icon: "success",
+            title: "Success",
+            text: res.data.message,
+          });
           modal.hide();
         })
         .catch((err) => {

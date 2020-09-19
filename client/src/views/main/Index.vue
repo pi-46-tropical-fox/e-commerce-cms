@@ -5,7 +5,7 @@
         <b-navbar-nav>
           <b-nav-item href="#">Gunilify Admin Mode</b-nav-item>
           <b-nav-item>
-            <router-link to="/" style="color:white">Product</router-link>
+            <router-link to="/product" style="color:white">Product</router-link>
           </b-nav-item>
         </b-navbar-nav>
         <b-navbar-nav class="ml-auto">
