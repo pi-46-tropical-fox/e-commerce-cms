@@ -44,7 +44,7 @@ class AuthController {
                 code = 307
                 req.app.locals.body = { name, email, picture, password: generateRandomStrings(25, false) }
 
-                res.redirect(code, '/user/register')
+                res.redirect(code, '/users/register')
             }
 
             req.app.locals.payload = { name, email, picture }
