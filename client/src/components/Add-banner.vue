@@ -1,16 +1,22 @@
 <template>
   <div class="main mt-3">
-    <form @submit.prevent="add">
-      <div class="form-group">
-        <label for="exampleInputEmail1">Name</label>
-        <input type="text" class="form-control" v-model="name" aria-describedby="emailHelp">
+    <div class="form-container container">
+      <div class="row align-items-center" style="height: 100vh;">
+        <div class="col-12">
+          <form @submit.prevent="add">
+            <div class="form-group">
+              <label for="exampleInputEmail1">Name</label>
+              <input type="text" class="form-control" v-model="name" aria-describedby="emailHelp">
+              </div>
+              <div class="form-group">
+                <label for="exampleInputPassword1">Image Url</label>
+                <input type="text" class="form-control" v-model="image_url">
+              </div>
+            <button type="submit" class="btn btn-primary">Submit</button>
+          </form>
         </div>
-        <div class="form-group">
-          <label for="exampleInputPassword1">Image Url</label>
-          <input type="text" class="form-control" v-model="image_url">
-        </div>
-      <button type="submit" class="btn btn-primary">Submit</button>
-    </form>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -45,4 +51,8 @@ export default {
     padding: 0px 10px;
   }
 
+  .form-container{
+    width: 500px;
+    height: 100vh;
+  }
 </style>

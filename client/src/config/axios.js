@@ -5,7 +5,7 @@ const instance = axios.create({
   baseURL: 'https://e-commerce-cms-juan.herokuapp.com'
 })
 // const instance = axios.create({
-//   baseURL: 'http://localhost:3001'
+//   baseURL: 'http://localhost:3000'
 // })
 
 instance.interceptors.response.use(
