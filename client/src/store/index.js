@@ -1,6 +1,6 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
-import axios from 'axios'
+import axios from '../config/axios'
 
 Vue.use(Vuex)
 
@@ -41,7 +41,7 @@ export default new Vuex.Store({
     login (context, payload) {
       axios({
         method: 'POST',
-        url: 'http://localhost:3001/users/login',
+        url: '/users/login',
         data: payload
       })
         .then(({ data }) => {
@@ -56,7 +56,7 @@ export default new Vuex.Store({
     fetchProducts ({ commit }) {
       axios({
         method: 'GET',
-        url: 'http://localhost:3001/products',
+        url: '/products',
         headers: {
           access_token: localStorage.access_token
         }
@@ -73,7 +73,7 @@ export default new Vuex.Store({
     fetchOneProduct (context, id) {
       axios({
         method: 'GET',
-        url: `http://localhost:3001/products/${id}`,
+        url: `/products/${id}`,
         headers: {
           access_token: localStorage.access_token
         }
@@ -89,7 +89,7 @@ export default new Vuex.Store({
     addProduct (context, payload) {
       axios({
         method: 'POST',
-        url: 'http://localhost:3001/products',
+        url: '/products',
         data: payload,
         headers: {
           access_token: localStorage.access_token
@@ -106,7 +106,7 @@ export default new Vuex.Store({
     editProduct (context, payload) {
       axios({
         method: 'PUT',
-        url: `http://localhost:3001/products/${payload.id}`,
+        url: `/products/${payload.id}`,
         data: payload,
         headers: {
           access_token: localStorage.access_token
@@ -123,7 +123,7 @@ export default new Vuex.Store({
     deleteProducts (context, id) {
       axios({
         method: 'DELETE',
-        url: `http://localhost:3001/products/${id}`,
+        url: `/products/${id}`,
         headers: {
           access_token: localStorage.access_token
         }
