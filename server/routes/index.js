@@ -3,7 +3,9 @@ const UserController = require('../controller/UserController')
 const ProductController = require("../controller/ProductController")
 const { authentication } = require("../middleware/auth")
 
-
+router.get("/", (req, res) => {
+    res.json({messsage: "MASUK HEROKU"})
+})
 router.post('/register', UserController.register)
 router.post('/login', UserController.login)
 

@@ -8,9 +8,7 @@ const routes = require('./routes')
 const ErrHandler = require('./middleware/ErrHandler')
 const PORT = process.env.PORT || 3000;
 
-app.get("/", (req, res) => {
-    res.json({messsage: "MASUK HEROKU"})
-})
+
 
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
