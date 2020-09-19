@@ -1,21 +1,23 @@
-// if(process.env.NODE_ENV === 'development' || process.env.NODE_ENV === 'test') {
+if(process.env.NODE_ENV === 'development'){
     require('dotenv').config()
-// }
-const express = require('express')
+}
+
+const cors = require(`cors`)
+const express = require(`express`)
+const routes = require(`./routes`)
+const errorHandler = require(`./middlewares/errHandler`)
 const app = express()
-const cors = require('cors')
-const PORT = process.env.PORT || 3000
-//const routes = require('./routes')
+const port = process.env.PORT || 3000
 
-app.use(express.urlencoded({extended:true}))
-app.use(express.json())
-
+//console.log(process.env.SECRET)
 app.use(cors())
-//app.use(routes)
+app.use(express.json())
+app.use(express.urlencoded({extended: true}))
+app.use(routes)
 app.use(errorHandler)
 
-app.listen(PORT, ()=>{
-    console.log(`Makan nasi yang ke ${PORT} hari`);
+app.listen(port, () => {
+    console.log(`We are open now at ${port}`)
 })
 
 module.exports = app
