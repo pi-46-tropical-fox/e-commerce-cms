@@ -281,6 +281,37 @@ _Response (400 - Bad Request)_
 }
 ```
 ---
+### POST /register
+
+> Register your account
+
+_Request Header_
+```
+not needed
+```
+
+_Request Body_
+```
+{
+  "firstName": "<your first name>",
+  "lastName": "<your last name>",
+  "email": "<your email>"
+  "password": "<your password>",
+}
+```
+
+_Response (201 - created)_
+```
+
+```
+
+_Response (400 - Bad Request)_
+```
+{
+  "message": "Invalid request"
+}
+```
+---
 ### POST /login
 
 > Login to your account
