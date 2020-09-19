@@ -23,6 +23,7 @@ class UserController{
     }
 
     static login(req, res, next) {
+        console.log(req.body)
         User.findOne({
             where: {
                 email: req.body.email
@@ -34,10 +35,10 @@ class UserController{
                 }
 
                 const flag = comparePassword(req.body.password, data.password)
-
+                console.log(flag)
                 if(flag) {
                     const access_token = generateToken(data)
-                    return res.status(200).json({access_token, message: 'Success to login!'})
+                    return res.status(200).json({access_token, role: data.role, message: 'Success to login!'})
                 }else {
                     throw {message: 'Invalid name or password', statusCode: 400}
                 }

@@ -1,22 +1,110 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-import Home from '../views/Home.vue'
+import Landing from '../views/Landing.vue'
+import Dashboard from '../views/Dashboard.vue'
+import Login from '../views/Login.vue'
+import AddProduct from '../views/AddProduct'
+import EditProduct from '../views/EditProduct'
+import Banner from '../views/Banner.vue'
+import AddBanner from '../views/AddBanner.vue'
+import EditBanner from '../views/EditBanner.vue'
+import CustomerRegister from '../views/CustomerRegister'
+import CustomerSite from '../views/CustomerSite'
 
 Vue.use(VueRouter)
 
 const routes = [
   {
     path: '/',
-    name: 'Home',
-    component: Home
+    name: 'Landing',
+    component: Landing
   },
   {
-    path: '/about',
-    name: 'About',
-    // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
-    component: () => import(/* webpackChunkName: "about" */ '../views/About.vue')
+    path: '/login',
+    name: 'Login',
+    component: Login
+  },
+  {
+    path: '/dashboard',
+    name: 'Dashboard',
+    component: Dashboard,
+    beforeEnter: (to, from, next) => {
+      if (localStorage.getItem('access_token')) {
+        next()
+      } else {
+        next('/login')
+      }
+    }
+  },
+  {
+    path: '/addProduct',
+    name: 'AddProduct',
+    component: AddProduct,
+    beforeEnter: (to, from, next) => {
+      if (localStorage.getItem('access_token')) {
+        next()
+      } else {
+        next('/login')
+      }
+    }
+  },
+  {
+    path: '/editProduct/:id',
+    name: 'EditProduct',
+    component: EditProduct,
+    beforeEnter: (to, from, next) => {
+      if (localStorage.getItem('access_token')) {
+        next()
+      } else {
+        next('/login')
+      }
+    }
+  },
+  {
+    path: '/banner',
+    name: 'Banner',
+    component: Banner,
+    beforeEnter: (to, from, next) => {
+      if (localStorage.getItem('access_token')) {
+        next()
+      } else {
+        next('/login')
+      }
+    }
+  },
+  {
+    path: '/addBanner',
+    name: 'AddBanner',
+    component: AddBanner,
+    beforeEnter: (to, from, next) => {
+      if (localStorage.getItem('access_token')) {
+        next()
+      } else {
+        next('/login')
+      }
+    }
+  },
+  {
+    path: '/editBanner/:id',
+    name: 'EditBanner',
+    component: EditBanner,
+    beforeEnter: (to, from, next) => {
+      if (localStorage.getItem('access_token')) {
+        next()
+      } else {
+        next('/login')
+      }
+    }
+  },
+  {
+    path: '/customerRegister',
+    name: 'CustomerRegister',
+    component: CustomerRegister
+  },
+  {
+    path: '/customerSite',
+    name: 'CustomerSite',
+    component: CustomerSite
   }
 ]
 
