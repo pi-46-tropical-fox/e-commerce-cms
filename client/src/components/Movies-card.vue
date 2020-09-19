@@ -9,7 +9,7 @@
         <img :src="movie.image_url" class="img-fluid img-thumbnail" :alt="movie.name">
       </td>
       <td>{{ movie.name }}</td>
-      <td>{{ movie.price }}</td>
+      <td>Rp. {{ movie.price.toLocaleString('id-ID') }}</td>
       <td>{{ movie.stock }}</td>
       <td class="d-flex justify-content-around">
         <button class="btn btn-info" style="width: 80px; margin-left: -30px;">

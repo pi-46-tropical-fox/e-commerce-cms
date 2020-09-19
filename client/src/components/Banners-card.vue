@@ -6,7 +6,7 @@
     >
       <th scope="row">{{index+1}}</th>
       <td class="w-25">
-        <img :src="banner.image_url" class="img-fluid img-thumbnail" :alt="banner.name">
+        <img :src="banner.image_url" class="img-fluid img-thumbnail" :alt="banner.title">
       </td>
       <td>{{ banner.title }}</td>
       <td class="d-flex justify-content-around">
