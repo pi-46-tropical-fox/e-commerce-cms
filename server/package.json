@@ -6,7 +6,7 @@
   "scripts": {
     "test": "jest --detectOpenHandles --forceExit --runInBand --verbose",
     "dev": "nodemon bin/http.js",
-    "start": "npm run dev"
+    "start": "node bin/http.js"
   },
   "keywords": [],
   "author": "",
