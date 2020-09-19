@@ -80,6 +80,7 @@ export default new Vuex.Store({
         .then(({ data }) => {
           console.log(data, 'masuk axios then')
           commit('setNewProduct', data)
+          this.dispatch('fetchProducts')
           return data
         })
         .catch(err => {
@@ -106,7 +107,9 @@ export default new Vuex.Store({
         })
     }
     // editProduct ({commit}, data) {
-    //   axios
+    //   axios({
+    //     method: 'PUT',
+    //   })
     // }
   },
   modules: {
