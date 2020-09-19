@@ -1,23 +1,25 @@
 <template>
-  <div class="container">
-    <div>
-      <button class="btn btn-secondary" v-b-modal.modal-1>
-        Add Product +
-      </button>
+  <div class="container" style="margin: 0 auto;">
+    <div style="margin-top:2em;">
+      <div>
+        <button class="btn btn-secondary" v-b-modal.modal-1>
+          Add Product +
+        </button>
+      </div>
+      <ProductTable
+        v-for="product in products.data"
+        :key="product.id"
+        :product="product"
+        @delete="deleteProducts"
+        @edit="fetchDetail"
+      ></ProductTable>
+      <!-- Modal -->
+      <AddForm @productManipulate="addProduct"></AddForm>
+      <EditForm
+        :detailProduct="detailProduct"
+        @editProduct="editProduct"
+      ></EditForm>
     </div>
-    <ProductTable
-      v-for="product in products.data"
-      :key="product.id"
-      :product="product"
-      @delete="deleteProducts"
-      @edit="fetchDetail"
-    ></ProductTable>
-    <!-- Modal -->
-    <AddForm @productManipulate="addProduct"></AddForm>
-    <EditForm
-      :detailProduct="detailProduct"
-      @editProduct="editProduct"
-    ></EditForm>
   </div>
 </template>
 
@@ -57,7 +59,7 @@ export default {
           this.$swal.fire({
             icon: "success",
             title: "Success",
-            text: 'Deleted Successfully',
+            text: "Deleted Successfully",
           });
         })
         .catch((err) => {
@@ -71,7 +73,7 @@ export default {
     addProduct(value) {
       this.$store
         .dispatch("addProduct", value.payload)
-        .then(res => {
+        .then((res) => {
           this.$swal.fire({
             icon: "success",
             title: "Success",
@@ -92,7 +94,7 @@ export default {
     editProduct(modal) {
       this.$store
         .dispatch("updateProduct", this.detailProduct)
-        .then(res => {
+        .then((res) => {
           this.getProducts();
           this.$swal.fire({
             icon: "success",
