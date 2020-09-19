@@ -13,7 +13,7 @@ router.get("/products", authentication, authorization, ProductController.show);
 router.post("/products", authentication, authorization, ProductController.add);
 
 //EDIT PRODUCTS
-router.get("/products/:id", authentication, ProductController.find);
+router.get("/products/:id", authentication, authorization, ProductController.find);
 router.put("/products/:id", authentication, authorization, ProductController.edit);
 
 //DELETE PRODUCTS
