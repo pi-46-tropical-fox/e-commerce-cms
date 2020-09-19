@@ -14,6 +14,9 @@ app.use(express.json());
 app.use(cors())
 app.use(routes)
 app.use(ErrHandler)
+app.get("/", (req, res) => {
+    res.send({messsage: "MASUK HEROKU"})
+})
 
 app.listen(PORT, () => {
     console.log(`App is running on ${process.env.NODE_ENV} on port: ${PORT}`)
