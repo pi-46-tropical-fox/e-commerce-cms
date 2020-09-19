@@ -14,7 +14,7 @@ const routes = [
     beforeEnter (to, from, next) {
       if(localStorage.getItem('access_token')) {
         next({
-          name: 'Product'
+          path: '/product'
         })
       } else {
         next()
