@@ -6,7 +6,8 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
-    products: []
+    products: [],
+    selectedData: {}
   },
   mutations: {
     setProducts (state, payload) {
@@ -14,6 +15,9 @@ export default new Vuex.Store({
     },
     removeProduct (state, payload) {
       state.products = state.products.filter(product => product.id !== payload)
+    },
+    setSelectedData (state, payload) {
+      state.selectedData = payload
     }
   },
   actions: {
@@ -31,10 +35,10 @@ export default new Vuex.Store({
         })
     },
     fetchEditData ({ commit }, payload) {
-      console.log(payload)
+      console.log(payload, 'fetch index store')
       axios.get(`http://localhost:3001/products/${payload}`)
         .then(({ data }) => {
-          commit('setProducts', data)
+          commit('setSelectedData', data)
         })
         .catch(err => {
           console.log(err)
