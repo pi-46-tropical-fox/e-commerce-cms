@@ -94,6 +94,19 @@ export default new Vuex.Store({
       }).catch(err => {
         console.log(err)
       })
+    },
+    editProduct (context, data) {
+      console.log(data.payload);
+      // axios({
+      //   method: 'PATCH',
+      //   url: `/products/${data.id}`,
+      //   headers: {
+      //     access_token: localStorage.getItem('access_token')
+      //   },
+      //   data: payload
+      // }).then(res => {
+
+      // })
     }
   }
 })
