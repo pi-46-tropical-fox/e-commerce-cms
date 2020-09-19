@@ -51,6 +51,9 @@ export default {
       axios({
         method: 'put',
         url: '/products/' + id,
+        headers: {
+          access_token:localStorage.access_token
+        },
         data: {
           name,
           image_url,

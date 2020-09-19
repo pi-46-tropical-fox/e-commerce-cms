@@ -19,14 +19,19 @@
 </template>
 
 <script>
-import axios from '../config/axios'
+// import axios from '../config/axios'
 import ProductTable from '../components/ProductTable'
 
 export default {
   name: 'Home',
-  data () {
-    return {
-      products: []
+  // data () {
+  //   return {
+  //     products: []
+  //   }
+  // },
+  computed: {
+    products () {
+      return this.$store.state.products
     }
   },
   components: {
@@ -34,20 +39,22 @@ export default {
   },
   methods: {
     fetchProduct () {
-      axios({
-        method: 'get',
-        url: '/products',
-        headers: {
-          access_token:localStorage.access_token
-        }
-      })
-        .then(({ data }) => {
-          // console.log(data, '<<< ini data')
-          this.products = data
-        })
-        .catch(err => {
-          console.log(err, '<<< ini error fetchdata')
-        })
+      // axios({
+      //   method: 'get',
+      //   url: '/products',
+      //   headers: {
+      //     access_token:localStorage.access_token
+      //   }
+      // })
+      //   .then(({ data }) => {
+      //     // console.log(data, '<<< ini data')
+      //     this.products = data
+      //   })
+      //   .catch(err => {
+      //     console.log(err, '<<< ini error fetchdata')
+      //   })
+      this.$store.dispatch('fetchProducts')
+      // setelah memanggil action di store, lanjutkan di computed untuk memanggil data di store
     },
     toAddProduct () {
       this.$router.push({ name: 'AddProduct' })

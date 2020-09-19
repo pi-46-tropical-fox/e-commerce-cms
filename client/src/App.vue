@@ -6,7 +6,7 @@
         <button class="btn btn-outline-info my-2 my-sm-0" @click="Close">Close</button>
       </div>
     </nav>
-    <div class="d-flex justify-content-center align-items-center container">
+    <div class="d-flex justify-content-center align-items-center container mt-4">
       <router-view/>
     </div>
   </div>
@@ -18,7 +18,7 @@ export default {
   methods: {
       Close () {
           localStorage.clear()
-          this.$router.push({name: 'Login'})
+          this.$router.push({name: 'Login'}).catch(() => {})
       }
   }
 }
