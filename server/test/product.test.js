@@ -25,6 +25,7 @@ beforeAll((done) => {
     User.create(userData)
     .then(user => {
         access_token = generateToken(user)
+        // console.log(access_token, '<<<<<<');
         done()
     })
     .catch(err => {
