@@ -3,7 +3,7 @@ const ProductController = require('../controllers/ProductController')
 const UserController = require('../controllers/UserController')
 const { authentication, authorization } = require('../middlewares/auth')
 
-app.get('/', (req, res) => {
+router.get('/', (req, res) => {
     res.send('Hello World!')
 })
 router.post('/register', UserController.register)
