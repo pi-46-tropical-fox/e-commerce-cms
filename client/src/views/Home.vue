@@ -1,11 +1,17 @@
 <template>
   <div class="home">
+    <Navbar></Navbar>
+    <button class="button" style="display: flex; margin: auto"
+    v-on:click="openModal"
+    >Add Product</button>
+    <Modal v-if="modal"
+    @addProduct="addProduct"
+    @closeModal="closeModal">
+    </Modal>
     <div class="card-container">
       <Card
-      v-for="product in data" :key="product.id"
+      v-for="product in products" :key="product.id"
       :itemData="product"
-      @updateItem="updateProduct"
-      @deleteItem="deleteProduct"
       ></Card>
     </div>
   </div>
@@ -14,57 +20,44 @@
 <script>
 // @ is an alias to /src
 import Card from '../components/itemCard'
-import axios from 'axios'
+import Modal from '../components/modal'
+import Navbar from './Navbar'
 
 export default {
   name: 'Home',
-  components: {
-    Card
-  },
   data () {
     return {
-      data: []
+      modal: false
     }
   },
+  components: {
+    Card,
+    Modal,
+    Navbar
+  },
   methods: {
-    getProducts () {
-      axios({
-        method: 'GET',
-        url: 'http://localhost:3000/products'
-      })
-        .then(({ data }) => {
-          this.data = data
-        })
-        .catch(err => { console.log(err) })
+    openModal () {
+      this.modal = true
     },
-    async updateProduct (data) {
-      await axios({
-        method: 'PUT',
-        url: `http://localhost:3000/products/${data.id}`,
-        data: data
-      })
-      try {
-        console.log(data)
-      }
-      catch(err) {
-        console.log(err)
-      }
+    closeModal () {
+      this.modal = false
     },
-    async deleteProduct (id) {
-      await axios({
-        method: 'DELETE',
-        url: `http://localhost:3000/products/${id}`
-      })
-      try {
-        console.log("Delete data success")
-      }
-      catch(err) {
-        console.log(err)
-      }
+    fetchProducts () {
+      this.$store.dispatch('fetchProducts')
     },
+    addProduct (data) {
+      console.log(data)
+      this.$store.dispatch('addProduct', data)
+      this.modal = false
+    }
+  },
+  computed: {
+    products () {
+      return this.$store.state.products
+    }
   },
   created () {
-    this.getProducts()
+    this.fetchProducts()
   }
 }
 </script>

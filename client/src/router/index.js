@@ -1,7 +1,8 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 import Home from '../views/Home.vue'
-import Products from '../views/Products.vue'
+import Login from '../views/Login.vue'
+import FormEdit from '../components/formEdit'
 
 Vue.use(VueRouter)
 
@@ -9,20 +10,39 @@ const routes = [
   {
     path: '/',
     name: 'Home',
-    component: Home
+    component: Home,
+    beforeEnter: (to, from, next) => {
+      if (localStorage.getItem('access_token')) {
+        next()
+      } else {
+        next('/login')
+      }
+    }
   },
-  // {
-  //   path: '/about',
-  //   name: 'About',
-  //   // route level code-splitting
-  //   // this generates a separate chunk (about.[hash].js) for this route
-  //   // which is lazy-loaded when the route is visited.
-  //   component: () => import(/* webpackChunkName: "about" */ '../views/About.vue')
-  // },
   {
-    name: 'Products',
-    path: '/products',
-    component: Products
+    name: 'Edit Products',
+    path: '/products/:productId',
+    component: FormEdit,
+    beforeEnter: (to, from, next) => {
+      if (localStorage.getItem('access_token')) {
+        next()
+      } else {
+        next('/login')
+      }
+    }
+  },
+  {
+    name: 'Login',
+    path: '/login',
+    component: Login,
+    beforeEnter: (to, from, next) => {
+      console.log(from)
+      if (localStorage.getItem('access_token')) {
+        next({path: from.path})
+      } else {
+        next()
+      }
+    }
   }
 ]
 
