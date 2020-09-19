@@ -14,8 +14,25 @@ module.exports = (sequelize, DataTypes) => {
     }
   };
   Banner.init({
-    title: DataTypes.STRING,
-    status: DataTypes.BOOLEAN,
+    title: {
+      type: DataTypes.STRING,
+      validate: {
+        notEmpty : {
+          args : true,
+          msg : 'Banner title must not empty!'
+        }
+      },
+      allowNull : false
+    },
+    status: {
+      type: DataTypes.BOOLEAN,
+      validate: {
+        notEmpty: {
+          args: true,
+          msg: 'Promo status must not empty!'
+        }
+      }
+    },
     image_url: DataTypes.STRING
   }, {
     sequelize,

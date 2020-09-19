@@ -10,12 +10,12 @@
 
       <div class="collapse navbar-collapse" id="navbarNavDropdown">
         <ul class="navbar-nav">
-          <li v-if="currentRoute.path === '/products'" class="nav-item">
+          <li v-if="currentRoute.path === '/products' && role == 'admin'" class="nav-item">
             <router-link to="/products/add" class="nav-link"
             id="nav-login" href="#"><b>Release New Book! </b></router-link>
           </li>
 
-          <li v-if="currentRoute.path === '/banners'" class="nav-item">
+          <li v-if="currentRoute.path === '/banners' && role == 'admin'" class="nav-item">
             <router-link to="/banners/add" class="nav-link"
             id="nav-login" href="#">Add Banner</router-link>
           </li>
@@ -52,6 +52,8 @@
 </template>
 
 <script>
+import { Toast } from '../config/toaster'
+
 export default {
   name: 'Navbar',
   methods: {
@@ -60,9 +62,12 @@ export default {
       this.$store.commit('changeLogin', false)
       this.$store.commit('setRole', '')
       this.$store.commit('setName', '')
-      if (this.currentRoute.path === '/products/add' ||
-      this.currentRoute.path === 'products/:product_id') {
+      if (this.currentRoute.path !== '/') {
         this.$router.push('/')
+        Toast.fire({
+          icon: 'success',
+          title: 'You have logged out, Thank you for using Bookiepedia!'
+        })
       }
     }
   },

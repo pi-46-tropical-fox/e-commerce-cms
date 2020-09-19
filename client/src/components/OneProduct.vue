@@ -20,15 +20,15 @@
           placeholder="Update the book title"
         >
         <input type="text" class="field" v-model="input.image_url" name=""
-          id=""
-          placeholder="Update the image url for cover book"
+          id="" placeholder="Update the book image"
         />
+          <!-- placeholder="Update the image url for cover book" -->
         <input type="number" class="field" v-model="input.price" name=""
           id=""
-         placeholder="Update book price"
+         placeholder="Update book price" required
         />
         <input type="number" class="field" v-model="input.stock" name="" id=""
-        placeholder="Update book stock"
+        placeholder="Update book stock" required
         />
         <div class="btn-wrapper">
           <button id="btn1" class="btn">Update</button>

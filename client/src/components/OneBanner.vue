@@ -23,12 +23,19 @@
           id=""
           placeholder="Update the image url banner"
         />
-        <input type="radio" class="field" value="true" v-model="input.status" name=""
-          id=""
-        /> <label for="">Promo</label>
-        <input type="radio" class="field" value="false" v-model="input.status" name=""
-          id=""
-        /> <label for="">No Promo</label>
+
+        <p>Is banner has a promo? </p>
+
+          <label id="radio1" class="radio-inline">
+            <input type="radio"  class="field" value="true" v-model="input.status" name=""
+              required
+            > Yes
+          </label>
+          <label id="radio2" class="radio-inline">
+            <input type="radio" class="field" value="false" v-model="input.status" name=""
+              required
+          > No
+          </label>
         <div class="btn-wrapper">
           <button id="btn1" class="btn">Update</button>
         </div>
@@ -174,6 +181,20 @@ h2:after {
 
 textarea {
   min-height: 150px;
+}
+
+#radio1 {
+  margin: 10px 30px 0 0;
+  /* margin: 5px; */
+}
+
+#radio2 {
+  margin: 0 0 10px 30px;
+  /* margin: 5px; */
+}
+
+.btn {
+  margin: 10px 0 0 0;
 }
 
 /* .btn-wrapper {

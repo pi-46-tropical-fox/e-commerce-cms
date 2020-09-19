@@ -2,6 +2,7 @@ import Vue from 'vue'
 import Vuex from 'vuex'
 import axios from '../config/axios'
 import router from '../router'
+import { Toast } from '../config/toaster'
 
 Vue.use(Vuex)
 
@@ -12,6 +13,7 @@ export default new Vuex.Store({
     name: localStorage.getItem('user'),
     allProduct: [],
     oneProduct: [],
+    updatedProduct: '',
     landing: false
   },
   mutations: {
@@ -32,6 +34,9 @@ export default new Vuex.Store({
     },
     setLanding (state, landing) {
       state.landing = landing
+    },
+    setUpdatedProduct (state, updatedProduct) {
+      state.updatedProduct = updatedProduct
     }
 
   },
@@ -55,8 +60,13 @@ export default new Vuex.Store({
           context.commit('setName', data.name)
           console.log(this.state.isLogin, this.state.role, this.state.name, '<<<<<<<')
 
-          if (data.role === 'admin') {
+          if (data.role === 'admin' || data.role === 'security') {
             router.push('/')
+
+            Toast.fire({
+              icon: 'success',
+              title: `You have sign in successfully. Welcome to Bookiepedia, ${this.state.name}!`
+            })
           }
         })
     },
@@ -89,22 +99,32 @@ export default new Vuex.Store({
         .then(({ data }) => {
           console.log(data)
           if (data) {
+            context.commit('setUpdatedProduct', data.name)
             router.push('/products')
+            // console.log(this.state.updatedProduct)
+            Toast.fire({
+              icon: 'success',
+              title: `You have added "${this.state.updatedProduct}" book!`
+            })
           }
         })
     },
     getOne (context, id) {
-      console.log(id, 'GET')
-      axios
-        .get(`/products/${id}`, {
-          headers: {
-            access_token: localStorage.access_token
-          }
-        })
-        .then(({ data }) => {
-          console.log(data)
-          context.commit('setOneProduct', data)
-        })
+      if (this.state.role === 'admin') {
+        console.log(id, 'GET')
+        axios
+          .get(`/products/${id}`, {
+            headers: {
+              access_token: localStorage.access_token
+            }
+          })
+          .then(({ data }) => {
+            console.log(data)
+            context.commit('setOneProduct', data)
+          })
+      } else {
+        router.push('/products')
+      }
     },
     updateProduct (context, update) {
       const id = update.id
@@ -113,6 +133,12 @@ export default new Vuex.Store({
         image_url: update.image_url,
         price: update.price,
         stock: update.stock
+      }
+      if (!data.image_url) {
+        data.image_url = this.state.oneProduct.image_url
+      }
+      if (!data.name) {
+        data.name = this.state.oneProduct.name
       }
       axios
         .put(`/products/${id}`, data, {
@@ -123,6 +149,11 @@ export default new Vuex.Store({
         .then(({ data }) => {
           if (data) {
             router.push('/products')
+            context.commit('setUpdatedProduct', data.name)
+            Toast.fire({
+              icon: 'success',
+              title: `You have updated "${this.state.updatedProduct}" book!`
+            })
           }
         })
     },
@@ -137,6 +168,10 @@ export default new Vuex.Store({
         .then(({ data }) => {
           console.log('deleted')
           router.push('/products')
+          Toast.fire({
+            icon: 'success',
+            title: 'You have deleted book successfully!'
+          })
         })
     },
     getBanner (context) {
@@ -167,21 +202,30 @@ export default new Vuex.Store({
           console.log(data)
           if (data) {
             router.push('/banners')
+            context.commit('setUpdatedProduct', data.title)
+            Toast.fire({
+              icon: 'success',
+              title: `You have added "${this.state.updatedProduct}" banner!`
+            })
           }
         })
     },
     getOneBanner (context, id) {
-      console.log(id, 'GET BANNER')
-      axios
-        .get(`/banners/${id}`, {
-          headers: {
-            access_token: localStorage.access_token
-          }
-        })
-        .then(({ data }) => {
-          console.log(data)
-          context.commit('setOneProduct', data)
-        })
+      if (this.state.role === 'admin') {
+        console.log(id, 'GET BANNER')
+        axios
+          .get(`/banners/${id}`, {
+            headers: {
+              access_token: localStorage.access_token
+            }
+          })
+          .then(({ data }) => {
+            console.log(data)
+            context.commit('setOneProduct', data)
+          })
+      } else {
+        router.push('/banners')
+      }
     },
     updateBanner (context, update) {
       const id = update.id
@@ -189,6 +233,12 @@ export default new Vuex.Store({
         title: update.title,
         status: update.status,
         image_url: update.image_url
+      }
+      if (!data.image_url) {
+        data.image_url = this.state.oneProduct.image_url
+      }
+      if (!data.title) {
+        data.title = this.state.oneProduct.title
       }
       axios
         .put(`/banners/${id}`, data, {
@@ -199,6 +249,11 @@ export default new Vuex.Store({
         .then(({ data }) => {
           if (data) {
             router.push('/banners')
+            context.commit('setUpdatedProduct', data.title)
+            Toast.fire({
+              icon: 'success',
+              title: `You have updated "${this.state.updatedProduct}" banner!`
+            })
           }
         })
     },
@@ -213,6 +268,10 @@ export default new Vuex.Store({
         .then(({ data }) => {
           console.log('deleted')
           router.push('/banners')
+          Toast.fire({
+            icon: 'success',
+            title: 'You have deleted banner successfully!'
+          })
         })
     }
   },

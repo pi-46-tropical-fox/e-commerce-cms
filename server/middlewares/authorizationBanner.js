@@ -20,7 +20,7 @@ const authorizationBanner = async (req, res, next) => {
         if ('admin' == req.userData.role) {
           next ()
         } else {
-          throw { message : 'You have no authorize!', statusCode : 403 }
+          throw { message : 'You have no authorize! Go back to banner page', statusCode : 403 }
         }
       } else {
         throw (err)

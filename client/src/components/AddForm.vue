@@ -12,10 +12,10 @@
           id="" placeholder="Cover book image url" required
         />
         <input type="number" class="field" v-model="input.price" name=""
-          id="" placeholder="Book price"
+          id="" placeholder="Book price" required
         />
         <input type="number" class="field" v-model="input.stock" name="" id=""
-          placeholder="Book stock"
+          placeholder="Book stock" required
         />
         <button class="btn">Add</button>
       </div>

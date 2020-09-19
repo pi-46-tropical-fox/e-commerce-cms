@@ -33,7 +33,17 @@
 <script>
 export default {
   name: 'CardBook',
-  props: ['product']
+  props: ['product'],
+  computed: {
+    role () {
+      return this.$store.state.role
+    }
+  },
+  mounted () {
+    if (localStorage.role !== 'admin') {
+      this.$router.push('/products')
+    }
+  }
 }
 </script>
 

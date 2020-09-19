@@ -11,12 +11,19 @@
         <input type="text" class="field" v-model="input.image_url" name=""
           id="" placeholder="Banner image url" required
         />
-        <input type="radio" class="field" value="true" v-model="input.status" name=""
-          id=""
-        /> <label for="">Promo</label>
-        <input type="radio" class="field" value="false" v-model="input.status" name=""
-          id=""
-        /> <label for="">No Promo</label>
+        <p>Is banner has a promo? </p>
+
+          <label id="radio1" class="radio-inline">
+            <input type="radio"  class="field" value="true" v-model="input.status" name=""
+
+            > Yes
+          </label>
+          <label id="radio2" class="radio-inline">
+            <input type="radio" class="field" value="false" v-model="input.status" name=""
+
+          > No
+          </label>
+
         <button class="btn">Add</button>
       </div>
       </form>
@@ -152,6 +159,20 @@ textarea {
 .field:focus {
   border: 2px solid rgba(30,85,250,0.47);
   background: #fff;
+}
+
+#radio1 {
+  margin: 10px 30px 0 0;
+  /* margin: 5px; */
+}
+
+#radio2 {
+  margin: 0 0 10px 30px;
+  /* margin: 5px; */
+}
+
+.btn {
+  margin: 10px 0 0 0;
 }
 
 @media screen and (max-width: 880px) {
