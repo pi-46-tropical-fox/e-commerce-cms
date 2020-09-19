@@ -1,0 +1,68 @@
+{
+  "Product": [
+    {
+      "id": 1,
+      "name": "Adidas",
+      "image_url": "https://s0.bukalapak.com/img/53684606541/large/data.png",
+      "price": 220000,
+      "stock": 20,
+      "category": "sport"
+    },
+    {
+      "id": 2,
+      "name": "Nike",
+      "image_url": "https://cf.shopee.co.id/file/b2ca8315ef7b796c287ee3af16cbe355",
+      "price": 235000,
+      "stock": 20,
+      "category": "sport"
+    },
+    {
+      "id": 3,
+      "name": "Puma",
+      "image_url": "https://ncrsport.com/img/storage/large/352634-03-1.jpg",
+      "price": 300000,
+      "stock": 20,
+      "category": "casual"
+    },
+    {
+      "id": 4,
+      "name": "Reebok",
+      "image_url": "https://ncrsport.com/img/storage/large/DV6727-1.jpg",
+      "price": 450000,
+      "stock": 20,
+      "category": "casual"
+    },
+    {
+      "id": 5,
+      "name": "League",
+      "image_url": "https://cf.shopee.co.id/file/c3f6f1455f6cd753e2f467b9daf0ba1c",
+      "price": 226000,
+      "stock": 20,
+      "category": "sport"
+    },
+    {
+      "id": 6,
+      "name": "Specs",
+      "image_url": "https://cf.shopee.co.id/file/aa132e2ac49615d09f7c4a6020790624",
+      "price": 250000,
+      "stock": 20,
+      "category": "sport"
+    },
+    {
+      "id": 7,
+      "name": "Bally",
+      "image_url": "https://cf.shopee.co.id/file/1a1333b9106a630b90abf7edbedbfb50",
+      "price": 220000,
+      "stock": 20,
+      "category": "formal"
+    },
+    {
+      "id": 8,
+      "name": "Kickers",
+      "image_url": "https://cf.shopee.co.id/file/3e3d94ede8da7ea4aa9b1940aee64cf6",
+      "price": 283000,
+      "stock": 20,
+      "category": "formal"
+    }
+  ]
+}
