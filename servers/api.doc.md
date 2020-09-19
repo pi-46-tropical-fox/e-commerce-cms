@@ -231,3 +231,181 @@ IV. Delete a Product
         }
     ]
 
+
+    +++++++++++++++++++
+
+V. Add Banner
+  * Route 
+    POST/banner
+  * Request Headers
+    access_token : <access_token>
+  * Request Body
+    "name"          : <name>
+    "image_url"     : <image_url>
+  * Response (201)
+    [
+        {
+            "id"            : <id>
+            "name"          : <name>
+            "image_url"     : <image_url>
+        }
+    ]
+  * Response (400)
+    [
+        {
+            message: "Bad request"
+        }
+    ]
+  * Response (401)
+    [
+        {
+            message: "User Unauthorized"
+        }
+    ]
+  * Response (403)
+    [
+        {
+            message: "Forbidden Access"
+        }
+    ]
+  * Response (500)
+    [
+        {
+            message: "Internal error server"
+        }
+    ]
+
+VI. Get All Banners
+  * Route 
+    GET/Banners
+  * Request Headers
+    access_token : <access_token>
+  * Request Body
+    no needed
+  * Response (201)
+    [
+        {
+            "id"            : <id>
+            "name"          : <name>
+            "image_url"     : <image_url>
+        }
+        dst.
+    ]
+  * Response (400)
+    [
+        {
+            message: "Bad request"
+        }
+    ]
+  * Response (401)
+    [
+        {
+            message: "User Unauthorized"
+        }
+    ]
+  * Response (404)
+    [
+        {
+            message: "Products no found"
+        }
+    ]
+  * Response (500)
+    [
+        {
+            message: "Internal error server"
+        }
+    ]
+
+VII. Update a Banners
+  * Route 
+    PUT/banners/:id
+  * Request Headers
+    access_token : <access_token>
+  * Request Body
+    "name"          : <name>
+    "image_url"     : <image_url>
+  * Response (201)
+    [
+        {
+            "id"            : <id>
+            "name"          : <name>
+            "image_url"     : <image_url>
+        }
+        dst.
+    ]
+  * Response (400)
+    [
+        {
+            message: "Bad request"
+        }
+    ]
+  * Response (401)
+    [
+        {
+            message: "User Unauthorized"
+        }
+    ]
+  * Response (403)
+    [
+        {
+            message: "Forbidden Access"
+        }
+    ]
+  * Response (404)
+    [
+        {
+            message: "Products no found"
+        }
+    ]
+  * Response (500)
+    [
+        {
+            message: "Internal error server"
+        }
+    ]
+
+VII. Delete a Banners
+  * Route 
+    DELETE/banners/:id
+  * Request Headers
+    access_token : <access_token>
+  * Request Body
+    not needed
+  * Response (201)
+    [
+        {
+            message: "Successfully delete product"
+        }
+        dst.
+    ]
+  * Response (400)
+    [
+        {
+            message: "Bad request"
+        }
+    ]
+  * Response (401)
+    [
+        {
+            message: "User Unauthorized"
+        }
+    ]
+  * Response (403)
+    [
+        {
+            message: "Forbidden Access"
+        }
+    ]
+  * Response (404)
+    [
+        {
+            message: "Products no found"
+        }
+    ]
+  * Response (500)
+    [
+        {
+            message: "Internal error server"
+        }
+    ]
+

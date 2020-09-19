@@ -1,18 +1,13 @@
-const {Product} = require(`../models`)
+const {Banner} = require(`../models`)
 class Controller {
     static async add(req, res, next){
-        const {name, image_url, price, stock} = req.body
+        const {title, image_url} = req.body
         try{
-            const product = await Product.create({name, image_url, price, stock})
-            if(product){
+            const banner = await Banner.create({title, image_url})
+            if(banner){
                 return res.status(201).json({
                     message: "Successfully create new product",
-                    data: {
-                        name: product.name,
-                        image_url: product.image_url,
-                        price: product.price,
-                        stock: product.stock
-                    }
+                    data: banner
                 })
             } else {
                 throw { message: "Bad request", statusCode: 400}
@@ -22,16 +17,16 @@ class Controller {
         }
     }
 
-    static async getAllProducts(req, res, next){
+    static async getAllBanners(req, res, next){
         try{
-            const products = await Product.findAll()
-            if(products.length > 0){
+            const banners = await Banner.findAll()
+            if(banners.length > 0){
                 return res.status(200).json({
-                    data: products
+                    data: banners
                 })
             } else {
                 return res.status(204).json({
-                    data: products
+                    data: banners
                 })
             }
         }catch(err){
@@ -42,10 +37,10 @@ class Controller {
     static async findOne(req, res, next){
         const {id} = req.params
         try{
-            const products = await Product.findByPk(id)
-            if(products){
+            const banners = await Banner.findByPk(id)
+            if(banners){
                 return res.status(200).json({
-                    data: products
+                    data: banners
                 })
             } else {
                 throw {message: "Products not found", statusCode: 404}
@@ -56,12 +51,12 @@ class Controller {
     }
 
     static async update(req, res, next){
-        const {name, image_url, price, stock} = req.body
+        const {title, image_url} = req.body
         const {id} = req.params
         
         try{
-            const product = await Product.update({name, image_url, price, stock}, {where: {id}})
-            if(!product){
+            const banner = await Banner.update({title, image_url}, {where: {id}})
+            if(!banner){
                 throw {message: "Product Not Found", statusCode: 404}
             } else {
                 return res.status(200).json({
@@ -76,8 +71,8 @@ class Controller {
     static async delete(req, res, next){
         const {id} = req.params
         try{
-            const product = await Product.destroy({where: {id}})
-            if(!product){
+            const banner = await Banner.destroy({where: {id}})
+            if(!banner){
                 throw {message: "Product not found", statusCode: 404}
             } else {
                 return res.status(200).json({

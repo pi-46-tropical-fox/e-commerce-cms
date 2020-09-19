@@ -44,7 +44,7 @@ beforeAll( async done => {
         productExmp = product
         done()
     } catch(err) {
-        done(err) // gw bisa ubah data niih, tapi gk bisa ketik perintah di terminal
+        done(err)
     }
 })
 
@@ -199,8 +199,6 @@ describe('POST /products', () => {
         price: "string", 
         stock: "string"
     }
-
-    let data = " berhasil kolaborasi di live share "
 
     //Test if add products success
     test('Successfully add new product', done => {

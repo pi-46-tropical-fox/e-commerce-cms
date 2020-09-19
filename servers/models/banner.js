@@ -14,12 +14,36 @@ module.exports = (sequelize, DataTypes) => {
     }
   };
   Banner.init({
-    title: DataTypes.STRING,
-    status: DataTypes.STRING,
-    image_url: DataTypes.STRING
+    title: {
+      type: DataTypes.STRING,
+      validate: {
+        len: {
+          args: [4, 50],
+          msg: "Name minimum is three and maximun fifty"
+        },
+        notEmpty: {
+          args: true,
+          msg: "Name can not be empty"
+        }
+      }
+    },
+    status: DataTypes.BOOLEAN,
+    image_url: {
+      type: DataTypes.STRING,
+      validate: {
+        notEmpty: {
+          args: true,
+          msg: "image_url can not be empty"
+        }
+      }
+    }
   }, {
     sequelize,
     modelName: 'Banner',
   });
+
+  Banner.beforeCreate((banner, opt) => {
+    banner.status = false
+  })
   return Banner;
 };

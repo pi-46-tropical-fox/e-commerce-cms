@@ -11,7 +11,6 @@ class Controller{
             if(!user){
                 throw errorMsg
             }
-            console.log(user)
             const isValid = compare(password, user.password)    
             if(isValid) {
                 const token = encode(user.email, user.id, user.role)
