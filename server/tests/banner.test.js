@@ -92,7 +92,7 @@ describe("Banner Endpoint Tests", () => {
       "Status must be boolean!",
       "Title cannot be left blank!",
       "Status cannot be left blank!",
-      "Title cannot be left blank!",
+      "Image url cannot be left blank!",
       "Please insert a valid url!"
     ];
 

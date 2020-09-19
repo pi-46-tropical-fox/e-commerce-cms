@@ -26,7 +26,7 @@
               <small><a href="https://imgur.com/t/upload" target="_blank">Get url of your image</a></small>
             </div>
             <button type="submit" class="btn-sm btn-dark">Submit</button>
-            <router-link class="btn-sm btn-danger ml-2 p-2" :to="{ name: 'Banner' }">Cancel</router-link>
+            <router-link class="btn-sm btn-danger ml-2 p-2" :to="{ name: 'BannerDetails' }">Cancel</router-link>
           </form>
         </div>
       </div>

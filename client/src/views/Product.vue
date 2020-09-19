@@ -20,7 +20,7 @@
                 <th scope="col">stock</th>
                 <th scope="col">category</th>
                 <th scope="col">Updated At</th>
-                <th scope="col">Options</th>
+                <th scope="col">Details</th>
               </tr>
             </thead>
             <tbody>
@@ -30,7 +30,7 @@
                 <td>{{ product.price }}</td>
                 <td>{{ product.stock }}</td>
                 <td>{{ product.category }}</td>
-                <td>{{ product.updatedAt }}</td>
+                <td>{{ new Date(product.updatedAt).toISOString().split('T')[0] }}</td>
                 <td><router-link class="btn-sm btn-info" :to="{ name: 'ProductDetails', params: {id: product.id, image: product.image_url} }">Details</router-link></td>
               </tr>
             </tbody>

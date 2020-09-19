@@ -42,7 +42,7 @@ module.exports = (sequelize, DataTypes) => {
       validate: {
         notEmpty: {
           args: true,
-          msg: "Title cannot be left blank!"
+          msg: "Image url cannot be left blank!"
         },
         isUrl: {
           args: true,

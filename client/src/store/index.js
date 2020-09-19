@@ -45,7 +45,8 @@ export default new Vuex.Store({
           router.push({ name: 'Product' })
         })
         .catch((err) => {
-          console.log(err)
+          console.log(err.response)
+          swal('Error', err.response.data.errors[0], 'warning')
         })
     },
     getProducts ({ commit }, payload) {
@@ -78,7 +79,8 @@ export default new Vuex.Store({
           router.push({ name: 'Product' })
         })
         .catch((err) => {
-          console.log(err)
+          console.log(err.response)
+          swal('Error', err.response.data.errors[0], 'warning')
         })
     },
     getProductById ({ commit }, payload) {
@@ -137,7 +139,8 @@ export default new Vuex.Store({
           router.push({ name: 'Product' })
         })
         .catch((err) => {
-          console.log(err)
+          console.log(err.response)
+          swal('Error', err.response.data.errors[0], 'warning')
         })
     },
     getBanners ({ commit }, payload) {
@@ -170,7 +173,8 @@ export default new Vuex.Store({
           router.push({ name: 'Banner' })
         })
         .catch((err) => {
-          console.log(err)
+          console.log(err.response)
+          swal('Error', err.response.data.errors[0], 'warning')
         })
     },
     getBannerById ({ commit }, payload) {
@@ -229,7 +233,8 @@ export default new Vuex.Store({
           router.push({ name: 'Banner' })
         })
         .catch((err) => {
-          console.log(err)
+          console.log(err.response)
+          swal('Error', err.response.data.errors[0], 'warning')
         })
     }
   },

@@ -14,11 +14,11 @@
           <table class="table table-stripped">
             <thead class="thead-dark">
               <tr>
-                <th scope="col">id</th>
+                <th scope="col">no.</th>
                 <th scope="col">title</th>
                 <th scope="col">status</th>
                 <th scope="col">Updated At</th>
-                <th scope="col">Options</th>
+                <th scope="col">Details</th>
               </tr>
             </thead>
             <tbody>
@@ -26,7 +26,7 @@
                 <td>{{ index+1 }}</td>
                 <td>{{ banner.title }}</td>
                 <td>{{ banner.status }}</td>
-                <td>{{ banner.updatedAt }}</td>
+                <td>{{ new Date(banner.updatedAt).toISOString().split('T')[0] }}</td>
                 <td><router-link class="btn-sm btn-info" :to="{ name: 'BannerDetails', params: {id: banner.id} }">Details</router-link></td>
               </tr>
             </tbody>
