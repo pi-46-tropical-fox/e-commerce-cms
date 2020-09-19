@@ -2,7 +2,7 @@
 Ecommerce CMS APP adalah Single Page Application (SPA) yang bertujuan untuk membantu 'admin' exommerce untuk mengatur database product dan banner yang akan ditampilkan pada aplikasi exommerce customer. Aplikasi ini memudahkan admin untuk menambahlan, mengubah dan mengedit data yang diperlukan.
 
 Aplikasi ini memiliki konfigurasi dan fitur sebagai berikut : 
-* Aplikasi ini dapat diakses pada url https://kanban-app-d4e62.web.app/
+* Aplikasi ini dapat diakses pada url https://ecommerce-cms-72024.web.app
 * Aplikasi ini dideploy menggunakan "heroku" untuk server dan "firebase" untuk client.
 * RESTful endpoint dengan operasi CRUD.
 * Format respon berupa JSON.

@@ -2,7 +2,11 @@ import Vue from 'vue'
 import Vuex from 'vuex'
 import axios from 'axios'
 
+
+
 Vue.use(Vuex)
+
+const baseUrl = 'https://ecom-cms-arviandito.herokuapp.com'
 
 export default new Vuex.Store({
   state: {
@@ -39,7 +43,7 @@ export default new Vuex.Store({
     login (context, payload) {
       return axios({
         method: 'POST',
-        url: 'http://localhost:3001/login',
+        url: 'https://ecom-cms-arviandito.herokuapp.com/login',
         data: {
           email: payload.email,
           password: payload.password
@@ -70,7 +74,7 @@ export default new Vuex.Store({
     fetchProducts (context) {
       axios({
         method: 'GET',
-        url: 'http://localhost:3001/products',
+        url: baseUrl + '/products',
         headers: {
           access_token: localStorage.getItem('access_token')
         }
@@ -86,7 +90,7 @@ export default new Vuex.Store({
     deleteProduct (context, id) {
       axios({
         method: 'DELETE',
-        url: `http://localhost:3001/products/${id}`,
+        url: baseUrl + `/products/${id}`,
         headers: {
           access_token: localStorage.getItem('access_token')
         }
@@ -102,7 +106,7 @@ export default new Vuex.Store({
     addProduct (context, payload) {
       return axios({
         method: 'POST',
-        url: 'http://localhost:3001/products',
+        url: baseUrl + '/products',
         headers: {
           access_token: localStorage.getItem('access_token')
         },
@@ -126,7 +130,7 @@ export default new Vuex.Store({
     selectProduct (context, id) {
       axios({
         method: 'GET',
-        url: `http://localhost:3001/products/${id}`,
+        url: baseUrl + `/products/${id}`,
         headers: {
           access_token: localStorage.getItem('access_token')
         }
@@ -143,7 +147,7 @@ export default new Vuex.Store({
     editProduct (context, data) {
       axios({
         method: 'PUT',
-        url: `http://localhost:3001/products/${data.id}`,
+        url: baseUrl + `/products/${data.id}`,
         headers: {
           access_token: localStorage.getItem('access_token')
         },
@@ -167,7 +171,7 @@ export default new Vuex.Store({
     fetchBanners (context) {
       axios({
         method: 'GET',
-        url: 'http://localhost:3001/banners',
+        url: baseUrl + '/banners',
         headers: {
           access_token: localStorage.getItem('access_token')
         }
@@ -184,7 +188,7 @@ export default new Vuex.Store({
     deleteBanner (context, id) {
       axios({
         method: 'DELETE',
-        url: `http://localhost:3001/banners/${id}`,
+        url: baseUrl + `/banners/${id}`,
         headers: {
           access_token: localStorage.getItem('access_token')
         }
@@ -200,7 +204,7 @@ export default new Vuex.Store({
     addBanner (context, payload) {
       return axios({
         method: 'POST',
-        url: 'http://localhost:3001/banners',
+        url: baseUrl + '/banners',
         headers: {
           access_token: localStorage.getItem('access_token')
         },
@@ -222,7 +226,7 @@ export default new Vuex.Store({
     selectBanner (context, id) {
       axios({
         method: 'GET',
-        url: `http://localhost:3001/banners/${id}`,
+        url: baseUrl + `/banners/${id}`,
         headers: {
           access_token: localStorage.getItem('access_token')
         }
@@ -239,7 +243,7 @@ export default new Vuex.Store({
     editBanner (context, payload) {
       axios({
         method: 'PUT',
-        url: `http://localhost:3001/banners/${payload.id}`,
+        url: baseUrl + `/banners/${payload.id}`,
         headers: {
           access_token: localStorage.getItem('access_token')
         },
@@ -261,7 +265,7 @@ export default new Vuex.Store({
     customerRegister (context, payload) {
       axios({
         method: 'POST',
-        url: 'http://localhost:3001/register',
+        url: baseUrl + '/register',
         data: {
           email: payload.email,
           password: payload.password
