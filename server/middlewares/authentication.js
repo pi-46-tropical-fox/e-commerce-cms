@@ -15,7 +15,7 @@ const authentication = async (req, res, next) => {
       req.userData = userData
       console.log(req.params.id, 'INI PARAMS');
       console.log(user, 'ini user');
-      console.log('========= ini userData', userData);
+      // console.log('========= ini userData', userData);
       next()
     } else {
       throw { message : 'User is not authenticated', statusCode : 401 }
