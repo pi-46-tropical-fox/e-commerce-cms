@@ -3,8 +3,7 @@ import VueRouter from 'vue-router'
 
 import Login from '../views/Login.vue'
 import Dashboard from '../views/Dashboard.vue'
-import NotFound from '../views/NotFound.vue'
-import Product from '../views/Product.vue'
+import UpdateProduct from '../views/UpdateProduct.vue'
 import AddProduct from '../views/AddProduct.vue'
 
 import Logout from '../views/Logout.vue'
@@ -20,7 +19,7 @@ const routes = [
         component: Login,
         beforeEnter: (to, from, next) => {
             if(store.state.access_token){
-                next('/dashboard')
+                next('/')
             } else {
                 next()
             }
@@ -33,11 +32,6 @@ const routes = [
         meta : {
             requiresAuth : true
         }
-    },
-    {
-        path : '/notfound',
-        name : 'NotFound',
-        component: NotFound
     },
     {
         path: '/logout',
@@ -53,9 +47,9 @@ const routes = [
         }
     },
     {
-        path: '/product/:id',
+        path: '/product/:id/edit',
         name: 'Product',
-        component: Product,
+        component: UpdateProduct,
         meta : {
             requiresAuth : true
         }

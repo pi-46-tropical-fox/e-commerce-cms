@@ -20,7 +20,7 @@ export default new Vuex.Store({
                 localStorage.setItem('access_token', res.data.access_token)
                 state.access_token = res.data.access_token
 
-                router.push('/dashboard')
+                router.push('/')
             }).catch(e => {
                 Vue.swal.fire('Error', e.data)
             })
@@ -31,7 +31,34 @@ export default new Vuex.Store({
         },
         fetchProducts({state}){
             axios.get('/products', { headers : { access_token : state.access_token }}).then(e => {
-                console.log(e)
+                state.products = e.data
+            })
+        },
+        updateById({state}, data){
+            return new Promise((res, rej) => {
+                axios.put(`/products/${data.id}`, data, { headers : { access_token : state.access_token }}).then(response => {
+                    res(response)
+                }).catch(err => {
+                    rej(err)
+                })
+            })
+        },
+        delete({state}, id){
+            return new Promise((res, rej) => {
+                axios.delete(`/products/${id}`, { headers : { access_token : state.access_token }}).then(response => {
+                    res(response)
+                }).catch(e => {
+                    rej(e)
+                })
+            })
+        },
+        fetchProductById({state}, id){
+            return new Promise((res, rej) => {
+                axios.get(`/products/${id}`, { headers : { access_token : state.access_token }}).then(response => {
+                    res(response)
+                }).catch(err => {
+                    rej(err)
+                })
             })
         },
         createProduct({state}, data){

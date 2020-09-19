@@ -17,13 +17,14 @@
             <input v-model="form.stock" type="number" class="form-control" required placeholder="Stock">
         </div>
         
-        <button class="btn btn-primary">Create</button>
+        <button type="submit" v-if="!update" class="btn btn-primary">Create</button>
+        <button type="submit" v-else class="btn btn-primary">Update</button>
     </form>
 </template>
 
 <script>
 export default {
-    props : ['name', 'image_url', 'price', 'stock'],
+    props : ['name', 'image_url', 'price', 'stock', 'update'],
     methods : {
         submitForm(){
             this.$emit('submitForm', this.form)

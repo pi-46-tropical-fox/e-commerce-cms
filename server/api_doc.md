@@ -4,6 +4,10 @@
 POST /user/login
 
 GET /products
+GET /products/:id
+POST /products
+DELETE /products/:id
+PUT /products/:id
 ```
 
 ## POST /user/login
