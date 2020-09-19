@@ -42,8 +42,8 @@
           />
           <div class="card-body">
             <h5 class="card-title">{{ product.name }}</h5>
-            <p class="card-text">{{ product.stock }}</p>
-            <p class="card-text">{{ product.price }}</p>
+            <p class="card-text">stock: {{ product.stock }}</p>
+            <p class="card-text">price: Rp. {{ new Number(product.price).toLocaleString("id-ID") }}</p>
           </div>
         </div>
       </div>
