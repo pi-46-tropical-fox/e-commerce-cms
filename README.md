@@ -69,8 +69,8 @@ Admin link: https://ecommerce-4fca5.web.app/admin/login
         "stock": 23,
         "category": "smartphone",
         "description: "new",
-        "createdAt": "2020-04-09T18:45:51.986Z",
-        "updatedAt": "2020-04-09T18:45:51.986Z"
+        "createdAt": "2020-09-09T18:45:51.986Z",
+        "updatedAt": "2020-09-09T18:45:51.986Z"
     },
     {
         "id": 10,
@@ -81,8 +81,8 @@ Admin link: https://ecommerce-4fca5.web.app/admin/login
         "stock": 23,
         "category": "smartphone",
         "description: "new",
-        "createdAt": "2020-04-09T18:45:51.986Z",
-        "updatedAt": "2020-04-09T18:45:51.986Z"
+        "createdAt": "2020-09-09T18:45:51.986Z",
+        "updatedAt": "2020-09-09T18:45:51.986Z"
     }
 ]
 ```
@@ -235,8 +235,8 @@ not needed
 	"stock": 23,
 	"category": "smartphone",
 	"description: "new",
-	"createdAt": "2020-04-09T18:45:51.986Z",
-	"updatedAt": "2020-04-09T18:45:51.986Z"
+	"createdAt": "2020-09-09T18:45:51.986Z",
+	"updatedAt": "2020-09-09T18:45:51.986Z"
 }
 ```
 
