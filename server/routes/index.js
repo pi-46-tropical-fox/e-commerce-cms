@@ -5,7 +5,9 @@ const {authentication, authorization} = require(`../middlewares/auth`)
 const UserController = require(`../controllers/UserController`)
 
 
-// router.post(`/register`, UserController.register)
+router.get('/', (req, res)=>{
+    res.send('Terhubung kedalam Server E-Commerce')
+})
 router.post(`/login`, UserController.login)
 router.use(authentication)
 router.use(authorization)

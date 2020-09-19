@@ -4,18 +4,6 @@ const {encode} = require(`../helpers/jwt`)
 
 class UserController {
 
-    static register(req, res, next) {
-        const newUser = User.generateForm(req.body)
-        User.create(newUser)
-        .then(result => {
-            res.status(201).json(result)
-        })
-        .catch(err => {
-            // console.log(err)
-            next(err)
-        })
-    }
-
     static login(req, res, next) {
         const {email, password} = req.body
         const error = {
