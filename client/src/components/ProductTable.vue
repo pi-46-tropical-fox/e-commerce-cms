@@ -42,19 +42,22 @@ export default {
     toEdit (productId) {
       this.$router.push({ name: 'EditProduct', params: { id: productId } })
     },
-    deleteProduct (productId) {
+    deleteProduct (id) {
       // console.log(productId);
-
-      axios({
-        method: 'delete',
-        url: '/products/' + productId
-      })
-        .then(({ data }) => {
-          // this.$router.push({name: 'Home'})
-        })
-        .catch(err => {
-          console.log(err)
-        })
+      this.$store.dispatch('deleteProduct', {id})
+      // axios({
+      //   method: 'delete',
+      //   url: '/products/' + id,
+      //   headers: {
+      //     access_token:localStorage.access_token
+      //   }
+      // })
+      //   .then(({ data }) => {
+      //     this.$router.push({name: 'Home'}).catch(err => {})
+      //   })
+      //   .catch(err => {
+      //     console.log(err)
+      //   })
     }
   }
 }
