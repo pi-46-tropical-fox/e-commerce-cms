@@ -187,7 +187,7 @@ describe("FEATURE Login", function(){
 			.then(response => {
 				const{body, status} = response
 				expect(body.errors[0]).toBe("invalid email or password")
-				expect(status).toBe(200)
+				expect(status).toBe(400)
 
 				done()
 			})
@@ -204,7 +204,7 @@ describe("FEATURE Login", function(){
 			.then(response => {
 				const{body, status} = response
 				expect(body.errors[0]).toBe("Email and password required")
-				expect(status).toBe(200)
+				expect(status).toBe(400)
 
 				done()
 			})

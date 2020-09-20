@@ -39,6 +39,7 @@ class UserController {
     }
 
     static async login(req, res, next){
+        console.log("ini login dari userController");
         try{
             const {email, password} =  req.body
             if (!email || !password){
@@ -66,6 +67,7 @@ class UserController {
                 }else{
                     let access_token = generateUserToken(userData)
                     // console.log(access_token)
+                    console.log(access_token);
                     res.status(200).json({access_token})
                 }
             }

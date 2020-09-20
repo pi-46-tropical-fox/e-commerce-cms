@@ -11,6 +11,7 @@ router.get("/", function(req, res){
 
 router.use("/users", users)
 
+
 router.use(authentication)
 
 router.use(adminAuthorization)

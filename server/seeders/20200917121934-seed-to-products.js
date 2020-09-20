@@ -17,56 +17,7 @@ module.exports = {
         image_url: "https://www.mobygames.com/images/covers/l/319393-the-witcher-3-wild-hunt-playstation-4-front-cover.jpg",
         price: 500000,
         stock: 12,
-        CategoryId: 2,
-        createdAt: new Date(),
-        updatedAt: new Date()
-      },
-      {
-        name: "The Witcher 3: Wild Hunt",
-        image_url: "https://www.mobygames.com/images/covers/l/319393-the-witcher-3-wild-hunt-playstation-4-front-cover.jpg",
-        price: 500000,
-        stock: 12,
-        CategoryId: 2,
-        createdAt: new Date(),
-        updatedAt: new Date()
-      },      {
-        name: "The Witcher 3: Wild Hunt",
-        image_url: "https://www.mobygames.com/images/covers/l/319393-the-witcher-3-wild-hunt-playstation-4-front-cover.jpg",
-        price: 500000,
-        stock: 12,
-        CategoryId: 2,
-        createdAt: new Date(),
-        updatedAt: new Date()
-      },      {
-        name: "The Witcher 3: Wild Hunt",
-        image_url: "https://www.mobygames.com/images/covers/l/319393-the-witcher-3-wild-hunt-playstation-4-front-cover.jpg",
-        price: 500000,
-        stock: 12,
-        CategoryId: 2,
-        createdAt: new Date(),
-        updatedAt: new Date()
-      },      {
-        name: "The Witcher 3: Wild Hunt",
-        image_url: "https://www.mobygames.com/images/covers/l/319393-the-witcher-3-wild-hunt-playstation-4-front-cover.jpg",
-        price: 500000,
-        stock: 12,
-        CategoryId: 2,
-        createdAt: new Date(),
-        updatedAt: new Date()
-      },      {
-        name: "The Witcher 3: Wild Hunt",
-        image_url: "https://www.mobygames.com/images/covers/l/319393-the-witcher-3-wild-hunt-playstation-4-front-cover.jpg",
-        price: 500000,
-        stock: 12,
-        CategoryId: 2,
-        createdAt: new Date(),
-        updatedAt: new Date()
-      },      {
-        name: "The Witcher 3: Wild Hunt",
-        image_url: "https://www.mobygames.com/images/covers/l/319393-the-witcher-3-wild-hunt-playstation-4-front-cover.jpg",
-        price: 500000,
-        stock: 12,
-        CategoryId: 2,
+        CategoryId: 1,
         createdAt: new Date(),
         updatedAt: new Date()
       },
