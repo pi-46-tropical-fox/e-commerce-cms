@@ -10,6 +10,7 @@ export default new Vuex.Store({
         currentUser: {},
         products: [],
         categories: [],
+        productDetail: {},
     },
     mutations: {
         setCurrentUser(state, userData) {
@@ -26,6 +27,10 @@ export default new Vuex.Store({
 
         setCategories(state, categories) {
             state.categories = categories;
+        },
+
+        setProductDetail(state, product) {
+            state.productDetail = product;
         },
     },
     actions: {
@@ -50,9 +55,6 @@ export default new Vuex.Store({
             Axios({
                 url: '/products',
                 method: 'GET',
-                headers: {
-                    access_token: localStorage.getItem('access_token'),
-                },
             })
                 .then(({ data }) => {
                     commit('setProducts', data);
@@ -62,23 +64,23 @@ export default new Vuex.Store({
                 });
         },
 
-        fetchProductsById(context, { id }) {
-            return Axios({
+        fetchProductsById({ commit }, { id }) {
+            Axios({
                 url: `/products/${id}`,
                 method: 'GET',
-                headers: {
-                    access_token: localStorage.getItem('access_token'),
-                },
-            });
+            })
+                .then(({ data }) => {
+                    commit('setProductDetail', data);
+                })
+                .catch(err => {
+                    console.log(err);
+                });
         },
 
         fetchCategories({ commit }) {
             Axios({
                 url: '/categories',
                 method: 'GET',
-                headers: {
-                    access_token: localStorage.getItem('access_token'),
-                },
             })
                 .then(({ data }) => {
                     commit('setCategories', data);
@@ -107,7 +109,7 @@ export default new Vuex.Store({
 
         updateProduct(context, productData) {
             return Axios({
-                url: '/products',
+                url: `/products/${productData.id}`,
                 method: 'PUT',
                 headers: {
                     access_token: localStorage.getItem('access_token'),
@@ -122,20 +124,14 @@ export default new Vuex.Store({
             });
         },
 
-        deleteProduct({ dispatch }, id) {
-            Axios({
+        deleteProduct(context, id) {
+            return Axios({
                 url: `/products/${id}`,
                 method: 'DELETE',
                 headers: {
                     access_token: localStorage.getItem('access_token'),
                 },
-            })
-                .then(() => {
-                    dispatch.fetchProducts();
-                })
-                .catch(err => {
-                    console.log(err);
-                });
+            });
         },
     },
     modules: {},

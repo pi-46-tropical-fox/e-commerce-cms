@@ -74,7 +74,6 @@ describe('GET /categories', function () {
 		];
 		request(app)
 			.get('/categories')
-			.set('access_token', access_token_admin)
 			.then(response => {
 				const { statusCode, body } = response;
 
@@ -86,35 +85,12 @@ describe('GET /categories', function () {
 				done(err);
 			});
 	});
-
-	test('401: Unauthenticated because no access_token, return json with error', function (done) {
-		const expectedErrors = [
-			{
-				name: 'notAuthenticated',
-				message: 'User not authenticated',
-			},
-		];
-
-		request(app)
-			.get('/products')
-			.then(response => {
-				const { statusCode, body } = response;
-
-				expect(statusCode).toBe(401);
-				expect(body.errors).toEqual(expect.arrayContaining(expectedErrors));
-				done();
-			})
-			.catch(error => {
-				done(error);
-			});
-	});
 });
 
 describe('GET /categories/:id', function () {
 	test(`200: Success get category by id, return json with category's data`, function (done) {
 		request(app)
 			.get(`/categories/${category.id}`)
-			.set('access_token', access_token_admin)
 			.then(response => {
 				const { statusCode, body } = response;
 
@@ -148,28 +124,6 @@ describe('GET /categories/:id', function () {
 				const { statusCode, body } = response;
 
 				expect(statusCode).toBe(404);
-				expect(body.errors).toEqual(expect.arrayContaining(expectedErrors));
-				done();
-			})
-			.catch(error => {
-				done(error);
-			});
-	});
-
-	test('401: Unauthenticated because no access_token, return json with error', function (done) {
-		const expectedErrors = [
-			{
-				name: 'notAuthenticated',
-				message: 'User not authenticated',
-			},
-		];
-
-		request(app)
-			.get('/categories')
-			.then(response => {
-				const { statusCode, body } = response;
-
-				expect(statusCode).toBe(401);
 				expect(body.errors).toEqual(expect.arrayContaining(expectedErrors));
 				done();
 			})

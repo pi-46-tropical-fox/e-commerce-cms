@@ -421,7 +421,6 @@ describe('GET /products', function () {
 		];
 		request(app)
 			.get('/products')
-			.set('access_token', access_token_admin)
 			.then(response => {
 				const { statusCode, body } = response;
 
@@ -433,40 +432,26 @@ describe('GET /products', function () {
 				done(err);
 			});
 	});
-
-	test('401: Unauthenticated because no access_token, return json with error', function (done) {
-		const expectedErrors = [
-			{
-				name: 'notAuthenticated',
-				message: 'User not authenticated',
-			},
-		];
-
-		request(app)
-			.get('/products')
-			.then(response => {
-				const { statusCode, body } = response;
-
-				expect(statusCode).toBe(401);
-				expect(body.errors).toEqual(expect.arrayContaining(expectedErrors));
-				done();
-			})
-			.catch(error => {
-				done(error);
-			});
-	});
 });
 
 describe('GET /products/:id', function () {
 	test(`200: Success get product by id, return json with product's data`, function (done) {
 		request(app)
 			.get(`/products/${createdProduct.id}`)
-			.set('access_token', access_token_admin)
 			.then(response => {
 				const { statusCode, body } = response;
 
 				expect(statusCode).toBe(200);
-				expect(body).toEqual(createdProduct);
+				expect(body).toEqual({
+					...createdProduct,
+					Category: {
+						id: category.id,
+						name: category.name,
+						slug: category.slug,
+						createdAt: new Date(category.createdAt).toISOString(),
+						updatedAt: new Date(category.updatedAt).toISOString(),
+					},
+				});
 				done();
 			})
 			.catch(err => {
@@ -484,33 +469,10 @@ describe('GET /products/:id', function () {
 
 		request(app)
 			.get(`/products/1234`)
-			.set('access_token', access_token_admin)
 			.then(response => {
 				const { statusCode, body } = response;
 
 				expect(statusCode).toBe(404);
-				expect(body.errors).toEqual(expect.arrayContaining(expectedErrors));
-				done();
-			})
-			.catch(error => {
-				done(error);
-			});
-	});
-
-	test('401: Unauthenticated because no access_token, return json with error', function (done) {
-		const expectedErrors = [
-			{
-				name: 'notAuthenticated',
-				message: 'User not authenticated',
-			},
-		];
-
-		request(app)
-			.get('/products')
-			.then(response => {
-				const { statusCode, body } = response;
-
-				expect(statusCode).toBe(401);
 				expect(body.errors).toEqual(expect.arrayContaining(expectedErrors));
 				done();
 			})

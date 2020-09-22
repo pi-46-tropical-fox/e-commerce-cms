@@ -46,7 +46,7 @@
                         <th>{{ product.Category.name }}</th>
                         <th>
                             <a
-                                class="button"
+                                class="button mr-3"
                                 @click="goToDetail(product.id, product.slug)"
                             >
                                 Detail
@@ -77,6 +77,12 @@
                                     class="input"
                                     type="text"
                                 />
+                            </div>
+                        </div>
+
+                        <div class="field">
+                            <div class="control">
+                                <img width="200px" :src="image_url" alt="" />
                             </div>
                         </div>
 
@@ -159,6 +165,7 @@
 <script>
 import { mapState, mapActions } from 'vuex';
 import CategoryList from '@/components/CategoryList.vue';
+import Swal from 'sweetalert2';
 
 export default {
     name: 'Products',
@@ -207,7 +214,13 @@ export default {
                     this.fetchProducts();
                 })
                 .catch(err => {
-                    console.log(err);
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Validation Error',
+                        html: err.response.data.errors
+                            .map(err => err.message)
+                            .join('<br />'),
+                    });
                 });
         },
 
@@ -219,7 +232,17 @@ export default {
         },
 
         deleteProducts(id) {
-            this.deleteProduct(id);
+            this.deleteProduct(id)
+                .then(() => {
+                    this.fetchProducts();
+                })
+                .catch(err => {
+                    const { message } = err.response.data.errors[0];
+                    Swal.fire({
+                        title: 'Not Authenticated or Authorized',
+                        text: message,
+                    });
+                });
         },
     },
 
