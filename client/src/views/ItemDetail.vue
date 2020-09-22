@@ -26,7 +26,7 @@
           <!-- <label for="stock">Stock</label> -->
           <br>
           <input class="item-detail-input stock" type="number" v-model="itemData.stock">
-          
+
           <br><br>
 
           <select  class="item-detail-input category-id" name="category" v-model='itemData.CategoryId'>
@@ -51,64 +51,62 @@
 <script>
 export default {
   name: 'ItemDetail',
-  data (){
-    return{
+  data () {
+    return {
       isEdit: false
     }
-
   },
   computed: {
     itemData: {
-      get(){
+      get () {
         return this.$store.state.onDisplayData
       }
     },
 
-    categoriesData(){
+    categoriesData () {
       return this.$store.state.categoriesData
     },
 
     priceConverted () {
-      let price= String(this.itemData.price).split('')
-      let result = []
+      const price = String(this.itemData.price).split('')
+      const result = []
       let j = price.length
-      for(let i = 0; i <= price.length; i++){
+      for (let i = 0; i <= price.length; i++) {
         result.unshift(price[j])
         j -= 1
-        if (i % 3 === 0 && i !== 0 && i !== price.length){
+        if (i % 3 === 0 && i !== 0 && i !== price.length) {
           result.unshift('.')
         }
-        
       }
       return result.join('')
     }
   },
   methods: {
-    toggleStartEdit (){
-      if(this.isEdit){
+    toggleStartEdit () {
+      if (this.isEdit) {
         this.isEdit = false
       } else {
         this.isEdit = true
       }
     },
-    submitEdit(){
-      let payload= {
-          id: this.itemData.id,
+    submitEdit () {
+      const payload = {
+        id: this.itemData.id,
         	name: this.itemData.name,
-					image_url: this.itemData.image_url,
-					price: this.itemData.price,
-					stock: this.itemData.stock,
-					CategoryId: this.itemData.CategoryId,
+        image_url: this.itemData.image_url,
+        price: this.itemData.price,
+        stock: this.itemData.stock,
+        CategoryId: this.itemData.CategoryId
       }
-      console.log(payload);
+      console.log(payload)
       this.$store.dispatch('editData', payload)
     },
-    deleteItem(){
-      let payload= {
+    deleteItem () {
+      const payload = {
         id: this.itemData.id
       }
       this.$store.dispatch('deleteItem', payload)
-      this.$router.push({name: 'ProductList', id: this.itemData.CategoryId})
+      this.$router.push({ name: 'ProductList', id: this.itemData.CategoryId })
     }
   }
 }

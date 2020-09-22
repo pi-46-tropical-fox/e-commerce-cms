@@ -33,30 +33,30 @@ export default {
     // itemsData () {
     //   return this.$store.state.itemsData
     // },
-    
+
     categoriesData () {
       return this.$store.state.categoriesData
     }
   },
   methods: {
     fetchItemsFromStore (category) {
-      console.log("masuk");
-      let payload = {
+      console.log('masuk')
+      const payload = {
         id: category.id
       }
       this.$store.dispatch('fetchItems', payload)
     },
-    addCategory(){
-      let payload = {
+    addCategory () {
+      const payload = {
         name: this.newCategoryName
       }
-      
+
       this.$store.dispatch('addCategory', payload)
-      this.newCategoryName= ''
+      this.newCategoryName = ''
     },
     fetchCategoriesFromStore () {
       this.$store.dispatch('fetchCategories')
-    },
+    }
 
   },
   created () {

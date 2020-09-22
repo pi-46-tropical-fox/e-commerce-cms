@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 // import axios from 'axios'
-import axios from "../config/axios"
+import axios from '../config/axios'
 Vue.use(Vuex)
 
 export default new Vuex.Store({
@@ -26,8 +26,8 @@ export default new Vuex.Store({
   },
   actions: {
     fetchItems (context, payload) {
-      console.log('masuk', payload);
-      let id = payload.id
+      console.log('masuk', payload)
+      const id = payload.id
       const category = context.state.categoriesData.filter(category => {
         return category.id === Number(id)
       })
@@ -40,7 +40,7 @@ export default new Vuex.Store({
         url: './categories',
         headers: {
           access_token: localStorage.access_token
-        
+
         }
       })
         .then(({ data }) => {
@@ -66,7 +66,7 @@ export default new Vuex.Store({
         })
     },
 
-    editData (context, payload){
+    editData (context, payload) {
       axios({
         method: 'PUT',
         url: `./products/${payload.id}`,
@@ -76,8 +76,8 @@ export default new Vuex.Store({
         },
         data: payload
       })
-        .then(({data}) => {
-          console.log("berhasil")
+        .then(({ data }) => {
+          console.log('berhasil')
           context.dispatch('fetchCategories')
         })
         .catch(err => {
@@ -85,18 +85,18 @@ export default new Vuex.Store({
         })
     },
 
-    deleteItem (context, payload){
+    deleteItem (context, payload) {
       axios({
         method: 'DELETE',
         url: `./products/${payload.id}`,
         headers: {
           //  nanti ganti ke state
           access_token: localStorage.access_token
-          
-        },
+
+        }
       })
-        .then(({data}) => {
-          console.log("berhasil")
+        .then(({ data }) => {
+          console.log('berhasil')
           context.dispatch('fetchCategories')
         })
         .catch(err => {
@@ -104,18 +104,18 @@ export default new Vuex.Store({
         })
     },
 
-    addItem (context, payload){
+    addItem (context, payload) {
       axios({
         method: 'POST',
-        url: `./products/`,
+        url: './products/',
         headers: {
           //  nanti ganti ke state
           access_token: localStorage.access_token
         },
         data: payload
       })
-        .then(({data}) => {
-          console.log("berhasil")
+        .then(({ data }) => {
+          console.log('berhasil')
           context.dispatch('fetchCategories')
         })
         .catch(err => {
@@ -123,17 +123,17 @@ export default new Vuex.Store({
         })
     },
 
-    addCategory(context, payload){
-      let {name} = payload
+    addCategory (context, payload) {
+      const { name } = payload
       axios({
         method: 'post',
-        url: "./categories/",
+        url: './categories/',
         headers: {
           access_token: localStorage.access_token
         },
         data: payload
       })
-        .then(({data}) => {
+        .then(({ data }) => {
           context.dispatch('fetchCategories')
         })
         .catch(err => {
@@ -141,22 +141,22 @@ export default new Vuex.Store({
         })
     },
 
-    deleteCategory(context, payload){
-      let {id} = payload
+    deleteCategory (context, payload) {
+      const { id } = payload
       axios({
         method: 'delete',
         url: `./categories/${id}`,
         headers: {
           access_token: localStorage.access_token
-        },
+        }
       })
-        .then(({data}) => {
+        .then(({ data }) => {
           context.dispatch('fetchCategories')
         })
         .catch(err => {
           console.log(err)
         })
-    },
+    }
   },
   modules: {
   }

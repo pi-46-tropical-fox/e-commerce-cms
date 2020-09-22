@@ -42,28 +42,28 @@ export default {
     showAddPage () {
       this.$router.push({ name: 'AddPage' })
     },
-    deleteCategory(){
+    deleteCategory () {
       swal({
-        title: "Delete this Category?",
-        text: "Once deleted, products will be deleted too",
-        icon: "warning",
+        title: 'Delete this Category?',
+        text: 'Once deleted, products will be deleted too',
+        icon: 'warning',
         buttons: true,
-        dangerMode: true,
+        dangerMode: true
       })
-      .then((willDelete) => {
-        if (willDelete) {
-          let payload = {
-            id: this.$route.params.id
+        .then((willDelete) => {
+          if (willDelete) {
+            const payload = {
+              id: this.$route.params.id
+            }
+            this.$store.dispatch('deleteCategory', payload)
+            swal('Your category has been deleted!', {
+              icon: 'success'
+            })
+            this.$router.push({ name: 'Dashboard' })
+          } else {
+            swal('Your imaginary file is safe!')
           }
-          this.$store.dispatch('deleteCategory', payload)
-          swal("Your category has been deleted!", {
-            icon: "success",
-          });
-          this.$router.push({name: 'Dashboard'})
-        } else {
-          swal("Your imaginary file is safe!");
-        }
-      });      
+        })
     }
 
   },

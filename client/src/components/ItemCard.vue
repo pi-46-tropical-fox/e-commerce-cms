@@ -44,7 +44,7 @@ export default {
   methods: {
     displayDetail () {
       this.$router.push({ name: 'ItemDetail' })
-      let payload= {
+      const payload = {
         id: this.item.id,
         name: this.item.name,
         image_url: this.item.image_url,
