@@ -44,7 +44,15 @@ export default {
   methods: {
     displayDetail () {
       this.$router.push({ name: 'ItemDetail' })
-      this.$store.commit('setOnDisplayData', this.item)
+      let payload= {
+        id: this.item.id,
+        name: this.item.name,
+        image_url: this.item.image_url,
+        price: this.item.price,
+        stock: this.item.stock,
+        CategoryId: this.item.CategoryId
+      }
+      this.$store.commit('setOnDisplayData', payload)
     }
   }
 }

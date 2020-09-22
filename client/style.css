@@ -74,18 +74,50 @@ h1{
   height: 100%;
   flex-grow: 0;
   width: 10%;
+
+  display: flex;
+  flex-direction: column;
 }
 
 .category-item{
-  background-color: #FE8D27;
-
-  width: 100%;
-  padding: 0;
+  margin-bottom: 5px;
   border-radius: 0;
+  padding: 0;
 }
 
-a{
+/* a{
   width: 100px;
+} */
+
+.category-bar button{
+  width: 100%;
+  padding: 10px;
+}
+
+
+
+.add-category{
+  display: flex;
+  width: 100%;
+  
+  flex-direction: column;
+}
+
+.category-bar input{
+  height: 3rem;
+  width: 100%;
+  border: none  ;
+  text-align: center;
+  background-color: #ffa500;
+  color: #363636;
+}
+
+.category-bar input:focus{
+  outline: none;
+}
+
+.add-category-button {
+  background-color: #ffa500;
 }
 
 
@@ -135,9 +167,6 @@ a{
 
 .card.mb-3.add-card{
   cursor: pointer;
-
-  width: 3rem;
-  height: 3rem;
 }
 .card.mb-3.add-card h1{
   align-self: center;
@@ -177,8 +206,9 @@ a{
 
 }
 .add-container{
-  margin-bottom: 10rem;
-  width: 100%;
+  max-height: 33rem;
+  /* margin-bottom: 20rem; */
+  max-width: 10rem;
   margin: 1rem;
   margin-left: 3rem;
 }

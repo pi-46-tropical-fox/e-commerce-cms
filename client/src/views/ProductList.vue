@@ -1,9 +1,9 @@
 <template>
   <div class="product-list">
-
       <div class="product-item">
-          <div class="card mb-3 add-card" @click.prevent="showAddPage">
-            <button class='btn btn-warning'>ADD</button>
+          <div class="card mb-3 add-card">
+            <button class='btn btn-warning' @click.prevent="showAddPage">ADD Product</button>
+            <button class='btn btn-warning' @click.prevent="deleteCategory"> DELETE Category</button>
           </div>
           <ItemCard
             v-for="item in itemsData"
@@ -14,14 +14,12 @@
       </div>
       <div class="product-item-detail">
         <router-view></router-view>
-        <!-- <ItemDetail v-if="onDisplayItemData"
-
-        > </ItemDetail> -->
       </div>
     </div>
 </template>
 
 <script>
+import swal from 'sweetalert'
 import ItemCard from '../components/ItemCard.vue'
 export default {
   name: 'ProductList',
@@ -33,29 +31,44 @@ export default {
       return this.$store.state.onDisplayData
     },
     itemsData () {
-      // console.log(this.$store.state.categoriesData[2].id)
-      const category = this.$store.state.categoriesData.filter(category => {
-        // console.log(category.id === Number(this.$route.params.id))
-        return category.id === Number(this.$route.params.id)
-      })
-      // console.log(category[0])
-      return category[0].Products
+      return this.$store.state.itemsData
     }
   },
   methods: {
-    fetchItemsFromStore () {
-      this.$store.dispatch('fetchItems')
-    },
+
     fetchCategoriesFromStore () {
       this.$store.dispatch('fetchCategories')
     },
     showAddPage () {
       this.$router.push({ name: 'AddPage' })
+    },
+    deleteCategory(){
+      swal({
+        title: "Delete this Category?",
+        text: "Once deleted, products will be deleted too",
+        icon: "warning",
+        buttons: true,
+        dangerMode: true,
+      })
+      .then((willDelete) => {
+        if (willDelete) {
+          let payload = {
+            id: this.$route.params.id
+          }
+          this.$store.dispatch('deleteCategory', payload)
+          swal("Your category has been deleted!", {
+            icon: "success",
+          });
+          this.$router.push({name: 'Dashboard'})
+        } else {
+          swal("Your imaginary file is safe!");
+        }
+      });      
     }
 
   },
   created () {
-    this.fetchItemsFromStore()
+    // this.fetchItemsFromStore()
     this.fetchCategoriesFromStore()
   }
 }

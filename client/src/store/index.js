@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
-import axios from 'axios'
+// import axios from 'axios'
+import axios from "../config/axios"
 Vue.use(Vuex)
 
 export default new Vuex.Store({
@@ -24,30 +25,22 @@ export default new Vuex.Store({
     }
   },
   actions: {
-    fetchItems (context) {
-      axios({
-        method: 'GET',
-        url: 'http://localhost:3000/products',
-        headers: {
-          //  nanti ganti ke state
-          access_token: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTgzLCJlbWFpbCI6ImFkbWluQG1haWwuY29tIiwicm9sZSI6ImFkbWluIiwiaWF0IjoxNjAwNDQxMjk4fQ.iGUEY-GjlD0PzolHdij8KclWtfVeBJX41D4XIC17ImA'
-        }
+    fetchItems (context, payload) {
+      console.log('masuk', payload);
+      let id = payload.id
+      const category = context.state.categoriesData.filter(category => {
+        return category.id === Number(id)
       })
-        .then(({ data }) => {
-          // console.log(data)
-          context.commit('setItemData', data)
-        })
-        .catch(({ error }) => {
-          console.log(error)
-        })
+      context.commit('setItemData', category[0].Products)
     },
 
     fetchCategories (context) {
       axios({
         method: 'GET',
-        url: 'http://localhost:3000/categories',
+        url: './categories',
         headers: {
-          access_token: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTgzLCJlbWFpbCI6ImFkbWluQG1haWwuY29tIiwicm9sZSI6ImFkbWluIiwiaWF0IjoxNjAwNDQxMjk4fQ.iGUEY-GjlD0PzolHdij8KclWtfVeBJX41D4XIC17ImA'
+          access_token: localStorage.access_token
+        
         }
       })
         .then(({ data }) => {
@@ -60,12 +53,13 @@ export default new Vuex.Store({
 
     login (context, payload) {
       axios({
-        methods: 'POST',
-        url: 'http://localhost:3000/users/login',
+        method: 'POST',
+        url: './users/login',
         data: payload
       })
         .then(({ data }) => {
-          console.log(data)
+          // console.log(data)
+          localStorage.access_token = data.access_token
         })
         .catch(err => {
           console.log(err)
@@ -75,10 +69,10 @@ export default new Vuex.Store({
     editData (context, payload){
       axios({
         method: 'PUT',
-        url: `http://localhost:3000/products/${payload.id}`,
+        url: `./products/${payload.id}`,
         headers: {
           //  nanti ganti ke state
-          access_token: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTgzLCJlbWFpbCI6ImFkbWluQG1haWwuY29tIiwicm9sZSI6ImFkbWluIiwiaWF0IjoxNjAwNDQxMjk4fQ.iGUEY-GjlD0PzolHdij8KclWtfVeBJX41D4XIC17ImA'
+          access_token: localStorage.access_token
         },
         data: payload
       })
@@ -94,10 +88,11 @@ export default new Vuex.Store({
     deleteItem (context, payload){
       axios({
         method: 'DELETE',
-        url: `http://localhost:3000/products/${payload.id}`,
+        url: `./products/${payload.id}`,
         headers: {
           //  nanti ganti ke state
-          access_token: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTgzLCJlbWFpbCI6ImFkbWluQG1haWwuY29tIiwicm9sZSI6ImFkbWluIiwiaWF0IjoxNjAwNDQxMjk4fQ.iGUEY-GjlD0PzolHdij8KclWtfVeBJX41D4XIC17ImA'
+          access_token: localStorage.access_token
+          
         },
       })
         .then(({data}) => {
@@ -112,10 +107,10 @@ export default new Vuex.Store({
     addItem (context, payload){
       axios({
         method: 'POST',
-        url: `http://localhost:3000/products/`,
+        url: `./products/`,
         headers: {
           //  nanti ganti ke state
-          access_token: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTgzLCJlbWFpbCI6ImFkbWluQG1haWwuY29tIiwicm9sZSI6ImFkbWluIiwiaWF0IjoxNjAwNDQxMjk4fQ.iGUEY-GjlD0PzolHdij8KclWtfVeBJX41D4XIC17ImA'
+          access_token: localStorage.access_token
         },
         data: payload
       })
@@ -126,7 +121,42 @@ export default new Vuex.Store({
         .catch(err => {
           console.log(err)
         })
-    }
+    },
+
+    addCategory(context, payload){
+      let {name} = payload
+      axios({
+        method: 'post',
+        url: "./categories/",
+        headers: {
+          access_token: localStorage.access_token
+        },
+        data: payload
+      })
+        .then(({data}) => {
+          context.dispatch('fetchCategories')
+        })
+        .catch(err => {
+          console.log(err)
+        })
+    },
+
+    deleteCategory(context, payload){
+      let {id} = payload
+      axios({
+        method: 'delete',
+        url: `./categories/${id}`,
+        headers: {
+          access_token: localStorage.access_token
+        },
+      })
+        .then(({data}) => {
+          context.dispatch('fetchCategories')
+        })
+        .catch(err => {
+          console.log(err)
+        })
+    },
   },
   modules: {
   }

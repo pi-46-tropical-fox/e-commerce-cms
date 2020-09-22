@@ -12,11 +12,13 @@ class ProductController {
 					message : "Field(s) can't be null"
 				}
 				next(errors)
+			}else{
+				console.log("still work");
+				let createdProduct = await Product.create({ name, image_url, price, stock, CategoryId })
+				return res.status(201).json(createdProduct)
 			}
+			
 
-			let createdProduct = await Product.create({ name, image_url, price, stock, CategoryId })
-			// console.log(createdProduct);
-			return res.status(201).json(createdProduct)
 		} catch (err) {
 			next(err)
 		}
