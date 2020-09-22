@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 import axios from 'axios'
+import router from '../router'
 
 Vue.use(Vuex)
 
@@ -27,7 +28,7 @@ export default new Vuex.Store({
         url: 'http://localhost:3001/products'
       })
         .then(({ data }) => {
-          console.log(data)
+          // console.log(data)
           context.commit('setProducts', data)
         })
         .catch(err => {
@@ -39,6 +40,24 @@ export default new Vuex.Store({
       axios.get(`http://localhost:3001/products/${payload}`)
         .then(({ data }) => {
           commit('setSelectedData', data)
+        })
+        .catch(err => {
+          console.log(err)
+        })
+    },
+    editData ({ commit }, payload) {
+      axios.put(`http://localhost:3001/products/${payload.id}`, payload)
+        .then(({ data }) => {
+          router.push('/dashboard')
+        })
+        .catch(err => {
+          console.log(err)
+        })
+    },
+    addData ({ commit }, payload) {
+      axios.post('http://localhost:3001/products', payload)
+        .then(({ data }) => {
+          router.push('/dashboard')
         })
         .catch(err => {
           console.log(err)

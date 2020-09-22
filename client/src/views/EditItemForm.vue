@@ -4,7 +4,7 @@
         <img src="../assets/edit-doc.svg" class="card-img-top">
         <div class="card-body">
             <h5 class="card-title">Edit</h5>
-              <form>
+              <form @submit.prevent="submitEdit">
                 <div class="form-group">
                   <label for="nameEdit">Name</label>
                   <input type="text" class="form-control" style="text-align: center;" id="nameEdit" v-model="selectedData.name">
@@ -14,11 +14,11 @@
                   <input type="text" class="form-control" style="text-align: center;" id="imageUrlEdit" v-model="selectedData.image_url">
                 </div>
                  <div class="form-group">
-                  <label for="priceEdit">Price</label>
+                  <label for="priceEdit">Price (Rp)</label>
                   <input type="number" class="form-control" style="text-align: center;" id="priceEdit" v-model="selectedData.price">
                 </div>
                 <div class="form-group">
-                  <label for="stockEdit">Price</label>
+                  <label for="stockEdit">Stock</label>
                   <input type="number" class="form-control" style="text-align: center;" id="stockEdit" v-model="selectedData.stock">
                 </div>
                 <button type="submit" class="btn btn-primary">Edit</button>
@@ -37,6 +37,12 @@ export default {
       get () {
         return this.$store.state.selectedData
       }
+    }
+  },
+  methods: {
+    submitEdit () {
+      // console.log(this.selectedData)
+      this.$store.dispatch('editData', this.selectedData)
     }
   },
   created () {

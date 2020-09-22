@@ -6,8 +6,8 @@
             <h5 class="card-title">{{ productData.name }}</h5>
             <p class="card-text">Price: {{ productData.price }}</p>
             <p class="card-text">Stock: {{ productData.stock }}</p>
-            <a class="btn btn-primary mr-2">
-                <img src="../assets/edit.svg" @click.prevent="editProduct(productData.id)">
+            <a class="btn btn-primary mr-2" @click.prevent="editProduct(productData.id)">
+                <img src="../assets/edit.svg">
                 Edit
                 </a>
             <a class="btn btn-primary" @click.prevent="deleteProduct(productData.id)">
@@ -40,6 +40,7 @@ export default {
         })
     },
     editProduct (id) {
+      // console.log(id)
       this.$router.push({ path: `/edit/${id}` })
     }
   }

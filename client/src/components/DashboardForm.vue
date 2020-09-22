@@ -1,5 +1,5 @@
 <template>
-<div style="top: 30px;">
+<div class="col-10" style="top: 30px;">
     <!-- <h1>This is supposed to be Dashboard</h1> -->
     <div class="container" >
       <div class="row">

@@ -1,9 +1,11 @@
 <template>
 <div class="dashboard">
-   <div class="col">
-     <NavBar></NavBar>
-     <DashboardForm></DashboardForm>
+  <div class="container-fluid">
+    <div class="row">
+      <NavBar></NavBar>
+      <DashboardForm></DashboardForm>
     </div>
+  </div>
 </div>
 </template>
 

@@ -4,22 +4,22 @@
         <img src="../assets/add-doc.svg" class="card-img-top">
         <div class="card-body">
             <h5 class="card-title">Add Item</h5>
-              <form>
+              <form @submit.prevent="submitAdd">
                 <div class="form-group">
                   <label for="nameItem">Name</label>
-                  <input type="text" class="form-control" id="nameItem">
+                  <input type="text" class="form-control" id="nameItem" v-model="selectedData.name">
                 </div>
                 <div class="form-group">
                   <label for="imageUrlItem">Image URL</label>
-                  <input type="text" class="form-control" id="imageUrlItem">
+                  <input type="text" class="form-control" id="imageUrlItem" v-model="selectedData.image_url">
                 </div>
                  <div class="form-group">
                   <label for="priceItem">Price</label>
-                  <input type="number" class="form-control" id="priceItem">
+                  <input type="number" class="form-control" id="priceItem" v-model="selectedData.price">
                 </div>
                 <div class="form-group">
                   <label for="stockItem">Price</label>
-                  <input type="number" class="form-control" id="stockItem">
+                  <input type="number" class="form-control" id="stockItem" v-model="selectedData.stock">
                 </div>
                 <button type="submit" class="btn btn-primary">Submit</button>
               </form>
@@ -30,7 +30,19 @@
 
 <script>
 export default {
-  name: 'AddItemForm'
+  name: 'AddItemForm',
+  computed: {
+    selectedData: {
+      get () {
+        return this.$store.state.selectedData
+      }
+    }
+  },
+  methods: {
+    submitAdd () {
+      this.$store.dispatch('addData', this.selectedData)
+    }
+  }
 }
 </script>
 
