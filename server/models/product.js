@@ -56,7 +56,7 @@ module.exports = (sequelize, DataTypes) => {
 						msg: 'Price cannot null',
 					},
 					isInteger(val) {
-						if (val <= 0 || val[0] === '0' || typeof val !== 'number') {
+						if (val < 0 || typeof val !== 'number') {
 							throw new Error('Price must be positive numbers with no leading zeroes');
 						}
 					},
@@ -75,7 +75,7 @@ module.exports = (sequelize, DataTypes) => {
 						msg: 'Stock cannot null',
 					},
 					isInteger(val) {
-						if (val <= 0 || val[0] === '0' || typeof val !== 'number') {
+						if (val < 0 || typeof val !== 'number') {
 							throw new Error('Stock must be positive numbers with no leading zeroes');
 						}
 					},
