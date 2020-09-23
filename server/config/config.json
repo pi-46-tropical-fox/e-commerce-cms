@@ -1,0 +1,19 @@
+{
+  "development": {
+    "username": "chika",
+    "password": "postgres123",
+    "database": "ecommerceCMS",
+    "host": "127.0.0.1",
+    "dialect": "postgres"
+  },
+  "test": {
+    "username": "chika",
+    "password": "postgres123",
+    "database": "ecommerceCMS_test",
+    "host": "127.0.0.1",
+    "dialect": "postgres"
+  },
+  "production": {
+    "use_env_variable": "DATABASE_URL" 
+  }
+}
