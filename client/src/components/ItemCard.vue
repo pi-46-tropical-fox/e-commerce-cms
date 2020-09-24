@@ -3,9 +3,10 @@
       <img :src="itemData.image_url" class="card-img-top" height="200px" :alt="itemData.name">
       <div class="card-body">
         <h5 class="card-title">{{ itemData.name }}</h5>
-        <p class="card-text">Rp. {{ formatPrice(itemData.price) }}</p>
-        <a @click.prevent="upToDateProduct(itemData.id)" class="btn btn-primary">Edit</a>
-        <a @click.prevent="deleteProduct(itemData)" class="btn btn-danger">Delete</a>
+        <p class="card-text">Rp. {{ new Number(itemData.price).toLocaleString("id-ID") }}</p>
+        <p class="card-text">Stock: {{ itemData.stock }}</p>
+        <button type="button" @click.prevent="updateProduct(itemData.id)" class="btn btn-primary">Edit</button>
+        <button type="button" @click.prevent="deleteProduct(itemData)" class="btn btn-danger">Delete</button>
       </div>
     </div>
 </template>
@@ -15,13 +16,12 @@ export default {
   name: 'ItemCard',
   props: ['itemData'],
   methods: {
-    formatPrice (value) {
-      const val = (value / 1).toFixed().replace('.', ',')
-      return val.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.')
+    deleteProduct (payload) {
+      // console.log(payload, '<<<<<< delete product');
+      this.$store.dispatch('deleteProduct', payload)
     },
-    deleteProduct (data) {
-      console.log(data.id, 'ini id masuk  loo');
-      this.$store.dispatch('deleteProduct', data)
+    updateProduct (id) {
+      this.$router.push({ path: `/products/${id}` })
     }
   }
 }

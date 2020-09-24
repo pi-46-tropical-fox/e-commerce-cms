@@ -40,10 +40,49 @@
 
 <script>
 export default {
-    name: 'EditProduct',
-    data () {
-        return
+  name: 'EditProduct',
+  data () {
+    return {
+      name: '',
+      image_url: '',
+      price: '',
+      stock: ''
     }
+  },
+  methods: {
+    fetchOneProduct () {
+      this.$store.dispatch('fetchItemById', this.$route.params.id)
+    },
+    submitEditProduct () {
+      const payload = {
+        id: this.$route.params.id,
+        name: this.name,
+        image_url: this.image_url,
+        price: this.price,
+        stock: this.stock
+      }
+      this.$store.dispatch('editProduct', payload)
+      this.$router.push({ path: '/home' })
+    }
+  },
+  watch: {
+    '$store.state.oneProduct.name' () {
+      this.name = this.$store.state.oneProduct.name
+      this.image_url = this.$store.state.oneProduct.image_url
+      this.price = this.$store.state.oneProduct.price
+      this.stock = this.$store.state.oneProduct.stock
+    }
+  },
+  created () {
+    this.fetchOneProduct()
+  },
+  computed: {
+    data: {
+      get () {
+        return this.$store.state.oneProduct
+      }
+    }
+  }
 }
 </script>
 

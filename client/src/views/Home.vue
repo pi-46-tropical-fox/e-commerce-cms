@@ -1,9 +1,7 @@
 <template>
   <div class="home">
     <div id="nav">
-      <router-link to="/home">Home</router-link> |
-      <router-link to="/add-product">Add Product</router-link> |
-      <!-- <button @click.prevent="logout"></button> -->
+      <Navbar />
     </div>
     <div class="container" style="margin-top: 30px">
       <div class="row d-flex">
@@ -20,11 +18,13 @@
 <script>
 // @ is an alias to /src
 import Card from '../components/ItemCard'
+import Navbar from '../components/Navbar'
 
 export default {
   name: 'Home',
   components: {
-    Card
+    Card,
+    Navbar
   },
   computed: {
     items () {
@@ -35,10 +35,6 @@ export default {
     fetchItem () {
       this.$store.dispatch('fetchItems')
     }
-    // logout () {
-    //   // this.$store.dispatch('logout', false)
-    //   localStorage.clear()
-    // }
   },
   created () {
     this.fetchItem()

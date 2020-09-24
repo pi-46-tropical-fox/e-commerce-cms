@@ -1,8 +1,8 @@
 const route = require('express').Router()
-const UserRouter = require('./UserRoutes')
+const UserController = require('../controllers/UserController')
 const ProductRouter = require('./ProductRoutes')
 
-route.use('/users', UserRouter)
-route.use('/product', ProductRouter)
+route.use('/login', UserController.login)
+route.use('/products', ProductRouter)
 
 module.exports = route

@@ -4,7 +4,7 @@
         <div class="col-sm-9 col-md-7 col-lg-5 mx-auto">
             <div class="card card-signin my-5">
             <div class="card-body">
-                <h5 class="card-title text-center text-dark">New Product</h5>
+                <h3 class="card-title text-center text-dark">New Product</h3>
                 <form @submit.prevent="submitAddProduct" class="form-addProduct">
 
                     <div class="form-label-group">
@@ -22,7 +22,7 @@
                     <div class="form-label-group">
                         <label for="stock">Stock</label>
                         <input type="text" v-model="stock" class="form-control" required>
-                    </div>
+                    </div><br>
 
                     <button class="btn btn-lg btn-primary btn-block text-uppercase" type="submit">Add Prooduct</button>
                 </form>
@@ -52,9 +52,9 @@ export default {
         price: this.price,
         stock: this.stock
       })
-      .then((data) => {
-        this.$router.push('/home')
-      })
+        .then((data) => {
+          this.$router.push('/home')
+        })
     }
   }
 }

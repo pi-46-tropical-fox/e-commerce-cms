@@ -4,10 +4,8 @@ import Home from '../views/Home.vue'
 import Login from '../views/Login.vue'
 import AddProduct from '../views/AddProduct.vue'
 import EditProduct from '../views/EditProduct.vue'
-import store from '../store'
 
 Vue.use(VueRouter)
-const { state } = store
 
 const routes = [
   {
@@ -21,12 +19,12 @@ const routes = [
     component: Login
   },
   {
-    path: '/add-product',
+    path: '/products',
     name: 'AddProduct',
     component: AddProduct
   },
   {
-    path: '/edit/:id',
+    path: '/products/:id',
     name: 'EditProduct',
     component: EditProduct
   }
@@ -39,7 +37,11 @@ const router = new VueRouter({
 })
 
 router.beforeEach((to, from, next) => {
-  if (to.name !== 'Login' && !state.isLogin) next({ name: 'Login' })
+  if (to.name !== 'Login' && !localStorage.getItem('access_token'))next({ path: '/login' })
+  else next()
+})
+router.beforeEach((to, from, next) => {
+  if (to.name === 'Login' && localStorage.getItem('access_token'))next({ name: 'Home' })
   else next()
 })
 

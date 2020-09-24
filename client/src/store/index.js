@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 import axios from 'axios'
+import router from '../router'
 
 Vue.use(Vuex)
 
@@ -8,10 +9,16 @@ export default new Vuex.Store({
   state: {
     items: [],
     isLogin: false,
-    newProduct: {}
+    newProduct: {},
+    oneProduct: {
+      name: '',
+      image_url: '',
+      price: '',
+      stock: ''
+    }
   },
   mutations: {
-    setItems (state, payload) {
+    SET_ITEMS (state, payload) {
       state.items = payload
     },
     SET_LOGIN (state, payload) {
@@ -23,55 +30,55 @@ export default new Vuex.Store({
     },
     SET_NEW_PRODUCT (state, payload) {
       state.newProduct = payload
+    },
+    SET_ONE_PRODUCT (state, payload) {
+      const { name, image_url, price, stock } = payload
+      state.oneProduct.name = name
+      state.oneProduct.image_url = image_url
+      state.oneProduct.price = price
+      state.oneProduct.stock = stock
+      console.log(payload, '<<< ini payload di SET ONE PRODUCT')
     }
   },
   actions: {
     fetchItems ({ commit }) {
       axios({
         method: 'GET',
-        url: 'http://localhost:3333/product',
+        url: 'https://agile-meadow-39887.herokuapp.com/products',
         headers: {
           access_token: localStorage.access_token
         }
       })
         .then(({ data }) => {
           console.log(data)
-          commit('setItems', data)
+          commit('SET_ITEMS', data)
         })
         .catch(err => {
           console.log(err)
         })
     },
     login ({ commit }, payload) {
-      return new Promise((resolve, reject) => {
-        axios({
-          method: 'POST',
-          url: 'http://localhost:3333/users/login',
-          data: {
-            email: payload.email,
-            password: payload.password
-          }
-        })
-          .then(({ data }) => {
-            localStorage.setItem('access_token', data.access_token)
-            commit('SET_LOGIN', true)
-            resolve()
-          })
-          .catch(err => {
-            console.log(err)
-            reject(err)
-          })
+      axios({
+        method: 'POST',
+        url: 'https://agile-meadow-39887.herokuapp.com/login',
+        data: {
+          email: payload.email,
+          password: payload.password
+        }
       })
-    },
-    checkLogin (context) {
-      if (localStorage.getItem('access_token')) {
-        context.commit('SET_LOGIN', true)
-      }
+        .then(({ data }) => {
+          localStorage.setItem('access_token', data.access_token)
+          commit('SET_LOGIN', true)
+          router.push('/home')
+        })
+        .catch(err => {
+          console.log(err)
+        })
     },
     addProduct ({ commit }, payload) {
       axios({
         method: 'POST',
-        url: 'http://localhost:3333/product',
+        url: 'https://agile-meadow-39887.herokuapp.com/products',
         headers: {
           access_token: localStorage.access_token
         },
@@ -95,20 +102,53 @@ export default new Vuex.Store({
     deleteProduct (context, payload) {
       axios({
         method: 'DELETE',
-        url: `http://localhost:3333/product/${payload.id}`,
+        url: `https://agile-meadow-39887.herokuapp.com/products/${payload.id}`,
         headers: {
           access_token: localStorage.access_token
         }
       })
-      .then(({data}) => {
-        console.log(data, 'ini dari delete actions');
-        this.dispatch('fetchItems')
-        return data
+        .then(({ data }) => {
+          this.dispatch('fetchItems')
+          return data
+        })
+        .catch(err => {
+          return err
+        })
+    },
+    fetchItemById ({ commit }, payload) {
+      axios({
+        method: 'GET',
+        url: `https://agile-meadow-39887.herokuapp.com/products/${payload}`,
+        headers: {
+          access_token: localStorage.access_token
+        }
       })
-      .catch(err => {
-        console.log(err, 'ini err dari action delete');
-        return err
+        .then(({ data }) => {
+          commit('SET_ONE_PRODUCT', data)
+        })
+        .catch(err => {
+          console.log(err)
+        })
+    },
+    editProduct ({ commit }, payload) {
+      axios({
+        method: 'PUT',
+        url: `https://agile-meadow-39887.herokuapp.com/products/${payload.id}`,
+        data: payload,
+        headers: {
+          access_token: localStorage.access_token
+        }
       })
+        .then(({ data }) => {
+          this.dispatch('fetchItems')
+        })
+        .catch(err => {
+          console.log(err)
+        })
+    },
+    logout ({ commit }) {
+      localStorage.clear()
+      commit('SET_LOGIN', false)
     }
   }
 })

@@ -3,7 +3,7 @@ const comparePassword = require('../helpers/comparePass')
 const { generateToken } = require('../helpers/jwt')
 
 class UserController {
-    static loginAdmin(req, res, next) {
+    static login(req, res, next) {
         let option = {
             where: {
                 email: req.body.email
