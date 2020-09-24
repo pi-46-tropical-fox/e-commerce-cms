@@ -37,7 +37,6 @@ export default new Vuex.Store({
       state.oneProduct.image_url = image_url
       state.oneProduct.price = price
       state.oneProduct.stock = stock
-      console.log(payload, '<<< ini payload di SET ONE PRODUCT')
     }
   },
   actions: {
@@ -69,7 +68,7 @@ export default new Vuex.Store({
         .then(({ data }) => {
           localStorage.setItem('access_token', data.access_token)
           commit('SET_LOGIN', true)
-          router.push('/home')
+          router.push('/')
         })
         .catch(err => {
           console.log(err)

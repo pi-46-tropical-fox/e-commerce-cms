@@ -1,5 +1,6 @@
 <template>
   <div>
+    <Navbar />
     <div class="container">
         <div class="row">
         <div class="col-sm-9 col-md-7 col-lg-5 mx-auto">
@@ -39,6 +40,7 @@
 </template>
 
 <script>
+import Navbar from '../components/Navbar'
 export default {
   name: 'EditProduct',
   data () {
@@ -48,6 +50,9 @@ export default {
       price: '',
       stock: ''
     }
+  },
+  components: {
+    Navbar
   },
   methods: {
     fetchOneProduct () {
@@ -62,7 +67,7 @@ export default {
         stock: this.stock
       }
       this.$store.dispatch('editProduct', payload)
-      this.$router.push({ path: '/home' })
+      this.$router.push({ path: '/' })
     }
   },
   watch: {

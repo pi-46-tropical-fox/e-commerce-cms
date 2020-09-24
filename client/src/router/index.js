@@ -9,7 +9,7 @@ Vue.use(VueRouter)
 
 const routes = [
   {
-    path: '/home',
+    path: '/',
     name: 'Home',
     component: Home
   },
@@ -41,7 +41,7 @@ router.beforeEach((to, from, next) => {
   else next()
 })
 router.beforeEach((to, from, next) => {
-  if (to.name === 'Login' && localStorage.getItem('access_token'))next({ name: 'Home' })
+  if (to.name === 'Login' && localStorage.getItem('access_token'))next({ path: '/home' })
   else next()
 })
 

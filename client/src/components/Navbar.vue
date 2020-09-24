@@ -1,6 +1,6 @@
 <template>
   <nav class="navbar navbar-expand-lg navbar-dark" style="background-color: CornflowerBlue">
-    <router-link to='/home' style="text-decoration:none;">
+    <router-link to='/' style="text-decoration:none;">
         <a class="navbar-brand" id="logo">SomeShop</a>
     </router-link>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
@@ -27,7 +27,7 @@ export default {
         })
     },
     addProductFrom () {
-      this.$router.push({ path: '/add' })
+      this.$router.push({ path: '/products' })
     }
   }
 }
