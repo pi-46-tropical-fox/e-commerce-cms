@@ -13,9 +13,10 @@ class UserController{
                 Object.keys(req.app.locals.body).forEach(key => input[key] = req.app.locals.body[key])
             } else {
                 Object.keys(req.body).forEach(key => input[key] = req.body[key])
-                input.RoleId = 2
                 picture = ''
             }
+            
+            input.RoleId = 2
 
             await User.create(input)
 
