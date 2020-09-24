@@ -125,7 +125,7 @@ export default new Vuex.Store({
     editProduct (context, payload) {
       return new Promise((resolve, reject) => {
         ProductsAPI({
-          url: `/editProduct/${payload}`,
+          url: `/products/editProduct/${payload}`,
           method: 'GET',
           headers: { access_token: localStorage.getItem('access_token') }
         })
