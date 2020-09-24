@@ -11,26 +11,32 @@ export default new Vuex.Store({
         products : []
     },
     mutations: {
-        
+        "UPDATE_ACCESS_TOKEN"(state, access_token){
+            state.access_token = access_token
+            localStorage.setItem('access_token', access_token)
+        },
+        "REMOVE_ACCESS_TOKEN"(state){
+            state.access_token = ''
+            localStorage.clear()
+        },
+        "UPDATE_PRODUCTS"(state, products){
+            state.products = products
+        }
     },
     actions: {
-        login({state}, data){
-            console.log(data)
+        login({commit}, data){
             axios.post('/user/login', data).then(res => {
-                localStorage.setItem('access_token', res.data.access_token)
-                state.access_token = res.data.access_token
+                commit('UPDATE_ACCESS_TOKEN', res.data.access_token)
 
                 router.push('/')
             }).catch(e => {
-                Vue.swal.fire(
-                    {icon : 'Error', title : 'Email/Password salah'})
+                Vue.swal.fire({icon : 'Error', title : 'Email/Password salah'})
             })
         },
-        logout({state}){
-            state.access_token = undefined
-            localStorage.clear()
+        logout({commit}){
+            commit('REMOVE_ACCESS_TOKEN')
         },
-        fetchProducts({state}){
+        fetchProducts({commit, state}){
             axios.get('/products', { headers : { access_token : state.access_token }}).then(e => {
                 state.products = e.data
             })
