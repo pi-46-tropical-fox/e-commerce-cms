@@ -12,7 +12,7 @@ class CategoryController {
             })
     }
     
-    static add (req,res,next) {
+    static addCategory (req,res,next) {
 
         const dataCategory = {
             category : req.body.category
@@ -27,7 +27,7 @@ class CategoryController {
             })
     }
 
-    static delete (req,res,next) {
+    static deleteCategory (req,res,next) {
         const id = req.params.id
 
         Category.destroy({where: {id}})

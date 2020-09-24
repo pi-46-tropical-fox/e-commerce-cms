@@ -7,18 +7,38 @@
             <b-card-img src="https://picsum.photos/400/400/?image=20" alt="Image" class="rounded-0"></b-card-img>
           </b-col>
           <b-col md="6" class="bg-warning">
-            <b-card-body title="Add Category" class="mt-3">
+            <b-card-body title="Add Banner" class="mt-3">
               <b-alert :variant="color" show v-if="notification[0]">{{notification[0]}}</b-alert>
-              <b-form  class="mt-5" @submit.prevent="addCategory">
-                <b-form-group label="Category :">
+              <b-form  class="mt-3" @submit.prevent="addBanner">
+                <b-form-group label="Title :">
                   <b-form-input
-                    v-model="category"
+                    v-model="title"
                     type="text"
                     required
-                    placeholder="Enter Category Name"
+                    placeholder="Enter Banner Title"
                   >
                   </b-form-input>
                 </b-form-group>
+
+                <b-form-group label="Status">
+                  <b-form-select
+                    v-model="status"
+                    :options="optionsStatus"
+                    required
+                    value-field="status"
+                    text-field="status"
+                  ></b-form-select>
+                </b-form-group>
+
+                <b-form-group label="Image URL :">
+                  <b-form-input
+                    type="text"
+                    v-model="image_url"
+                    required
+                    placeholder="Enter Image URL"
+                  ></b-form-input>
+                </b-form-group>
+
                 <b-button type="submit" variant="primary">Submit</b-button>
               </b-form>
             </b-card-body>
@@ -32,10 +52,13 @@
 <script>
 
 export default {
-  name: 'addCategory',
+  name: 'addBanner',
   data () {
     return {
-      category: ''
+      title: '',
+      status: '',
+      image_url: '',
+      optionsStatus: [{ status: 'Activ' }, { status: 'Non Activ' }]
     }
   },
   computed: {
@@ -51,16 +74,18 @@ export default {
     }
   },
   methods: {
-    addCategory () {
+    addBanner () {
       const payload = {
-        category: this.category
+        title: this.title,
+        status: this.status,
+        image_url: this.image_url
       }
 
-      this.$store.dispatch('addCategory', payload)
+      this.$store.dispatch('addBanner', payload)
         .then(() => {
           setTimeout(() => {
             this.$store.commit('SET_NOTIFICATION', [])
-            this.$router.push('/Home')
+            this.$router.push('/Home/bannerGroup')
           }, 2000)
         })
         .catch(() => {

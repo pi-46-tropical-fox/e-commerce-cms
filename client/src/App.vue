@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <div id="nav">
-      <router-link class="mr-3" to="/home" v-show="isLogin">Home</router-link>
+      <router-link class="mr-3" to="/home" >Home</router-link>
       <router-link class="mr-3" to="/Login" v-show="!isLogin">Login</router-link>
       <router-link class="mr-3" to="/Register" v-show="!isLogin">Register</router-link>
       <b-button @click='logout' variant="secondary" v-show="isLogin">Logout</b-button>
@@ -15,7 +15,7 @@ export default {
     logout () {
       localStorage.clear()
       this.$store.commit('SET_IS_LOGIN', false)
-      this.$router.push('/Login')
+      this.$router.push('/')
     }
   },
   computed: {

@@ -41,4 +41,22 @@ function authorization ( req, res, next ) {
         })
 }
 
-module.exports = { authentication, authorization}
+function authorizationCustomer ( req, res, next ) {
+    console.log(req.userData)
+
+    User.findByPk(req.userData.id)
+        .then(user => {
+            if( user && user.role === 'customer') {
+                console.log(user.role, "<<<< dr authorizatiorn")
+                return next()
+            }
+            else {
+                throw { message: "Forbidden Access", statusCode: 403 }
+            }
+        })
+        .catch( err => {
+            return next(err)
+        })
+}
+
+module.exports = { authentication, authorization, authorizationCustomer}

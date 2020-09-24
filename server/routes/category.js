@@ -3,9 +3,9 @@ const CategoryController = require('../controllers/categoryController')
 const { authentication , authorization } = require('../middlewares/auth')
 
 
-router.use( authentication, authorization )
 router.get('/', CategoryController.show )
-router.post('/add', CategoryController.add )
-router.delete('/delete/:id', CategoryController.delete)
+router.use( authentication, authorization )
+router.post('/', CategoryController.addCategory )
+router.delete('/:id', CategoryController.deleteCategory)
 
 module.exports = router

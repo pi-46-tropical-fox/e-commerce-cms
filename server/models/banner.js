@@ -27,8 +27,8 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.STRING,
       validate: {
         is: {
-          args: [/Actif/, /Not Actif/],
-          msg: "Please input with Actif or Not Actif"
+          args: [/Activ/],
+          msg: "Please input with Activ or Not Activ"
         }
       }  
 

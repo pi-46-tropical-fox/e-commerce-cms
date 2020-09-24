@@ -8,7 +8,8 @@
           </b-col>
           <b-col md="6" class="bg-warning">
             <b-card-body title="Login Form" class="mt-3">
-              <b-form  class="mt-5" @submit.prevent="login">
+              <b-alert :variant="color" show v-if="notification[0]">{{notification[0]}}</b-alert>
+              <b-form  class="mt-2" @submit.prevent="login">
                 <b-form-group
                     id="input-group-1"
                     label="Email address:"
@@ -52,6 +53,18 @@ export default {
       password: ''
     }
   },
+  computed: {
+    notification: {
+      get () {
+        return this.$store.state.notification
+      }
+    },
+    color: {
+      get () {
+        return this.$store.state.color
+      }
+    }
+  },
   methods: {
     login () {
       const payload = {
@@ -63,9 +76,14 @@ export default {
         .then(() => {
           this.$store.commit('SET_IS_LOGIN', true)
           this.$router.push('/Home')
+          setTimeout(() => {
+            this.$store.commit('SET_NOTIFICATION', [])
+          }, 3000)
         })
-        .catch(err => {
-          console.log(err)
+        .catch(() => {
+          setTimeout(() => {
+            this.$store.commit('SET_NOTIFICATION', [])
+          }, 3000)
         })
     }
   }

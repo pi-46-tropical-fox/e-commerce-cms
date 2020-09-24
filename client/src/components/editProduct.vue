@@ -7,8 +7,9 @@
             <b-card-img src="https://picsum.photos/400/400/?image=20" alt="Image" class="rounded-0"></b-card-img>
           </b-col>
           <b-col md="6" class="bg-warning">
-            <b-card-body title="Edit Product" class="mt-3">
-              <b-form  class="mt-5" @submit.prevent="updateProduct">
+            <b-card-body title="Edit Product" class="mt-2">
+              <b-alert :variant="color" show v-if="notification[0]">{{notification[0]}}</b-alert>
+              <b-form  class="mt-2" @submit.prevent="updateProduct">
                 <b-form-group label="Name :">
                   <b-form-input
                     v-model="product.name"
@@ -80,27 +81,31 @@
 <script>
 
 export default {
-  name: 'addProduct',
-  data () {
-    return {
-      name: '',
-      image_url: '',
-      price: '',
-      stock: '',
-      gender: '',
-      CategoryId: ''
-    }
-  },
+  name: 'editProduct',
   computed: {
-    filters () {
-      return this.$store.state.filters
+    filters: {
+      get () {
+        return this.$store.state.filters
+      }
     },
-    categories () {
-      return this.$store.state.categories
+    categories: {
+      get () {
+        return this.$store.state.categories
+      }
     },
     product: {
       get () {
         return this.$store.state.product
+      }
+    },
+    notification: {
+      get () {
+        return this.$store.state.notification
+      }
+    },
+    color: {
+      get () {
+        return this.$store.state.color
       }
     }
   },
@@ -109,16 +114,20 @@ export default {
     updateProduct () {
       this.$store.dispatch('updateProduct', this.product)
         .then(() => {
-          this.$router.push('/Home')
+          setTimeout(() => {
+            this.$store.commit('SET_NOTIFICATION', [])
+            this.$router.push('/Home')
+          }, 2000)
         })
-        .catch(err => {
-          console.log(err)
+        .catch(() => {
+          setTimeout(() => {
+            this.$store.commit('SET_NOTIFICATION', [])
+          }, 3000)
         })
     }
   },
   created () {
     this.$store.dispatch('editProduct', this.$route.params.id)
-    // console.log(this.product, '<<<< ini dr product created')
   }
 }
 </script>

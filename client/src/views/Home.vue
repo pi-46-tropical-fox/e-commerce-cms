@@ -1,7 +1,7 @@
 <template>
   <div class="home">
-    <Sidebar class="col-3"></Sidebar>
-    <div class="col-8">
+    <Sidebar class="col-2"></Sidebar>
+    <div class="col-9">
       <router-view></router-view>
     </div>
   </div>

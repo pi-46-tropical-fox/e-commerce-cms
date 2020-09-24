@@ -8,9 +8,12 @@ export default new Vuex.Store({
   state: {
     products: [],
     product: [],
+    banners: [],
+    banner: [],
     filters: [{ gender: 'Men' }, { gender: 'Women' }],
     categories: [],
     notification: [],
+    color: '',
     isLogin: false
   },
   mutations: {
@@ -23,42 +26,65 @@ export default new Vuex.Store({
     SET_PRODUCT (state, payload) {
       state.product = payload
     },
+    SET_BANNERS (state, payload) {
+      state.banners = payload
+    },
+    SET_BANNER (state, payload) {
+      state.banner = payload
+    },
     SET_CATEGORIES (state, payload) {
       state.categories = payload
     },
     SET_NOTIFICATION (state, payload) {
       state.notification = payload
+    },
+    SET_COLOR (state, payload) {
+      state.color = payload
     }
   },
   actions: {
     login (context, payload) {
-      ProductsAPI({
-        url: '/login',
-        method: 'POST',
-        data: payload
+      return new Promise((resolve, reject) => {
+        ProductsAPI({
+          url: '/login',
+          method: 'POST',
+          data: payload
+        })
+          .then(({ data }) => {
+            console.log(data)
+            localStorage.setItem('access_token', data.access_token)
+            localStorage.setItem('id', data.id)
+            localStorage.setItem('email', data.email)
+            resolve(data)
+          })
+          .catch(({ response }) => {
+            console.log(response.data.errors, '<<< dr err login')
+            context.commit('SET_NOTIFICATION', response.data.errors)
+            context.commit('SET_COLOR', 'warning')
+            resolve(response)
+          })
       })
-        .then(({ data }) => {
-          console.log(data)
-          localStorage.setItem('access_token', data.access_token)
-          localStorage.setItem('id', data.id)
-          localStorage.setItem('email', data.email)
-        })
-        .catch(err => {
-          console.log(err)
-        })
     },
     register (context, payload) {
-      ProductsAPI({
-        url: '/register',
-        method: 'POST',
-        data: payload
+      return new Promise((resolve, reject) => {
+        ProductsAPI({
+          url: '/register',
+          method: 'POST',
+          data: payload
+        })
+          .then(({ data }) => {
+            console.log(data)
+            context.commit('SET_NOTIFICATION', [data.message])
+            context.commit('SET_COLOR', 'success')
+            resolve(data)
+          })
+          .catch(({ response }) => {
+            console.log(response.data.errors)
+            context.commit('SET_NOTIFICATION', response.data.errors)
+            context.commit('SET_COLOR', 'warning')
+            reject(response.data.errors)
+          })
       })
-        .then(({ data }) => {
-          console.log(data)
-        })
-        .catch(err => {
-          console.log(err)
-        })
     },
     fetchProducts (context) {
       ProductsAPI({
@@ -77,66 +103,87 @@ export default new Vuex.Store({
     addProduct (context, payload) {
       return new Promise((resolve, reject) => {
         ProductsAPI({
-          url: '/products/add',
+          url: '/products',
           method: 'POST',
           headers: { access_token: localStorage.getItem('access_token') },
           data: payload
         })
           .then(({ data }) => {
+            console.log(data, '<<<< ini dr addProduct')
             context.dispatch('fetchProducts')
+            context.commit('SET_NOTIFICATION', ['Successfully Create New Product'])
+            context.commit('SET_COLOR', 'success')
             resolve(data)
           })
-          .catch(err => {
-            reject(err)
+          .catch(({ response }) => {
+            context.commit('SET_NOTIFICATION', response.data.errors)
+            context.commit('SET_COLOR', 'warning')
+            reject(response.data.errors)
           })
       })
     },
     editProduct (context, payload) {
-      ProductsAPI({
-        url: `/products/edit/${payload}`,
-        method: 'GET',
-        headers: { access_token: localStorage.getItem('access_token') }
+      return new Promise((resolve, reject) => {
+        ProductsAPI({
+          url: `/products/${payload}`,
+          method: 'GET',
+          headers: { access_token: localStorage.getItem('access_token') }
+        })
+          .then(({ data }) => {
+            console.log(data.product, '<<<ini dr edit')
+            context.commit('SET_PRODUCT', data.product)
+            context.commit('SET_NOTIFICATION', [data.message])
+            context.commit('SET_COLOR', 'success')
+            resolve(data)
+          })
+          .catch(({ response }) => {
+            context.commit('SET_NOTIFICATION', response.data.errors)
+            context.commit('SET_COLOR', 'warning')
+            reject(response.data.errors)
+          })
       })
-        .then(({ data }) => {
-          console.log(data.product, '<<<ini dr edit')
-          context.commit('SET_PRODUCT', data.product)
-        })
-        .catch(err => {
-          console.log(err)
-        })
     },
     updateProduct (context, payload) {
       return new Promise((resolve, reject) => {
         ProductsAPI({
-          url: `/products/edit/${payload.id}`,
+          url: `/products/${payload.id}`,
           method: 'PUT',
           headers: { access_token: localStorage.getItem('access_token') },
           data: payload
         })
           .then(({ data }) => {
+            context.commit('SET_NOTIFICATION', [data.message])
+            context.commit('SET_COLOR', 'success')
             resolve(data)
           })
-          .catch(err => {
-            reject(err)
+          .catch(({ response }) => {
+            context.commit('SET_NOTIFICATION', response.data.errors)
+            context.commit('SET_COLOR', 'warning')
+            reject(response.data.errors)
           })
       })
     },
     deleteProduct (context, payload) {
       const agreement = confirm('Are you sure to delete this item?')
       if (agreement) {
-        ProductsAPI({
-          url: `/products/delete/${payload.id}`,
-          method: 'DELETE',
-          headers: { access_token: localStorage.getItem('access_token') },
-          data: payload
+        return new Promise((resolve, reject) => {
+          ProductsAPI({
+            url: `/products/${payload.id}`,
+            method: 'DELETE',
+            headers: { access_token: localStorage.getItem('access_token') },
+            data: payload
+          })
+            .then(({ data }) => {
+              console.log(data)
+              context.dispatch('fetchProducts')
+              context.commit('SET_NOTIFICATION', [data.message])
+              context.commit('SET_COLOR', 'success')
+              resolve(data)
+            })
+            .catch(err => {
+              reject(err)
+            })
         })
-          .then(({ data }) => {
-            console.log(data)
-            context.dispatch('fetchProducts')
-          })
-          .catch(err => {
-            console.log(err)
-          })
       }
     },
     fetchCategories (context) {
@@ -156,19 +203,120 @@ export default new Vuex.Store({
     addCategory (context, payload) {
       return new Promise((resolve, reject) => {
         ProductsAPI({
-          url: '/categories/add',
+          url: '/categories',
           method: 'POST',
           headers: { access_token: localStorage.getItem('access_token') },
           data: payload
         })
           .then(({ data }) => {
             context.dispatch('fetchProducts')
+            context.commit('SET_NOTIFICATION', ['Successfully Create New Category'])
+            context.commit('SET_COLOR', 'success')
             resolve(data)
           })
-          .catch(err => {
-            reject(err)
+          .catch(({ response }) => {
+            context.commit('SET_NOTIFICATION', response.data.errors)
+            context.commit('SET_COLOR', 'warning')
+            reject(response.data.errors)
           })
       })
+    },
+    fetchBanners (context) {
+      ProductsAPI({
+        url: '/banners',
+        method: 'GET',
+        headers: { access_token: localStorage.getItem('access_token') }
+      })
+        .then(({ data }) => {
+          console.log(data, '<<< ini dr action')
+          context.commit('SET_BANNERS', data)
+        })
+        .catch(err => {
+          console.log(err)
+        })
+    },
+    addBanner (context, payload) {
+      return new Promise((resolve, reject) => {
+        ProductsAPI({
+          url: '/banners',
+          method: 'POST',
+          headers: { access_token: localStorage.getItem('access_token') },
+          data: payload
+        })
+          .then(({ data }) => {
+            context.dispatch('fetchBanners')
+            context.commit('SET_NOTIFICATION', ['Successfully Create New Banner'])
+            context.commit('SET_COLOR', 'success')
+            resolve(data)
+          })
+          .catch(({ response }) => {
+            context.commit('SET_NOTIFICATION', response.data.errors)
+            context.commit('SET_COLOR', 'warning')
+            reject(response.data.errors)
+          })
+      })
+    },
+    editBanner (context, payload) {
+      return new Promise((resolve, reject) => {
+        ProductsAPI({
+          url: `/banners/${payload}`,
+          method: 'GET',
+          headers: { access_token: localStorage.getItem('access_token') }
+        })
+          .then(({ data }) => {
+            console.log(data, '<<<ini dr edit')
+            context.commit('SET_BANNER', data)
+            resolve(data)
+          })
+          .catch(({ response }) => {
+            context.commit('SET_NOTIFICATION', response.data.errors)
+            context.commit('SET_COLOR', 'warning')
+            reject(response.data.errors)
+          })
+      })
+    },
+    updateBanner (context, payload) {
+      return new Promise((resolve, reject) => {
+        ProductsAPI({
+          url: `/banners/${payload.id}`,
+          method: 'PUT',
+          headers: { access_token: localStorage.getItem('access_token') },
+          data: payload
+        })
+          .then(({ data }) => {
+            context.commit('SET_NOTIFICATION', [data.message])
+            context.commit('SET_COLOR', 'success')
+            resolve(data)
+          })
+          .catch(({ response }) => {
+            context.commit('SET_NOTIFICATION', response.data.errors)
+            context.commit('SET_COLOR', 'warning')
+            reject(response.data.errors)
+          })
+      })
+    },
+    deleteBanner (context, payload) {
+      const agreement = confirm('Are you sure to delete this item?')
+      if (agreement) {
+        return new Promise((resolve, reject) => {
+          ProductsAPI({
+            url: `/banners/${payload.id}`,
+            method: 'DELETE',
+            headers: { access_token: localStorage.getItem('access_token') },
+            data: payload
+          })
+            .then(({ data }) => {
+              console.log(data)
+              context.dispatch('fetchBanners')
+              context.commit('SET_NOTIFICATION', [data.message])
+              context.commit('SET_COLOR', 'success')
+              resolve(data)
+            })
+            .catch(err => {
+              reject(err)
+            })
+        })
+      }
     }
   },
   modules: {

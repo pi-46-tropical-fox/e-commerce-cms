@@ -5,22 +5,31 @@ import Login from '../views/Login.vue'
 import Register from '../views/Register.vue'
 import AddProduct from '../components/addProduct.vue'
 import EditProduct from '../components/editProduct.vue'
-import CardGroup from '../components/CardGroup.vue'
+import ProductGroup from '../components/ProductGroup.vue'
 import AddCategory from '../components/addCategory'
 import Dashboard from '../views/dashboard.vue'
+import BannerGroup from '../components/bannerGroup.vue'
+import AddBanner from '../components/addBanner.vue'
+import EditBanner from '../components/editBanner.vue'
 
 Vue.use(VueRouter)
 
 const routes = [
   {
     path: '/Home',
-    name: 'Home',
     component: Home,
+    beforeEnter: (to, from, next) => {
+      if (localStorage.getItem('access_token')) {
+        next()
+      } else {
+        next('/Login')
+      }
+    },
     children: [
       {
         path: '',
         name: 'Home',
-        component: CardGroup
+        component: ProductGroup
       },
       {
         path: 'addProduct',
@@ -33,14 +42,29 @@ const routes = [
         component: EditProduct
       },
       {
-        path: 'cardGroup',
-        name: 'cardGroup',
-        component: CardGroup
+        path: 'ProductGroup',
+        name: 'ProductGroup',
+        component: ProductGroup
       },
       {
         path: 'addCategory',
         name: 'addCategory',
         component: AddCategory
+      },
+      {
+        path: 'bannerGroup',
+        name: 'bannerGroup',
+        component: BannerGroup
+      },
+      {
+        path: 'addBanner',
+        name: 'addBanner',
+        component: AddBanner
+      },
+      {
+        path: 'editBanner/:id',
+        name: 'editBanner',
+        component: EditBanner
       }
     ]
   },
@@ -52,12 +76,26 @@ const routes = [
   {
     path: '/Login',
     name: 'Login',
-    component: Login
+    component: Login,
+    beforeEnter: (to, from, next) => {
+      if (localStorage.getItem('access_token')) {
+        next('/Home')
+      } else {
+        next()
+      }
+    }
   },
   {
     path: '/Register',
     name: 'Register',
-    component: Register
+    component: Register,
+    beforeEnter: (to, from, next) => {
+      if (localStorage.getItem('access_token')) {
+        next('/Home')
+      } else {
+        next()
+      }
+    }
   }
 ]
 

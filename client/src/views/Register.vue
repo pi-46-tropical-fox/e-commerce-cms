@@ -8,7 +8,8 @@
           </b-col>
           <b-col md="6" class="bg-warning">
             <b-card-body title="Register Form" class="mt-2">
-              <b-form  class="mt-3" @submit='register'>
+              <b-alert :variant="color" show v-if="notification[0]">{{notification[0]}}</b-alert>
+              <b-form  class="mt-3" @submit.prevent='register'>
                 <b-form-group label="Your Name:">
                     <b-form-input
                     type="text"
@@ -55,6 +56,18 @@ export default {
       password: ''
     }
   },
+  computed: {
+    notification: {
+      get () {
+        return this.$store.state.notification
+      }
+    },
+    color: {
+      get () {
+        return this.$store.state.color
+      }
+    }
+  },
   methods: {
     register () {
       const payload = {
@@ -64,7 +77,17 @@ export default {
       }
 
       this.$store.dispatch('register', payload)
-      this.$router.push('/Login')
+        .then(() => {
+          setTimeout(() => {
+            this.$router.push('/Login')
+            this.$store.commit('SET_NOTIFICATION', [])
+          }, 1000)
+        })
+        .catch(() => {
+          setTimeout(() => {
+            this.$store.commit('SET_NOTIFICATION', [])
+          }, 3000)
+        })
     }
   }
 }

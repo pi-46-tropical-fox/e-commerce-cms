@@ -4,14 +4,36 @@ class ProductController {
     static show ( req, res, next ) {
         Product.findAll()
             .then(products => {
-                return res.status(200).json({products})
+                return res.status(200).json(products)
             })
             .catch(err => {
                 return next(err)
             })
     }
 
-    static add ( req, res, next ) {
+    static showByGender ( req, res, next ) {
+        const gender = req.params.gender
+        Product.findAll({where: {gender}})
+            .then(products => {
+                return res.status(200).json(products)
+            })
+            .catch(err => {
+                return next(err)
+            })
+    }
+
+    static showByCategory ( req, res, next ) {
+        const CategoryId = req.params.CategoryId
+        Product.findAll({where: {CategoryId}})
+            .then(products => {
+                return res.status(200).json(products)
+            })
+            .catch(err => {
+                return next(err)
+            })
+    }
+
+    static addProduct ( req, res, next ) {
         const dataProduct = {
             name: req.body.name,
             image_url: req.body.image_url,
@@ -30,7 +52,7 @@ class ProductController {
             })
     }
 
-    static edit ( req, res, next ) {
+    static editProduct ( req, res, next ) {
         const id = req.params.id
 
         Product.findByPk(id)
@@ -42,7 +64,7 @@ class ProductController {
             })
     }
 
-    static editPost ( req, res, next ) {
+    static editPostProduct ( req, res, next ) {
         const editProduct = {
             name: req.body.name,
             image_url: req.body.image_url,
@@ -61,7 +83,22 @@ class ProductController {
             })
     }
 
-    static delete ( req, res, next ) {
+    static updateStock ( req, res, next ) {
+        const editProduct = {
+            stock: req.body.stock
+        }
+
+        Product.update(editProduct,{where: { id: req.params.id}})
+            .then(product => {
+                return res.status(201).json({message: `Successfully update Product with id ${req.params.id}`})
+            })
+            .catch( err => {
+                return next(err)
+            })
+    }
+
+
+    static deleteProduct ( req, res, next ) {
         Product.destroy({ where: { id: req.params.id }})
             .then(result => {
         

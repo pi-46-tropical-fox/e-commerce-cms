@@ -7,19 +7,40 @@
             <b-card-img src="https://picsum.photos/400/400/?image=20" alt="Image" class="rounded-0"></b-card-img>
           </b-col>
           <b-col md="6" class="bg-warning">
-            <b-card-body title="Add Category" class="mt-3">
+            <b-card-body title="Edit Banner" class="mt-3">
               <b-alert :variant="color" show v-if="notification[0]">{{notification[0]}}</b-alert>
-              <b-form  class="mt-5" @submit.prevent="addCategory">
-                <b-form-group label="Category :">
+              <b-form  class="mt-3" @submit.prevent="updateBanner">
+                <b-form-group label="Title :">
                   <b-form-input
-                    v-model="category"
+                    v-model="banner.title"
                     type="text"
                     required
-                    placeholder="Enter Category Name"
+                    placeholder="Enter Banner Title"
                   >
                   </b-form-input>
                 </b-form-group>
+
+                <b-form-group label="Status">
+                  <b-form-select
+                    v-model="banner.status"
+                    :options="optionsStatus"
+                    required
+                    value-field="status"
+                    text-field="status"
+                  ></b-form-select>
+                </b-form-group>
+
+                <b-form-group label="Image URL :">
+                  <b-form-input
+                    type="text"
+                    v-model="banner.image_url"
+                    required
+                    placeholder="Enter Image URL"
+                  ></b-form-input>
+                </b-form-group>
+
                 <b-button type="submit" variant="primary">Submit</b-button>
+
               </b-form>
             </b-card-body>
           </b-col>
@@ -32,13 +53,18 @@
 <script>
 
 export default {
-  name: 'addCategory',
+  name: 'editBanner',
   data () {
     return {
-      category: ''
+      optionsStatus: [{ status: 'Activ' }, { status: 'Non Activ' }]
     }
   },
   computed: {
+    banner: {
+      get () {
+        return this.$store.state.banner
+      }
+    },
     notification: {
       get () {
         return this.$store.state.notification
@@ -51,16 +77,12 @@ export default {
     }
   },
   methods: {
-    addCategory () {
-      const payload = {
-        category: this.category
-      }
-
-      this.$store.dispatch('addCategory', payload)
+    updateBanner () {
+      this.$store.dispatch('updateBanner', this.banner)
         .then(() => {
           setTimeout(() => {
             this.$store.commit('SET_NOTIFICATION', [])
-            this.$router.push('/Home')
+            this.$router.push('/Home/bannerGroup')
           }, 2000)
         })
         .catch(() => {
@@ -69,6 +91,9 @@ export default {
           }, 3000)
         })
     }
+  },
+  created () {
+    return this.$store.dispatch('editBanner', this.$route.params.id)
   }
 }
 </script>

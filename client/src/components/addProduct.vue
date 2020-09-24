@@ -8,6 +8,7 @@
           </b-col>
           <b-col md="6" class="bg-warning">
             <b-card-body title="Add Product" class="mt-3">
+              <b-alert :variant="color" show v-if="notification[0]">{{notification[0]}}</b-alert>
               <b-form  class="mt-5" @submit.prevent="addProduct">
                 <b-form-group label="Name :">
                   <b-form-input
@@ -96,6 +97,16 @@ export default {
     },
     categories () {
       return this.$store.state.categories
+    },
+    notification: {
+      get () {
+        return this.$store.state.notification
+      }
+    },
+    color: {
+      get () {
+        return this.$store.state.color
+      }
     }
   },
 
@@ -112,7 +123,15 @@ export default {
 
       this.$store.dispatch('addProduct', payload)
         .then(() => {
-          this.$router.push('/Home')
+          setTimeout(() => {
+            this.$store.commit('SET_NOTIFICATION', [])
+            this.$router.push('/Home')
+          }, 1000)
+        })
+        .catch(() => {
+          setTimeout(() => {
+            this.$store.commit('SET_NOTIFICATION', [])
+          }, 3000)
         })
     }
   },
