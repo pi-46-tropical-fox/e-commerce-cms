@@ -9,7 +9,13 @@ export default new Vuex.Store({
     isLogin: false,
     products: [],
     newProduct: {},
-    product: {}
+    product: {},
+    aProduct: {
+      name: '',
+      image_url: '',
+      price: '',
+      stock: ''
+    }
   },
   mutations: {
     setProducts (state, payload) {
@@ -23,6 +29,13 @@ export default new Vuex.Store({
     },
     setDeleteProduct (state, payload) {
       state.product = payload
+    },
+    setProduct (state, payload) {
+      const { name, image_url, price, stock } = payload
+      state.aProduct.name = name
+      state.aProduct.image_url = image_url
+      state.aProduct.price = price
+      state.aProduct.stock = stock
     }
   },
   actions: {
@@ -105,12 +118,39 @@ export default new Vuex.Store({
         .catch(err => {
           console.log(err)
         })
+    },
+    getProduct ({ commit }, payload) {
+      axios({
+        method: 'GET',
+        url: `/products/${payload}`,
+        headers: {
+          access_token: localStorage.access_token
+        }
+      })
+        .then(({ data }) => {
+          commit('setProduct', data)
+        })
+        .catch(err => {
+          console.log(err)
+        })
+    },
+    updateProduct ({ dispatch }, payload) {
+      axios({
+        method: 'PUT',
+        url: `/products/${payload.id}`,
+        data: payload,
+        headers: {
+          access_token: localStorage.access_token
+        }
+      })
+        .then(({ data }) => {
+          dispatch('fetchProducts')
+          return data
+        })
+        .catch(err => {
+          console.log(err)
+        })
     }
-    // editProduct ({commit}, data) {
-    //   axios({
-    //     method: 'PUT',
-    //   })
-    // }
   },
   modules: {
   }

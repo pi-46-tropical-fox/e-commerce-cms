@@ -4,10 +4,8 @@ import Home from '../views/Home.vue'
 import Login from '../views/Login.vue'
 import AddProduct from '../components/FormAddProduct.vue'
 import EditProduct from '../components/FormEditProduct.vue'
-import store from '../store'
 
 Vue.use(VueRouter)
-const { state } = store
 const routes = [
   {
     path: '/',
@@ -20,7 +18,7 @@ const routes = [
     component: AddProduct
   },
   {
-    path: '/editProduct',
+    path: '/products/:id',
     name: 'EditProduct',
     component: EditProduct
   },
@@ -38,9 +36,8 @@ const router = new VueRouter({
 })
 
 router.beforeEach((to, from, next) => {
-  if (to.name !== 'Login' && !state.isLogin) next({ name: 'Login' })
-  // if the user is not authenticated, `next` is called twice
-  next()
+  if (to.name !== 'Login' && !localStorage.getItem('access_token')) next({ name: 'Login' })
+  else next()
 })
 
 export default router
