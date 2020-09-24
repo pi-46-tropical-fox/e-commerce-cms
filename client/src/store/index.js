@@ -125,11 +125,12 @@ export default new Vuex.Store({
     editProduct (context, payload) {
       return new Promise((resolve, reject) => {
         ProductsAPI({
-          url: `/products/${payload}`,
+          url: `/editProduct/${payload}`,
           method: 'GET',
           headers: { access_token: localStorage.getItem('access_token') }
         })
           .then(({ data }) => {
+            console.log(payload, 'ini dr edit product')
             console.log(data.product, '<<<ini dr edit')
             context.commit('SET_PRODUCT', data.product)
             context.commit('SET_NOTIFICATION', [data.message])
