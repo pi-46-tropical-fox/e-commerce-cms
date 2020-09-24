@@ -38,7 +38,11 @@ export default {
         password: this.password
       }
       this.$store.dispatch('login', payload)
-      this.$router.push({ name: 'Dashboard' })
+        .then((data)=> {
+          if(data){
+            this.$router.push({ name: 'Dashboard' })
+          }
+        })
     }
   }
 }

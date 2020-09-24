@@ -8,7 +8,8 @@ export default new Vuex.Store({
   state: {
     itemsData: [],
     categoriesData: [],
-    onDisplayData: null
+    onDisplayData: null,
+    isLogin: false
   },
   mutations: {
     setItemData (state, payload) {
@@ -22,6 +23,10 @@ export default new Vuex.Store({
 
     setOnDisplayData (state, payload) {
       state.onDisplayData = payload
+    },
+
+    setIsLogin(state, payload){
+      state.isLogin = payload
     }
   },
   actions: {
@@ -52,7 +57,7 @@ export default new Vuex.Store({
     },
 
     login (context, payload) {
-      axios({
+     return axios({
         method: 'POST',
         url: './users/login',
         data: payload
@@ -60,6 +65,9 @@ export default new Vuex.Store({
         .then(({ data }) => {
           // console.log(data)
           localStorage.access_token = data.access_token
+        })
+        .then(()=> {
+          return true
         })
         .catch(err => {
           console.log(err)
@@ -156,6 +164,14 @@ export default new Vuex.Store({
         .catch(err => {
           console.log(err)
         })
+    },
+
+    isLogin(context, payload){
+      if(localStorage.access_token){
+        return context.commit('setIsLogin', true)
+      }else{
+        return context.commit('setIsLogin', false)
+      }
     }
   },
   modules: {
