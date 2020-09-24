@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "sequelize db:migrate:undo:all && sequelize db:migrate && sequelize db:seed:all && node bin/web",
+    "start": "npm i -g sequelize-cli && sequelize db:migrate:undo:all && sequelize db:migrate && sequelize db:seed:all && node bin/web",
     "drop-all": "sequelize db:drop",
     "create": "sequelize db:create",
     "migrate": "sequelize db:migrate",
