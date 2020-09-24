@@ -13,8 +13,8 @@ app.use(express.json())
 app.use(router)
 app.use(errHandler)
 
-// app.listen(port, (req,res) => {
-//     console.log(`listen on port ${port}`)
-// })
+app.listen(port, (req,res) => {
+    console.log(`listen on port ${port}`)
+})
 
 module.exports = app
