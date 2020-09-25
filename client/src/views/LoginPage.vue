@@ -151,7 +151,7 @@ h6
   outline: none;
   height: 40px;
   color: #fff;
-  font-size: 16px;
+  font-size: 14px;
 }
 
 .login-box input[type="submit"]

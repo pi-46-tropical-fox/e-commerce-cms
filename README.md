@@ -5,7 +5,7 @@ Membuat Content Management System untuk e-commerce
 This is e-commerce website to sell all popular books around the world, including book from Indonesia tho.
 
 Disclaimer:
-For your convenience, please use full screen resolution browser on your desktop (1920 x 1080) pixels while using this website.
+For your convenient, please use full screen resolution browser on your desktop (1920 x 1080) pixels while using this website.
 
 
 ##
@@ -32,6 +32,7 @@ Meanwhile, security (not admin) only have access for read all books and banner.
   - DELETE /products/:product_id
   - PUT /products/:product_id
   - GET /banners
+  - POST /banners
   - GET /banners/:banner_id
   - DELETE /banners/:banner_id
   - PUT /banners/:banner_id
