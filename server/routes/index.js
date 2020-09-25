@@ -16,6 +16,7 @@ router.delete ("/products/:id",  ProductController.deleteProducts)
 
 // router.post ("/products", authentication, ProductController.addProducts)
 // router.get ("/products", authentication, ProductController.getProducts)
+// router.get ("/products/:id",  ProductController.getProductbyId)
 // router.put ("/products/:id", authentication, authorization, ProductController.editProducts)
 // router.delete ("/products/:id", authentication, authorization, ProductController.deleteProducts)
 

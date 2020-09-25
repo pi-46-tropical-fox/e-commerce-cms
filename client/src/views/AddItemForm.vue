@@ -41,6 +41,9 @@ export default {
   methods: {
     submitAdd () {
       this.$store.dispatch('addData', this.selectedData)
+    },
+    created () {
+      this.submitAdd()
     }
   }
 }
