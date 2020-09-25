@@ -16,6 +16,10 @@ module.exports = (sequelize, DataTypes) => {
         onUpdate: 'CASCADE',
         onDelete: 'CASCADE',
       })
+      Product.hasMany(models.CartProduct, {
+        onUpdate: 'CASCADE',
+        onDelete: 'CASCADE',
+      })
     }
   };
   Product.init({
@@ -23,23 +27,23 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.STRING,
       allowNull: false,
       validate: {
+        notNull: {
+          msg: "You must specify the product name!"
+        },
         notEmpty: {
-          msg: "You have to fill out the product name."
-        }
+          msg: "You must specify the product name!"
+        },
       }
     },
     price: {
       type: DataTypes.INTEGER,
       allowNull: false,
       validate: {
+        notNull: {
+          msg: "You must specify the product price!"
+        },
         notEmpty: {
-          msg: "You have to specify the product price, and it's not negative."
-        },
-        isNotNegative(value) {
-          if(value < 0) return new Error(`Oh no, don't put negative numbers inside product price!`)
-        },
-        isNumeric: {
-          msg: "Product stock: Numbers, please."
+          msg: "You must specify the product price!"
         }
       }
     },
@@ -47,14 +51,11 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.INTEGER,
       allowNull: false,
       validate: {
+        notNull: {
+          msg: "You must specify the product price!"
+        },
         notEmpty: {
-          msg: "You should specify the product stock, and it's not negative."
-        },
-        isNumeric: {
-          msg: "Product stock: Numbers, please."
-        },
-        isNotNegative(value) {
-          if(value < 0) return new Error(`Oh no, don't put negative numbers inside product stock!`)
+          msg: "You must specify the product price!"
         }
       }
     },
@@ -63,7 +64,7 @@ module.exports = (sequelize, DataTypes) => {
       allowNull: false,
       validate: {
         notEmpty: {
-          msg: "You should specify the category!"
+          msg: "You must specify the category!"
         }
       },
       references: {
@@ -73,10 +74,18 @@ module.exports = (sequelize, DataTypes) => {
     }
   }, {
     sequelize,
+      validate: {
+        priceMustBePositive() {
+          if (this.price < 0) throw new Error(`The product price must be a positive number!`)
+        },
+        stockMustBePositive() {
+          if (this.stock < 0) throw new Error(`The product stock must be a positive number!`)
+        },
+      },
     hooks: {
-      beforeValidate(instance){
-        instance.stock = Number(instance.stock)
-        instance.price = instance.price * 100
+      beforeValidate(instance) {
+        instance.stock = !!instance.stock ? Number(instance.stock) : instance.stock
+        instance.price = !!instance.price ? instance.price * 100 : instance.price
       }
     },
     modelName: 'Product',

@@ -3,9 +3,9 @@ const { authenticate, authorize } = require('../../middleware/auth')
 const { CartController } = require('../../controllers')
 
 cartEndpoints
-    .get('/', CartController.read)
-    .post('/', authenticate, authorize, CartController.create)
-    .put('/:id', authenticate, authorize, CartController.update)
-    .delete('/:id', authenticate, authorize, CartController.delete)
+    .get('/', authenticate, CartController.read)
+    .post('/', authenticate, CartController.create)
+    .put('/:id', authenticate, CartController.update)
+    .delete('/:id', authenticate, CartController.delete)
 
 module.exports = cartEndpoints

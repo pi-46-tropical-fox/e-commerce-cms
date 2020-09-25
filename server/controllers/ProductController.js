@@ -1,9 +1,18 @@
-const { Product, Category } = require('../models')
+const { Product, ProductImage, Category } = require('../models')
 
 class ProductController{
     static async read(req, res, next){
         try {
-            let data = await Product.findAll({ include: Category })
+            let data = await Product.findAll({
+                include: [
+                    {
+                        model: Category
+                    },
+                    {
+                        model: ProductImage
+                    }
+                ]
+            })
 
             res.status(200).json({ data })
         } catch (e) {
@@ -13,7 +22,16 @@ class ProductController{
     
     static async readOne(req, res, next){
         try {
-            let data = await Product.findByPk(req.params.id)
+            let data = await Product.findByPk(req.params.id, {
+                include: [
+                    {
+                        model: Category
+                    },
+                    {
+                        model: ProductImage
+                    }
+                ]
+            })
 
             res.status(200).json({ data })
         } catch (e) {

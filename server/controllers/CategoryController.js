@@ -27,7 +27,7 @@ class CategoryController {
 
             await Category.create({ name, description })
 
-            res.status(201).json({ message: "Successfully updated category." })
+            res.status(201).json({ message: "Successfully created new category." })
         } catch (e) {
             return next(e)
         }
