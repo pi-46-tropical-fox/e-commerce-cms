@@ -1,8 +1,8 @@
 <template>
   <div class="home">
     <navbar></navbar>
-    <img alt="Vue logo" src="../assets/logo.png">
-    <productCard ></productCard>
+    <!-- {{data}} -->
+    <productCard v-for="card in data" :key="card.id" :value='card'></productCard>
     <router-view />
   </div>
 </template>
@@ -19,6 +19,11 @@ export default {
     productCard,
     navbar
   },
+  data(){
+    return {
+      card :[]
+    }
+  },
   methods:{
     fetch(){
       return this.$store.dispatch('fetchData')
@@ -26,7 +31,23 @@ export default {
   },
   created(){
     this.fetch()
-  }
+  },
+   computed: {
+    data() {
+      return this.$store.state.data;
+    }
+  },
+  // methods: {
+  //   fetchData() {
+  //     return this.$store.dispatch("fetchData");
+  //   },
+  //   deleteProduct(id) {
+  //     this.$store.dispatch("deleteProduct", id);
+  //   }
+  // },
+  // created() {
+  //   this.fetchData();
+  // }
 
 }
 </script>
