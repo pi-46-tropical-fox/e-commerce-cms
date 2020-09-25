@@ -1,10 +1,6 @@
 <template>
   <div class="home">
-    <div id="nav">
-      <router-link to="/">Home</router-link> |
-      <router-link to="/addProduct">Add Product</router-link> |
-      <button @click.prevent="logout" to="/login">Logout</button>
-    </div>
+    <Navbar />
     <div class="container">
       <div class="row justify-content-center">
         <ProductTable :dataProduct="products"></ProductTable>
@@ -16,10 +12,12 @@
 <script>
 // @ is an alias to /src
 import ProductTable from '../components/ProductTable'
+import Navbar from '../components/Navbar'
 export default {
   name: 'Home',
   components: {
-    ProductTable
+    ProductTable,
+    Navbar
   },
   computed: {
     products () {
