@@ -9,7 +9,7 @@
 export default {
     created(){
         this.$store.dispatch('logout')
-        this.$router.push('/')
+        this.$router.push('/login')
     }
 }
 </script>

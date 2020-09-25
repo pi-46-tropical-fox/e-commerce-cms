@@ -8,7 +8,8 @@ Vue.use(Vuex)
 export default new Vuex.Store({
     state: {
         access_token : localStorage.getItem('access_token'),
-        products : []
+        products : [],
+        singleProduct : {}
     },
     mutations: {
         "UPDATE_ACCESS_TOKEN"(state, access_token){
@@ -21,6 +22,19 @@ export default new Vuex.Store({
         },
         "UPDATE_PRODUCTS"(state, products){
             state.products = products
+        },
+        "UPDATE_PRODUCT_BY_ID"(state, product){
+            const index = state.products.findIndex(e => product.id)
+            state.products[index] = product
+        },
+        "DELETE_PRODUCT_BY_ID"(state, id){
+            state.products = state.products.filter(e => e.id !== id)
+        },
+        "UPDATE_SINGLE_PRODUCT"(state, product){
+            state.singleProduct = product
+        },
+        "ADD_PRODUCT"(state, product){
+            state.products.push(product)
         }
     },
     actions: {
@@ -37,40 +51,28 @@ export default new Vuex.Store({
             commit('REMOVE_ACCESS_TOKEN')
         },
         fetchProducts({commit, state}){
-            axios.get('/products', { headers : { access_token : state.access_token }}).then(e => {
-                state.products = e.data
+            return axios.get('/products', { headers : { access_token : state.access_token }}).then(e => {
+                commit('UPDATE_PRODUCTS', e.data)
             })
         },
-        updateById({state}, data){
-            return new Promise((res, rej) => {
-                axios.put(`/products/${data.id}`, data, { headers : { access_token : state.access_token }}).then(response => {
-                    res(response)
-                }).catch(err => {
-                    rej(err)
-                })
+        updateById({state, commit}, data){
+            return axios.put(`/products/${data.id}`, data, { headers : { access_token : state.access_token }}).then(response => {
+                commit('UPDATE_PRODUCT_BY_ID', response.data)
             })
         },
-        delete({state}, id){
-            return new Promise((res, rej) => {
-                axios.delete(`/products/${id}`, { headers : { access_token : state.access_token }}).then(response => {
-                    res(response)
-                }).catch(e => {
-                    rej(e)
-                })
+        delete({state,commit}, id){
+            return axios.delete(`/products/${id}`, { headers : { access_token : state.access_token }}).then(response => {
+                commit('DELETE_PRODUCT_BY_ID', id)
             })
         },
-        fetchProductById({state}, id){
-            return new Promise((res, rej) => {
-                axios.get(`/products/${id}`, { headers : { access_token : state.access_token }}).then(response => {
-                    res(response)
-                }).catch(err => {
-                    rej(err)
-                })
+        fetchProductById({state, commit}, id){
+            return axios.get(`/products/${id}`, { headers : { access_token : state.access_token }}).then(response => {
+                commit('UPDATE_SINGLE_PRODUCT', response.data)
             })
         },
-        createProduct({state}, data){
-            axios.post('/products', data, { headers : { access_token : state.access_token } }).then(res => {
-                router.push(`/`)
+        createProduct({state, commit}, data){
+            return axios.post('/products', data, { headers : { access_token : state.access_token } }).then(res => {
+                commit('ADD_PRODUCT', res.data)
             })
         }
     },

@@ -121,27 +121,6 @@ describe('test put /products', () => {
                 done()
             })
     })
-
-    it('should return updated product', (done) => {
-        request(app)
-            .put(`/products/${createdId}`)
-            .set('access_token', access_token)
-            .send({ name : 'Kuaci', price : 5000, image_url : 'https://cdn2.thecatapi.com/images/a57.jpg', stock : 555 })
-            .then(response => {
-                const {body, status} = response
-
-                console.log(body)
-
-                expect(body.name).toBe('Kuaci')
-                expect(body.price).toBe(5000)
-                expect(body.stock).toBe(555)
-
-                expect(status).toBe(200)
-
-                done()
-            })
-    })
-
 })
 
 describe('test delete /products/:id', () => {

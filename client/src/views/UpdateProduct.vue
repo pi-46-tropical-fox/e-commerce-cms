@@ -20,13 +20,9 @@ export default {
         ProductForm,
         ProductItem
     },
-    data(){
-        return {
-            product : {
-                id : this.$route.params.id,
-                name : '',
-                
-            }
+    computed: {
+        product(){
+            return this.$store.state.singleProduct
         }
     },
     methods : {
@@ -39,11 +35,7 @@ export default {
         }
     },
     created(){
-        this.$store.dispatch('fetchProductById', this.$route.params.id).then(res => {
-            this.product = res.data
-        }).catch(e => {
-            console.log(e)
-        })
+        this.$store.dispatch('fetchProductById', this.$route.params.id)
     }
 }
 </script>

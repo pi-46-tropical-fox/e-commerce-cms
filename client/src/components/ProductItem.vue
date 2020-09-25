@@ -27,9 +27,7 @@ export default {
     props : ['data', 'noLinks'],
     methods : {
         deleteProduct(){
-            this.$store.dispatch('delete', this.data.id).then(() => {
-                this.$store.dispatch('fetchProducts')
-            })
+            this.$store.dispatch('delete', this.data.id)
         }
     }
 }
