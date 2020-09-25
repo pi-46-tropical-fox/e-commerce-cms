@@ -29,7 +29,7 @@ class ProductController {
 					id: ProductId
 				},
 				returning: true
-			}); console.log("updated_product:", updated_product);
+			});
 			return res.status(200).json(updated_product[1][0]);
 		} catch (err) {
 			return res.status(500).json({ message: err.message });

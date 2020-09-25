@@ -58,5 +58,10 @@ module.exports = (sequelize, DataTypes) => {
     sequelize,
     modelName: 'Product',
   });
+  Product.beforeCreate((product, options) => {
+    if (!product.image_url || product.image_url.trim() === "") {
+      product.image_url = "https://www.electrosolutions.in/wp-content/uploads/2018/08/product-image-dummy-600x353.jpg";
+    }
+  });
   return Product;
 };

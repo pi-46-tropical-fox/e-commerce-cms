@@ -37,22 +37,23 @@ _Request Body_
 _Response (200 - OK)_
 ```
 {
-  "access_token": "<user's access token>"
+  "access_token": "<user's access token>",
+  "username": "<user's username>"
 }
 ```
 
 _Response (400 - Bad Request)_
 ```
 {
-  "The Email or Password is invalid."
+  "message": "The Email or Password is invalid."
 }
 ```
 
 _Response (500 - Internal Server Error)_
 ```
-{
-  "<error message>"
-}
+[
+  "<error message(s)>"
+]
 ```
 ---
 ### POST /products
@@ -107,9 +108,9 @@ _Response (403 - Forbidden)_
 
 _Response (500 - Internal Server Error)_
 ```
-{
-  "<error message>"
-}
+[
+  "<error message(s)>"
+]
 ```
 ---
 ### GET /products
@@ -181,9 +182,9 @@ _Response (403 - Forbidden)_
 
 _Response (500 - Internal Server Error)_
 ```
-{
-  "<error message>"
-}
+[
+  "<error message(s)>"
+]
 ```
 ---
 ### PUT /products/:ProductId
@@ -238,9 +239,9 @@ _Response (403 - Forbidden)_
 
 _Response (500 - Internal Server Error)_
 ```
-{
-  "<error message>"
-}
+[
+  "<error message(s)>"
+]
 ```
 ---
 ### DELETE /products/:ProductId
@@ -290,7 +291,7 @@ _Response (403 - Forbidden)_
 
 _Response (500 - Internal Server Error)_
 ```
-{
-  "<error message>"
-}
+[
+  "<error message(s)>"
+]
 ```

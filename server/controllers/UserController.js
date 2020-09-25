@@ -15,7 +15,7 @@ class UserController {
 				return res.status(400).json({ message: "The email or password is invalid." });
 			}
 			const access_token = generate_jwt_token(user);
-			return res.status(200).json({ access_token });
+			return res.status(200).json({ access_token, username: user.username });
 		} catch (err) {
 			return res.status(500).json({ message: err.message });
 		}
