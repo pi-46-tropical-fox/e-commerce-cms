@@ -52,9 +52,13 @@ class ProductController{
     static async deleteProduct(req, res, next){
         try{
             const { id } = req.params
-            await Product.destroy({where : { id }})
+            const destroyed = await Product.destroy({where : { id }})
 
-            res.status(200).json({ message : 'Data deleted' })
+            if(destroyed === 1){
+                res.status(200).json({ message : 'Data deleted' })
+            } else {
+                throw { message : 'Not found', statusCode : 404 }
+            }
         } catch (e){
             next(e)
         }

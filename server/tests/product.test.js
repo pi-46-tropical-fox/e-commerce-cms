@@ -48,7 +48,9 @@ describe('test post /products', () => {
             .set('Accept', 'application/json')
             .expect('Content-Type', /json/)
             .then(response => {
-                const {status} = response
+                const {body, status} = response
+                expect(body.errors).toEqual(expect.arrayContaining(['Validation notEmpty on image_url failed', 'Product.price cannot be null']))
+
                 expect(status).toBe(400)
                 done()
             })
@@ -62,7 +64,9 @@ describe('test post /products', () => {
             .set('Accept', 'application/json')
             .expect('Content-Type', /json/)
             .then(response => {
-                const {status} = response
+                const {body,status} = response
+                expect(body.errors).toEqual(expect.arrayContaining(['Validation min on price failed', 'Validation min on stock failed']))
+
                 expect(status).toBe(400)
                 done()
             })
@@ -93,7 +97,8 @@ describe('get /products by id', () => {
             .expect('Content-Type', /json/)
             .then(response => {
                 const {body, status} = response
-                
+
+                expect(body.errors).toEqual(expect.arrayContaining(['Not found']))
                 expect(status).toBe(404)
                 done()
             })
@@ -109,8 +114,6 @@ describe('test put /products', () => {
             .send({ name : 'Kuaci', price : 5000, image_url : 'https://cdn2.thecatapi.com/images/a57.jpg', stock : 555 })
             .then(response => {
                 const {body, status} = response
-
-                console.log(body)
 
                 expect(body.name).toBe('Kuaci')
                 expect(body.price).toBe(5000)
@@ -132,7 +135,24 @@ describe('test delete /products/:id', () => {
             .expect('Content-Type', /json/)
             .then(response => {
                 const {body, status} = response
+                expect(body.message).toBe('Data deleted')
+
                 expect(status).toBe(200)
+                done()
+            })
+    })
+
+    it('should not found', (done) => {
+        request(app)
+            .delete(`/products/999999`)
+            .set('access_token', access_token)
+            .set('Accept', 'application/json')
+            .expect('Content-Type', /json/)
+            .then(response => {
+                const {body, status} = response
+
+                expect(body.errors).toEqual(expect.arrayContaining(['Not found']))
+                expect(status).toBe(404)
                 done()
             })
     })

@@ -2,7 +2,6 @@ const app = require('../app')
 const request = require('supertest')
 
 const { sequelize, User } = require('../models')
-// const { queryInterface } = sequelize
 
 const { userCredentials, userData } = require('../tests/config')
 let access_token = ''
