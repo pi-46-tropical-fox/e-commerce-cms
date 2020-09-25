@@ -2,8 +2,8 @@ import Swal from 'sweetalert2'
 import axios from 'axios'
 
 const instance = axios.create({
-  baseURL: 'http://localhost:3000'
-  // baseURL: 'https://bookiepedia-sam.herokuapp.com/'
+  // baseURL: 'http://localhost:3000'
+  baseURL: 'https://bookiepedia-sam.herokuapp.com/'
 })
 
 // Add a response interceptor

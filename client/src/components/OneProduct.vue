@@ -15,19 +15,19 @@
       <div class="right">
       <form @submit.prevent="updateProduct">
         <h2>{{ $store.state.oneProduct.name }}</h2>
-        <input type="text" class="field" v-model="input.name"
+        <input type="text" class="field" v-model="oneProduct.name"
           name="" id=""
           placeholder="Update the book title"
         >
-        <input type="text" class="field" v-model="input.image_url" name=""
+        <input type="text" class="field" v-model="oneProduct.image_url" name=""
           id="" placeholder="Update the book image"
         />
           <!-- placeholder="Update the image url for cover book" -->
-        <input type="number" class="field" v-model="input.price" name=""
+        <input type="number" class="field" v-model="oneProduct.price" name=""
           id=""
          placeholder="Update book price" required
         />
-        <input type="number" class="field" v-model="input.stock" name="" id=""
+        <input type="number" class="field" v-model="oneProduct.stock" name="" id=""
         placeholder="Update book stock" required
         />
         <div class="btn-wrapper">
@@ -62,10 +62,10 @@ export default {
     },
     updateProduct () {
       const dataProduct = {
-        name: this.input.name,
-        image_url: this.input.image_url,
-        price: this.input.price,
-        stock: this.input.stock,
+        name: this.oneProduct.name,
+        image_url: this.oneProduct.image_url,
+        price: this.oneProduct.price,
+        stock: this.oneProduct.stock,
         id: this.$route.params.product_id
       }
       this.$store.dispatch('updateProduct', dataProduct)
@@ -77,11 +77,11 @@ export default {
     }
   },
 
-  // computed: {
-  //   oneProduct () {
-  //     return this.$store.state.oneProduct
-  //   }
-  // },
+  computed: {
+    oneProduct () {
+      return this.$store.state.oneProduct
+    }
+  },
   mounted () {
     this.getOneProduct()
   }
