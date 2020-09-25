@@ -54,22 +54,22 @@ describe('test GET /products', function(){
 
 describe('test POST /products', function(){
  
-    // test('Test success post item responds with json', function(done){
+    test('Test success post item responds with json', function(done){
         
-    //     request(app) 
-    //     .post('/products') 
-    //     .send(product)
-    //     .set('access_token', access_token) 
-    //     .set('Accept', 'application/json') 
-    //     .expect('Content-Type', /json/)
-    //     .then(response => {
-    //         // console.log(response, 'ini response post')
-    //         const {body, status} = response
-    //         expect(status).toBe(201)
-    //         expect(body).toHaveProperty('name', expect.any(String))
-    //         done()
-    //     })
-    // })
+        request(app) 
+        .post('/products') 
+        .send(product)
+        .set('access_token', access_token) 
+        .set('Accept', 'application/json') 
+        .expect('Content-Type', /json/)
+        .then(response => {
+            // console.log(response, 'ini response post')
+            const {body, status} = response
+            expect(status).toBe(201)
+            expect(body).toHaveProperty('name', expect.any(String))
+            done()
+        })
+    })
     
     test('Test failed post item no access_token', function(done){
         request(app) 
@@ -220,27 +220,27 @@ describe('test POST /products', function(){
 
 describe('test PUT /products', function(){
  
-    // test('Test success update item responds with json', function(done){
-    //     let productUpdate = {
-    //         name: 'baju makan update',
-    //         image_url : 'https://www.tororo.com/pub/media/catalog/product/cache/c687aa7517cf01e65c009f6943c2b1e9/m/o/mon_cheri_baju_koko_celana_grey_1.jpg',
-    //         price : 50000,
-    //         stock : 12
-    //         }
-    //     request(app) 
-    //     .put('/products/2') 
-    //     .send(productUpdate)
-    //     .set('access_token', access_token) 
-    //     .set('Accept', 'application/json') 
-    //     .expect('Content-Type', /json/)
-    //     .then(response => {
-    //         // console.log(response, 'ini response correct update')
-    //         const {body, status} = response
-    //         expect(status).toBe(200)
-    //         expect(body).toHaveProperty('message', 'Succes update')
-    //         done()
-    //     })
-    // })
+    test('Test success update item responds with json', function(done){
+        let productUpdate = {
+            name: 'baju makan update',
+            image_url : 'https://www.tororo.com/pub/media/catalog/product/cache/c687aa7517cf01e65c009f6943c2b1e9/m/o/mon_cheri_baju_koko_celana_grey_1.jpg',
+            price : 50000,
+            stock : 12
+            }
+        request(app) 
+        .put('/products/2') 
+        .send(productUpdate)
+        .set('access_token', access_token) 
+        .set('Accept', 'application/json') 
+        .expect('Content-Type', /json/)
+        .then(response => {
+            // console.log(response, 'ini response correct update')
+            const {body, status} = response
+            expect(status).toBe(200)
+            expect(body).toHaveProperty('message', 'Succes update')
+            done()
+        })
+    })
 
     test('Test failed update item no access_token', function(done){
         request(app) 
@@ -384,20 +384,20 @@ describe('test PUT /products', function(){
 
 describe('test DELETE /products', function(){
  
-    // test('Test success delete item', function(done){
-    //     request(app) 
-    //     .delete('/products/4') 
-    //     .set('access_token', access_token) 
-    //     .set('Accept', 'application/json') 
-    //     .expect('Content-Type', /json/)
-    //     .then(response => {
-    //         // console.log(response, 'ini response success delete')
-    //         const {body, status} = response
-    //         expect(status).toBe(200)
-    //         expect(body).toHaveProperty('message', 'Succes delete')
-    //         done()
-    //     })
-    // })
+    test('Test success delete item', function(done){
+        request(app) 
+        .delete('/products/4') 
+        .set('access_token', access_token) 
+        .set('Accept', 'application/json') 
+        .expect('Content-Type', /json/)
+        .then(response => {
+            // console.log(response, 'ini response success delete')
+            const {body, status} = response
+            expect(status).toBe(200)
+            expect(body).toHaveProperty('message', 'Succes delete')
+            done()
+        })
+    })
 
     test('Test failed delete item no access_token', function(done){
         request(app) 
