@@ -1,7 +1,7 @@
 <template>
   <div id="product">
     <ComponentHeader title="Product" route="products" />
-    <ProductList />
+    <CategoryList />
   </div>
 </template>
 
@@ -14,18 +14,17 @@ export default {
   name: "Category",
   components: {
     ComponentHeader,
+    CategoryList
   },
   
   mounted() {
-    console.log("MOUNTED", !this.$store.state.productData);
-
     axios.get('/categories', {
       headers: {
         access_token: localStorage.access_token,
       },
     })
     .then(({ data }) => {
-      this.$store.dispatch('storeCategoryData', data)
+      this.$store.dispatch('getCategories', data)
     });
   },
 };

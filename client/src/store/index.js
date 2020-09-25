@@ -2,6 +2,7 @@ import Vue from 'vue';
 import Vuex from 'vuex';
 
 import axios from '../config/axios';
+import swal from '../config/swal'
 
 Vue.use(Vuex);
 
@@ -37,12 +38,13 @@ export default new Vuex.Store({
   },
 
   mutations: {
-    changeAuthState(state, bool) {
+
+    // Auth
+    SET_AUTH_STATE(state, bool) {
       state.isAuthenticated = bool
       console.log(`state.isAuthenticated -> ${state.isAuthenticated}`);
     },
 
-    // Auth
     setUserState(state, payload) {
       state.name = payload.name
       state.email = payload.email
@@ -51,7 +53,7 @@ export default new Vuex.Store({
     },
 
     // Banner
-    saveBannerData(state, payload) {
+    SET_BANNER_DATA(state, payload) {
       state.bannerData = payload.data
     },
     getBannerDetails(state, id) {
@@ -59,7 +61,7 @@ export default new Vuex.Store({
     },
 
     // Category
-    saveCategoryData(state, payload) {
+    SET_CATEGORY_DATA(state, payload) {
       state.categoryData = payload.data
     },
     getCategoryDetails(state, id) {
@@ -67,7 +69,7 @@ export default new Vuex.Store({
     },
 
     // Product
-    saveProductData(state, payload) {
+    SET_PRODUCT_DATA(state, payload) {
       state.productData = payload.data.map(product => {
         return {
           id: product.id,
@@ -83,7 +85,7 @@ export default new Vuex.Store({
     },
 
     // upon logout
-    emptyData(state) {
+    EMPTY_DATA(state) {
       state.bannerData = null
       state.bannerDetails = null
 
@@ -101,26 +103,159 @@ export default new Vuex.Store({
 
   actions: {
     // Auth
-    login(context) {
-      context.commit('changeAuthState', true)
+    login({ commit }) {
+      commit('SET_AUTH_STATE', true)
     },
 
-    logout(context) {
-      context.commit('emptyData')
-      context.commit('changeAuthState', false)
+    logout({ commit }) {
+      commit('EMPTY_DATA')
+      commit('SET_AUTH_STATE', false)
     },
 
-    storeProductData(context, payload) {
-      context.commit('saveProductData', payload)
+    getProducts({ commit }) {
+      axios.get('/products', {
+        headers: {
+          access_token: localStorage.access_token,
+        },
+      })
+        .then(({ data }) => {
+          data.data.map(record => {
+            delete record.createdAt
+            delete record.updatedAt
+            return record
+          })
+
+          commit('SET_PRODUCT_DATA', data)
+        });
     },
 
-    storeCategoryData(context, payload) {
-      context.commit('saveCategoryData', payload)
+    getCategories({ commit }) {
+      axios.get('/categories', {
+        headers: {
+          access_token: localStorage.access_token,
+        },
+      })
+        .then(({ data }) => {
+          data.data.map(record => {
+            delete record.createdAt
+            delete record.updatedAt
+            return record
+          })
+
+          commit('SET_CATEGORY_DATA', data)
+        });
     },
 
-    storeBannerData(context, payload) {
-      context.commit('saveBannerData', payload)
-    }
+    getBanners({ commit }) {
+      axios.get('/banners', {
+        headers: {
+          access_token: localStorage.access_token,
+        },
+      })
+        .then(({ data }) => {
+          data.data.map(record => {
+            delete record.createdAt
+            delete record.updatedAt
+            return record
+          })
+
+          commit('SET_BANNER_DATA', data)
+        });
+    },
+
+    createProduct({ commit, dispatch }, payload) {
+      axios({
+        url: '/products',
+        method: 'POST',
+        headers: {
+          access_token: localStorage.access_token
+        },
+        data: payload
+      })
+        .then(res => {
+          console.log(res);
+
+          dispatch('getProducts')
+        })
+        .catch(err => {
+          console.log(err);
+        })
+    },
+    createCategory({ commit, dispatch }, payload) {
+      axios({
+        url: '/categories',
+        method: 'POST',
+        headers: {
+          access_token: localStorage.access_token
+        },
+        data: payload
+      })
+        .then(({ data }) => {
+          swal.showToastSuccess(data.message)
+          dispatch('getCategories')
+        })
+        .catch(err => {
+          console.log(err);
+        })
+    },
+    createBanner({ commit }, payload) {
+      axios({
+        url: '/banners',
+        method: 'POST',
+        headers: {
+          access_token: localStorage.access_token
+        },
+        data: payload
+      })
+        .then()
+        .catch(err => {
+          console.log(err);
+        })
+    },
+
+    updateProduct({ commit }, payload) {
+      axios()
+        .then()
+        .catch(err => {
+          console.log(err);
+        })
+    },
+    updateCategory({ commit }, payload) {
+      axios()
+        .then()
+        .catch(err => {
+          console.log(err);
+        })
+    },
+    updateBanner({ commit }, payload) {
+      axios()
+        .then()
+        .catch(err => {
+          console.log(err);
+        })
+    },
+
+    deleteProduct({ commit }, payload) {
+      axios()
+        .then()
+        .catch(err => {
+          console.log(err);
+        })
+    },
+    deleteCategory({ commit }, payload) {
+      axios()
+        .then()
+        .catch(err => {
+          console.log(err);
+        })
+    },
+    deleteBanner({ commit }, payload) {
+      axios()
+        .then()
+        .catch(err => {
+          console.log(err);
+        })
+    },
   },
 
 });

@@ -1,19 +1,19 @@
 <template>
   <div id="banner">
-    <ComponentHeader title="Banners" />
+    <BannerList />
   </div>
 </template>
 
 <script>
-import ComponentHeader from '../components/shared/ComponentHeader.vue'
+import BannerList from '@/components/banner/List.vue'
 
 export default {
   name: "Banner",
   components: {
-    ComponentHeader
+    BannerList
   },
   mounted() {
-    console.log("OBJECT - BANNER");
+    this.$store.dispatch('getBanners')
   },
 }
 </script>

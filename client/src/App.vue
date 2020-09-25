@@ -82,4 +82,16 @@ export default {
 #content {
   @apply ml-4;
 }
+
+.form-group {
+  @apply my-2
+}
+
+.form-group label {
+  @apply text-sm
+}
+
+.form-group input {
+  @apply border-b-2
+}
 </style>

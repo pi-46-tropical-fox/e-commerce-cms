@@ -1,18 +1,4 @@
 <template>
-  <!-- <div class="table-auto">
-    <div class="table-header">
-      <div class="row">
-        <div class="cell" v-for="(cell, i) in $props.headers" :key="i">{{ cell }}</div>
-      </div>
-    </div>
-    <div class="table-body">
-      <div class="row" v-for="row in $props.data" :key="row.id">
-        <div class="cell" v-for="(cell, i) in row" :key="i">{{ cell }}</div>
-        <div class="cell">Action</div>
-      </div>
-    </div>
-  </div>-->
-
   <div class="-my-2 py-2 overflow-x-auto sm:-mx-6 sm:px-6 lg:-mx-8 pr-10 lg:px-8">
     <div
       class="align-middle inline-block min-w-full shadow overflow-hidden bg-white shadow-dashboard px-8 pt-3 rounded-bl-lg rounded-br-lg"
@@ -42,8 +28,14 @@
               class="px-6 py-4 whitespace-no-wrap text-right border-b border-gray-500 text-sm leading-5"
             >
               <button
-                class="px-5 py-2 border-blue-500 border text-blue-500 rounded transition duration-300 hover:bg-blue-700 hover:text-white focus:outline-none"
+                class="px-5 py-2 ml-2 border-blue-500 border text-blue-500 rounded transition duration-300 hover:bg-blue-700 hover:text-white focus:outline-none"
               >View Details</button>
+              <button
+                class="px-5 py-2 ml-2 border-green-500 border text-green-500 rounded transition duration-300 hover:bg-green-700 hover:text-white focus:outline-none"
+              >Update</button>
+              <button @click.prevent="deleteData(row.id)"
+                class="px-5 py-2 ml-2 border-red-500 border text-red-500 rounded transition duration-300 hover:bg-red-700 hover:text-white focus:outline-none"
+              >Delete</button>
             </td>
           </tr>
         </tbody>
@@ -53,14 +45,26 @@
 </template>
 
 <script>
+import swal from '@/config/swal'
+
 // this will be used for tables
 export default {
   name: "Table",
 
-  props: ["data", "headers"],
+  props: {
+    data: Array,
+    headers: Array,
+    type: String
+  },
+
+  methods: {
+    async deleteData(id){
+      if(await swal.showSwalConfirm(`You're about to delete the ${this.$props.type} of ID ${id}`)) this.$emit('deleteData', id)
+    }
+  },
 
   mounted() {
-    console.log(this.$props.data);
+    // console.log(this.$props.data);
   },
 };
 </script>

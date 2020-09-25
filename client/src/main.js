@@ -2,14 +2,16 @@ import Vue from 'vue';
 import App from './App.vue';
 import store from './store';
 import router from './router';
+
 // for Tailwind CSS components
 import './assets/styles/index.css';
-// import { gapi, config } from "./config/gapi";
 import VueTailwind from 'vue-tailwind'
 
-Vue.config.productionTip = false;
+import vSelect from 'vue-select';
+import 'vue-select/dist/vue-select.css';
 
-// Vue.use(gapi, config);
+Vue.config.productionTip = false;
+Vue.component('v-select', vSelect)
 
 const settings = {
   //...
