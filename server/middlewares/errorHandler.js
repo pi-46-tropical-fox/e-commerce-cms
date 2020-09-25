@@ -4,8 +4,13 @@ function errorHandler(error, req, res, next) {
 	let statusCode = 500;
 	const errors = [];
 
+
 	switch (error.name) {
 	case 'SequelizeValidationError':
+		error.errors.forEach((e) => errors.push(e.message));
+		statusCode = 400;
+		break;
+		
 	case 'SequelizeUniqueConstraintError':
 		error.errors.forEach((e) => errors.push(e.message));
 		statusCode = 400;
@@ -16,6 +21,11 @@ function errorHandler(error, req, res, next) {
 		statusCode = 401;
 		break;
 
+	case 'SequelizeDatabaseError':
+		errors.push(error.message)
+		statusCode = 400
+		break;
+	
 	default:
 		errors.push(error.message);
 		statusCode = error.statusCode || 500;

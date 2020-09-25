@@ -25,7 +25,6 @@ class ProductController{
 
     static async createProduct(req, res, next){
         try{
-            console.log(req.body)
             const { name, image_url, price, stock } = req.body
 
             const created = await Product.create({ name, image_url, price, stock })

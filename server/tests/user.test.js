@@ -17,7 +17,7 @@ beforeAll((done) => {
     })
 })
 
-describe('test user post /user/login', () => {
+describe('test user post /user/login success', () => {
     it('should return an object contains access_token email and id', (done) => {
         request(app)
             .post('/user/login')
@@ -32,8 +32,25 @@ describe('test user post /user/login', () => {
                 done()
             })
     })
+})
 
-    it('should give wrong credentials error', (done) => {
+describe('test user post /user/login fail', () => {
+    it('email does not exists - should give wrong credentials error', (done) => {
+        request(app)
+            .post('/user/login')
+            .set('Accept', 'application/json')
+            .send({email : 'sjidoadsiojdasioj', password : 'asdasdojiadsio'})
+            .expect('Content-Type', /json/)
+            .expect(401)
+            .then(response => {
+                const {body, status} = response
+                expect(status).toBe(401)
+                expect(body).toHaveProperty('message', 'Email/Password combination not found!')
+                done()
+            })
+    })
+
+    it('email exists, wrong password - should give wrong credentials error', (done) => {
         let wrongUserCredentials = userCredentials
         wrongUserCredentials.password = wrongUserCredentials.password + Math.random()
 
@@ -50,8 +67,25 @@ describe('test user post /user/login', () => {
                 done()
             })
     })
-})
 
+    it('no email or password provided - should give wrong credentials error', (done) => {
+        let wrongUserCredentials = userCredentials
+        wrongUserCredentials.password = wrongUserCredentials.password + Math.random()
+
+        request(app)
+            .post('/user/login')
+            .set('Accept', 'application/json')
+            .send({})
+            .expect('Content-Type', /json/)
+            .expect(400)
+            .then(response => {
+                const {body, status} = response
+                expect(status).toBe(400)
+                expect(body.errors).toEqual(expect.arrayContaining(['Bad Request']))
+                done()
+            })
+    })
+})
 
 afterAll((done) => {
     User.destroy({
