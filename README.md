@@ -1,5 +1,5 @@
 # e-commerce-cms
-Admin Management System For An E-commerce App
+Content Management System For An E-commerce App
 
 # API Documentation
 
