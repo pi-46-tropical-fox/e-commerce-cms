@@ -1,0 +1,19 @@
+{
+  "development": {
+    "username": "vikryprakasa",
+    "password": "vikgans",
+    "database": "e-commerce-cms",
+    "host": "localhost",
+    "dialect": "postgres"
+  },
+  "test": {
+    "username": "vikryprakasa",
+    "password": "vikgans",
+    "database": "e-commerce-cms",
+    "host": "localhost",
+    "dialect": "postgres"
+  },
+    "production": {
+      "use_env_variable": "DATABASE_URL"
+    }
+}
