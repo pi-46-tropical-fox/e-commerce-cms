@@ -7,6 +7,7 @@ Technologies include :
 - Deployment: Heroku(server), Firebase (client)
 
 Firebase URL: https://e-commerce-hacktiv8-2020.web.app
+
 Login with : admin@mail.com / pass : 1234
 
 # API Documentation
