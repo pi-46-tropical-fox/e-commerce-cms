@@ -1,5 +1,15 @@
 # e-commerce-cms
-Membuat Content Management System untuk e-commerce
+An application to manage e-commerce clients. This project took 3 days to include learning the Technologies.
+
+Technologies include :
+- Server-side: Sequelize, Express, PostgreSQL, JWT, Jest
+- Client-side : Vue, Vue Router, Vuex, Axios , HTML, & CSS (Bootstrap)
+- Deployment: Heroku(server), Firebase (client)
+
+Firebase URL: https://e-commerce-hacktiv8-2020.web.app
+Login with : admin@mail.com / pass : 1234
+
+# API Documentation
 E-Commerce CMS on Thrift & Co. This app has:
 
 &nbsp;
